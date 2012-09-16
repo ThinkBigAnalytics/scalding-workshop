@@ -13,20 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-This script was adapted from the tutorial/Tutorial0.scala script that
-comes with the Scalding distribution.
+This script was adapted from the tutorial/Tutorial1.scala script that
+comes with the Scalding distribution, which is subject to the same Apache License.
 */
+
 import com.twitter.scalding._
-
-/**
- * This script functions as a sanity check that everything is setup properly.
- * From the project root directory, run this command:
- *   ruby run.rb tutorial/FirstScript.scala
- * It should run without error. The output is written to
- *   output/FirstScript.txt
- * What's in that file?
- */
-
 
 /**
  * Scalding's scripts/scald.rb script ASSUMES that the class name MATCHES
@@ -37,7 +28,7 @@ import com.twitter.scalding._
  * The constructor takes a com.twitter.scalding.Args object, which may be
  * ignored.
  */
-class FirstScript(args : Args) extends Job(args) {
+class Project1(args : Args) extends Job(args) {
 
   /**
    * com.twitter.scalding.Source is the parent type for all
@@ -45,18 +36,19 @@ class FirstScript(args : Args) extends Job(args) {
    *   TextLine:  Read in each line with no attempt at parsing it.
    *   Tsv:       Tab-seperated values.
    */
-  val in  = TextLine("tutorial/FirstScript.scala")
-  val out = TextLine("output/FirstScript.txt")
+  val in  = TextLine("scripts/Project1.scala")
+  val out = TextLine("output/Project1.txt")
 
   /**
-   * Use the simplest of Cascading pipelines; just pipe the input to the output.
+   * Here is the change relative to SanityCheck0.scala. We added a projection 
+   * to the Cascading pipeline that keeps just the 'line field (the original
+   * input), discarding the line number added when we read the file. Note that
+   * 'line is a Scala "symbol" (an interned String). For comparision, Ruby writes
+   * symbols with a colon prefix, e.g., :line.
+   * We also put the individual steps on separate lines, for better clarity.
    */
-  in.read.write(out)
-
-  /**
-   * By the way, if you look at the docs for Pipe, you won't find write there. That's
-   * because it's actually defined on com.twitter.scalding.RichPipe. Most of the methods
-   * we call on Pipes will actually be found on RichPipe; in typical scala style,
-   * the conversion between them is implicit.
-   */
+  in
+    .read
+    .project('line)
+    .write(out)
 }

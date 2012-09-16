@@ -11,7 +11,7 @@ This workshop is a half-day tutorial on Scalding and its place in the Hadoop eco
 
 ## Getting Started
 
-To keep the setup process as simple as possible, the workshop git repo contains a pre-built jar that bundles Scalding v0.7.3 for Scala v2.9.2 and other required jars, such as `Hadoop` *core*, `Log4J`, etc. So, all you need to install is Java, Scala, Ruby, and this workshop.
+To keep the setup process as simple as possible, the workshop git repo contains a pre-built jar that bundles Scalding v0.7.3 for Scala v2.9.2 and other required jars, such as `Cascading`, `Hadoop` *core*, `Log4J`, etc. So, all you need to install is Java, Scala, Ruby, and this workshop.
 
 It helps to pick a work directory where you will install some of the packages. In what follows, we'll assume you're using `$HOME/fun` on Linux, Mac OSX, or Cygwin for Windows with the `bash` shell (or a similar shell) or you are using `C:\fun` on Windows.
 
@@ -45,19 +45,19 @@ Scalding uses Scala v2.9.2. Install it from [here](http://www.scala-lang.org/dow
 
 Ruby is used as a platform-independent language for driver scripts by Scalding and we've followed the same convention. See [ruby-lang.org](http://ruby-lang.org) for details on installing Ruby. Either version 1.8.7 or 1.9.X will work.
 
-## Sanity Test
+## Sanity Check
 
 Once you've completed these steps, run the following commands as a sanity check to ensure that everything is setup properly. Using `bash`: 
 
     cd $HOME/fun/scalding-workshop
-    ./run.rb scripts/SanityCheck.scala
+    ./run.rb scripts/SanityCheck0.scala
 
 On Windows:
 
     cd C:\fun\scalding-workshop
-    ruby run.rb scripts/SanityCheck.scala
+    ruby run.rb scripts/SanityCheck0.scala
 
-The command should run without error. Note that it takes a moment to compile the Scala script and run to completion. The output is written to `output/SanityCheck.txt`. What's in that file?
+The commands should run without error. Note that it takes a moment to compile the Scala script and run to completion. The output is written to `output/SanityCheck0.txt`. What's in that file?
  
 ## Optional Installs
 
@@ -95,7 +95,7 @@ On Windows:
 
 (The Getting Started page says to build the `test` target between `update` and `assembly`, but the later builds `test` itself.)
 
-### Sanity Test
+### Sanity Check
 
 Once you've built Scalding, run the following command as a sanity check to ensure everything is setup properly. Using `bash`: 
 

@@ -1,4 +1,11 @@
 #!/usr/bin/env ruby
+#-------------------------------------------
+# run.rb - Simple driver for the Scalding workshop.
+# It verifies that you passed a Scalding script (a Scala source file)
+# as an argument, compiles it, and invokes Scalding in "local" mode.
+# Scalding comes with a more sophisticated driver script called "scald.rb".
+# This script is simpler and avoids some issues with "scald.rb".
+
 $LOAD_PATH << File.join(File.expand_path(File.dirname(File.symlink?(__FILE__) ? File.readlink(__FILE__) : __FILE__)), 'lib')
 
 require 'fileutils'

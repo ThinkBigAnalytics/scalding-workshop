@@ -7,11 +7,17 @@
 
 ## About this Workshop
 
-This workshop is a half-day tutorial on Scalding and its place in the Hadoop ecosystem. [Scalding](https://github.com/twitter/scalding) is a Scala API developed at Twitter for distributed data programming that uses the [Cascading](http://www.cascading.org/) Java API, which in turn sits on top of Hadoop's Java API. However, Scalding, through Cascading, also offers a *local* mode that makes it easy to run jobs without using the Hadoop libraries, for simpler testing and learning. We'll use that feature for most of this workshop.
+This workshop is a half-day tutorial on Scalding and its place in the Hadoop ecosystem. [Scalding](https://github.com/twitter/scalding) is a Scala API developed at Twitter for distributed data programming that uses the [Cascading](http://www.cascading.org/) Java API, which in turn sits on top of Hadoop's Java API. However, Scalding, through Cascading, also offers a *local* mode that makes it easy to run jobs without using the Hadoop libraries, for simpler testing and learning. We'll use this feature for most of this workshop.
 
 ## Getting Started
 
-You need to install several software packages first. It helps to pick a work directory where you will install some of the packages. In what follows, we'll assume you're using `$HOME/fun` on Linux or Mac OSX with `bash` (or a similar shell) or `C:\fun` on Windows.
+To keep the setup process as simple as possible, the workshop git repo contains a pre-built jar that bundles Scalding v0.7.3 for Scala v2.9.2 and other required jars, such as `Hadoop` *core*, `Log4J`, etc. So, all you need to install is Java, Scala, Ruby, and this workshop.
+
+It helps to pick a work directory where you will install some of the packages. In what follows, we'll assume you're using `$HOME/fun` on Linux, Mac OSX, or Cygwin for Windows with the `bash` shell (or a similar shell) or you are using `C:\fun` on Windows.
+
+### Git
+
+You'll need git to clone the workshop repository and optionally for other installs. See [here](http://git-scm.com/book/en/Getting-Started-Installing-Git) for details. As an alternative, you can download a workshop release from its Github repo, rather than clone it.
 
 ### This Workshop
 
@@ -25,6 +31,42 @@ On Windows:
     cd C:\fun
     git clone https://github.com/thinkbiganalytics/scalding-workshop
 
+Or, if you prefer, simply [download a release](https://github.com/thinkbiganalytics/scalding-workshop).
+
+### Java v1.6 or Better
+
+Install Java if necessary from [here](http://www.java.com/en/download/help/download_options.xml).
+
+### Scala v2.9.2
+
+Scalding uses Scala v2.9.2. Install it from [here](http://www.scala-lang.org/downloads).
+
+### Ruby v1.8.7 or v1.9.X
+
+Ruby is used as a platform-independent language for driver scripts by Scalding and we've followed the same convention. See [ruby-lang.org](http://ruby-lang.org) for details on installing Ruby. Either version 1.8.7 or 1.9.X will work.
+
+## Sanity Test
+
+Once you've completed these steps, run the following commands as a sanity check to ensure that everything is setup properly. Using `bash`: 
+
+    cd $HOME/fun/scalding-workshop
+    ./run.rb tutorial/Tutorial0.scala
+
+On Windows:
+
+    cd C:\fun\scalding-workshop
+    ruby run.rb --local tutorial/Tutorial0.scala
+
+The command should run without error. Note that it takes a moment to compile the Scala script and run to completion. The output is written to `output/SanityCheck_0.txt`. What's in that file?
+ 
+## Optional Installs
+
+If you're serious about using Scalding, you should clone and build the Scalding repo. We'll talk briefly about it in the workshop, but it isn't required.
+
+### SBT v0.11
+
+SBT is the *de facto* build tool for Scala. You'll need it to build Scalding. Follow these [installation instructions](https://github.com/harrah/xsbt/wiki/Getting-Started-Setup).
+
 ### Scalding from GitHub
 
 Clone [Scalding from GitHub](https://github.com/twitter/scalding). Using `bash`:
@@ -36,22 +78,6 @@ On Windows:
 
     cd C:\fun
     git clone https://github.com/thinkbiganalytics/scalding-workshop
-
-### Java v1.6 or Better
-
-Install Java if necessary from [here](http://www.java.com/en/download/help/download_options.xml).
-
-### Scala v2.9.2
-
-Scalding uses Scala v2.9.2. Install it from [here](http://www.scala-lang.org/downloads).
-
-### SBT v0.11
-
-SBT is the *de facto* build tool for Scala. We included SBT in the workshop you cloned above. If you plan to use Scala or Scalding after this workshop, you should install SBT yourself, following these [installation instructions](https://github.com/harrah/xsbt/wiki/Getting-Started-Setup).
-
-### Ruby v1.8.7 or v1.9.X
-
-See [ruby-lang.org](http://ruby-lang.org) for details on installing Ruby, which is used by Scalding driver's scripts. Either version 1.8.7 or 1.9.X will work.
 
 ### Build Scalding
 
@@ -69,7 +95,7 @@ On Windows:
 
 (The Getting Started page says to build the `test` target between `update` and `assembly`, but the later builds `test` itself.)
 
-## Sanity Test
+### Sanity Test
 
 Once you've built Scalding, run the following command as a sanity check to ensure everything is setup properly. Using `bash`: 
 

@@ -1,18 +1,7 @@
 #!/usr/bin/env bash 
 # run.sh - Simple script that runs Scalding on the workshop files.
 # Contrast with $SCALDING_HOME/scripts/scald.rb, which is more full featured, 
-# but also more restrictive.
-
-# for f in \
-#   hadoop-core-0.20.2.jar \
-#   log4j-1.2.15.jar \
-#   commons-httpclient-3.1.jar \
-#   commons-cli-1.2.jar \
-#   zookeeper-3.3.4.jar \
-#   scalding_2.9.2-0.7.3.jar.jar
-# do
-# 	CLASSPATH=$CLASSPATH:lib/$f
-# done
+# but also more restrictive for our purposes.
 
 script=$1
 if [ -z "$script" ]

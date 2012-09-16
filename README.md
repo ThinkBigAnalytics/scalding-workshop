@@ -59,15 +59,15 @@ Build Scalding according to its [Getting Started](https://github.com/twitter/sca
 
     cd $HOME/fun/scalding
     ../scalding-workshop/sbt.sh update
-    ../scalding-workshop/sbt.sh test
     ../scalding-workshop/sbt.sh assembly
 
 On Windows:
 
     cd C:\fun\scalding
     ..\scalding-workshop\sbt.bat update
-    ..\scalding-workshop\sbt.bat test
     ..\scalding-workshop\sbt.bat assembly
+
+(The Getting Started page says to build the `test` target between `update` and `assembly`, but the later builds `test` itself.)
 
 ## Sanity Test
 
@@ -80,7 +80,7 @@ On Windows:
 
     cd C:\fun\scalding
     ruby scripts\scald.rb --local tutorial/Tutorial0.scala
-  
+
 ## For Further Information
 
 See the [Scalding GitHub page](https://github.com/twitter/scalding) for more information about Scalding. The [wiki](https://github.com/twitter/scalding/wiki) is very useful.

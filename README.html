@@ -24,7 +24,7 @@ body{-webkit-font-smoothing:antialiased;font:normal .8764em/1.5em Arial,Verdana,
 
 <p><strong>StrangeLoop 2012</strong><br/>
 <strong>Dean Wampler</strong><br/>
-<a href="&#x6d;&#97;&#x69;&#108;&#116;&#111;&#x3a;&#100;&#101;&#x61;&#110;&#64;&#x64;&#101;&#x61;&#x6e;&#x77;&#97;&#109;&#112;&#x6c;&#x65;&#x72;&#46;&#x63;&#111;&#109;">&#100;&#101;&#97;&#x6e;&#64;&#x64;&#101;&#x61;&#x6e;&#119;&#x61;&#x6d;&#x70;&#108;&#x65;&#114;&#x2e;&#99;&#x6f;&#x6d;</a><br/>
+<a href="&#109;&#x61;&#x69;&#x6c;&#116;&#111;&#58;&#x64;&#x65;&#x61;&#110;&#64;&#x64;&#101;&#x61;&#x6e;&#119;&#97;&#x6d;&#x70;&#x6c;&#x65;&#114;&#x2e;&#x63;&#x6f;&#109;">&#100;&#x65;&#97;&#x6e;&#x40;&#100;&#x65;&#x61;&#110;&#x77;&#x61;&#x6d;&#x70;&#108;&#101;&#114;&#46;&#99;&#111;&#109;</a><br/>
 <a href="https://twitter.com/deanwampler">@deanwampler</a><br/></p>
 
 <h2 id="aboutthisworkshop">About this Workshop</h2>
@@ -33,14 +33,92 @@ body{-webkit-font-smoothing:antialiased;font:normal .8764em/1.5em Arial,Verdana,
 
 <h2 id="gettingstarted">Getting Started</h2>
 
+<p>You need to install several software packages first. It helps to pick a work directory where you will install some of the packages. In what follows, we&#8217;ll assume you&#8217;re using <code>$HOME/fun</code> on Linux or Mac OSX with <code>bash</code> (or a similar shell) or <code>C:\fun</code> on Windows.</p>
+
+<h3 id="thisworkshop">This Workshop</h3>
+
+<p>Clone this <a href="https://github.com/thinkbiganalytics/scalding-workshop">workshop from GitHub</a>. Using <code>bash</code>:</p>
+
+<pre><code>cd $HOME/fun
+git clone https://github.com/thinkbiganalytics/scalding-workshop
+</code></pre>
+
+<p>On Windows:</p>
+
+<pre><code>cd C:\fun
+git clone https://github.com/thinkbiganalytics/scalding-workshop
+</code></pre>
+
+<h3 id="scaldingfromgithub">Scalding from GitHub</h3>
+
+<p>Clone <a href="https://github.com/twitter/scalding">Scalding from GitHub</a>. Using <code>bash</code>:</p>
+
+<pre><code>cd $HOME/fun
+git clone https://github.com/twitter/scalding.git
+</code></pre>
+
+<p>On Windows:</p>
+
+<pre><code>cd C:\fun
+git clone https://github.com/thinkbiganalytics/scalding-workshop
+</code></pre>
+
+<h3 id="javav1.6orbetter">Java v1.6 or Better</h3>
+
+<p>Install Java if necessary from <a href="http://www.java.com/en/download/help/download_options.xml">here</a>.</p>
+
+<h3 id="scalav2.9.2">Scala v2.9.2</h3>
+
+<p>Scalding uses Scala v2.9.2. Install it from <a href="http://www.scala-lang.org/downloads">here</a>.</p>
+
+<h3 id="sbtv0.11">SBT v0.11</h3>
+
+<p>SBT is the <em>de facto</em> build tool for Scala. We included SBT in the workshop you cloned above. If you plan to use Scala or Scalding after this workshop, you should install SBT yourself, following these <a href="https://github.com/harrah/xsbt/wiki/Getting-Started-Setup">installation instructions</a>.</p>
+
+<h3 id="rubyv1.8.7orv1.9.x">Ruby v1.8.7 or v1.9.X</h3>
+
+<p>See <a href="http://ruby-lang.org">ruby-lang.org</a> for details on installing Ruby, which is used by Scalding driver&#8217;s scripts. Either version 1.8.7 or 1.9.X will work.</p>
+
+<h3 id="buildscalding">Build Scalding</h3>
+
+<p>Build Scalding according to its <a href="https://github.com/twitter/scalding/wiki/Getting-Started">Getting Started</a> page. Here is a synopsis of the steps. Note that we&#8217;ll assume that you&#8217;ll use the SBT command that was installed in the <code>$HOME/fun/scalding-workshop</code> directory. Using <code>bash</code>: </p>
+
+<pre><code>cd $HOME/fun/scalding
+../scalding-workshop/sbt.sh update
+../scalding-workshop/sbt.sh assembly
+</code></pre>
+
+<p>On Windows:</p>
+
+<pre><code>cd C:\fun\scalding
+..\scalding-workshop\sbt.bat update
+..\scalding-workshop\sbt.bat assembly
+</code></pre>
+
+<p>(The Getting Started page says to build the <code>test</code> target between <code>update</code> and <code>assembly</code>, but the later builds <code>test</code> itself.)</p>
+
+<h2 id="sanitytest">Sanity Test</h2>
+
+<p>Once you&#8217;ve built Scalding, run the following command as a sanity check to ensure everything is setup properly. Using <code>bash</code>: </p>
+
+<pre><code>cd $HOME/fun/scalding
+scripts/scald.rb --local tutorial/Tutorial0.scala
+</code></pre>
+
+<p>On Windows:</p>
+
+<pre><code>cd C:\fun\scalding
+ruby scripts\scald.rb --local tutorial/Tutorial0.scala
+</code></pre>
+
 <h2 id="forfurtherinformation">For Further Information</h2>
 
-<p>See the <a href="https://github.com/twitter/scalding">Scalding GitHub page</a> for more information about Scalding.</p>
+<p>See the <a href="https://github.com/twitter/scalding">Scalding GitHub page</a> for more information about Scalding. The <a href="https://github.com/twitter/scalding/wiki">wiki</a> is very useful.</p>
 
-<p><a href="&#x6d;&#x61;&#x69;&#x6c;&#116;&#111;&#58;&#100;&#x65;&#x61;&#110;&#64;&#x64;&#101;&#97;&#110;&#119;&#x61;&#109;&#112;&#108;&#x65;&#114;&#46;&#x63;&#111;&#x6d;">&#68;&#x65;&#97;&#110; &#87;&#97;&#109;&#112;&#x6c;&#101;&#114;</a> from <a href="http://thinkbiganalytics.com">Think Big Analytics</a> prepared this tutorial. For information about consulting and training on Scalding and other Hadoop-related topics, <a href="&#x6d;&#97;&#x69;&#x6c;&#116;&#x6f;&#x3a;&#x69;&#110;&#x66;&#x6f;&#x40;&#x74;&#x68;&#105;&#110;&#107;&#98;&#105;&#103;&#x61;&#x6e;&#97;&#x6c;&#x79;&#116;&#105;&#x63;&#x73;&#46;&#x63;&#x6f;&#109;">&#115;&#x65;&#110;&#x64; &#x75;&#x73; &#x65;&#109;&#97;&#x69;&#108;</a>.</p>
+<p><a href="&#109;&#97;&#x69;&#108;&#x74;&#111;&#x3a;&#x64;&#101;&#x61;&#x6e;&#64;&#x64;&#x65;&#x61;&#110;&#119;&#97;&#x6d;&#x70;&#108;&#x65;&#x72;&#46;&#x63;&#x6f;&#x6d;">&#x44;&#x65;&#97;&#110; &#87;&#x61;&#109;&#x70;&#x6c;&#x65;&#x72;</a> from <a href="http://thinkbiganalytics.com">Think Big Analytics</a> prepared this tutorial. <a href="&#109;&#97;&#105;&#x6c;&#x74;&#111;&#58;&#x64;&#x65;&#x61;&#110;&#x40;&#x64;&#x65;&#x61;&#110;&#119;&#x61;&#109;&#x70;&#x6c;&#101;&#114;&#46;&#99;&#x6f;&#109;">&#67;&#x6f;&#110;&#116;&#x61;&#99;&#116; &#68;&#101;&#x61;&#x6e;</a> with questions about the tutorial. For information about consulting and training on Scalding and other Hadoop-related topics, <a href="&#x6d;&#97;&#105;&#x6c;&#116;&#111;&#x3a;&#105;&#x6e;&#102;&#111;&#64;&#116;&#x68;&#x69;&#110;&#x6b;&#x62;&#105;&#103;&#97;&#x6e;&#x61;&#x6c;&#121;&#x74;&#105;&#99;&#x73;&#x2e;&#x63;&#x6f;&#x6d;">&#x73;&#x65;&#x6e;&#100; &#x75;&#x73; &#x65;&#x6d;&#97;&#x69;&#108;</a>.</p>
 
 <p><strong>Dean Wampler</strong><br/>
-<a href="&#x6d;&#97;&#x69;&#x6c;&#116;&#x6f;&#58;&#x64;&#x65;&#x61;&#x6e;&#x40;&#x64;&#101;&#x61;&#x6e;&#119;&#x61;&#x6d;&#112;&#108;&#x65;&#114;&#46;&#x63;&#x6f;&#109;">&#x64;&#101;&#x61;&#110;&#64;&#100;&#101;&#x61;&#110;&#x77;&#97;&#x6d;&#x70;&#x6c;&#x65;&#114;&#46;&#99;&#x6f;&#x6d;</a><br/>
+<a href="&#x6d;&#97;&#x69;&#108;&#116;&#x6f;&#58;&#100;&#x65;&#x61;&#110;&#x40;&#100;&#x65;&#x61;&#x6e;&#x77;&#97;&#109;&#x70;&#108;&#101;&#x72;&#x2e;&#x63;&#x6f;&#109;">&#x64;&#x65;&#x61;&#x6e;&#x40;&#100;&#101;&#x61;&#110;&#x77;&#x61;&#x6d;&#x70;&#x6c;&#101;&#x72;&#x2e;&#99;&#111;&#109;</a><br/>
 <a href="https://twitter.com/deanwampler">@deanwampler</a><br/></p>
     </div>
 </body>

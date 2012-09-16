@@ -50,14 +50,14 @@ Ruby is used as a platform-independent language for driver scripts by Scalding a
 Once you've completed these steps, run the following commands as a sanity check to ensure that everything is setup properly. Using `bash`: 
 
     cd $HOME/fun/scalding-workshop
-    ./run.rb tutorial/Tutorial0.scala
+    ./run.rb scripts/SanityCheck.scala
 
 On Windows:
 
     cd C:\fun\scalding-workshop
-    ruby run.rb --local tutorial/Tutorial0.scala
+    ruby run.rb scripts/SanityCheck.scala
 
-The command should run without error. Note that it takes a moment to compile the Scala script and run to completion. The output is written to `output/SanityCheck_0.txt`. What's in that file?
+The command should run without error. Note that it takes a moment to compile the Scala script and run to completion. The output is written to `output/SanityCheck.txt`. What's in that file?
  
 ## Optional Installs
 

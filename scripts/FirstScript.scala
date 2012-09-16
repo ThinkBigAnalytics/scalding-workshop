@@ -13,17 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-This script was adapted from the Tutorial0.scala script distributed with
-the Scalding distribution.
+This script was adapted from the tutorial/Tutorial0.scala script that
+comes with the Scalding distribution.
 */
 import com.twitter.scalding._
 
 /**
  * This script functions as a sanity check that everything is setup properly.
  * From the project root directory, run this command:
- *   ruby run.rb tutorial/SanityCheck0.scala
+ *   ruby run.rb tutorial/FirstScript.scala
  * It should run without error. The output is written to
- *   output/SanityCheck_0.txt
+ *   output/FirstScript.txt
  * What's in that file?
  */
 
@@ -37,7 +37,7 @@ import com.twitter.scalding._
  * The constructor takes a com.twitter.scalding.Args object, which may be
  * ignored.
  */
-class SanityCheck_0(args : Args) extends Job(args) {
+class FirstScript(args : Args) extends Job(args) {
 
   /**
    * com.twitter.scalding.Source is the parent type for all
@@ -45,8 +45,8 @@ class SanityCheck_0(args : Args) extends Job(args) {
    *   TextLine:  Read in each line with no attempt at parsing it.
    *   Tsv:       Tab-seperated values.
    */
-  val in  = TextLine("tutorial/SanityCheck_0.scala")
-  val out = TextLine("output/SanityCheck_0.txt")
+  val in  = TextLine("tutorial/FirstScript.scala")
+  val out = TextLine("output/FirstScript.txt")
 
   /**
    * Use the simplest of Cascading pipelines; just pipe the input to the output.

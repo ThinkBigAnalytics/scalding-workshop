@@ -107,11 +107,15 @@ On Windows:
     cd C:\fun\scalding
     ruby scripts\scald.rb --local tutorial/Tutorial0.scala
 
+## Next Steps
+
+The Workshop/Tutorial proper is described in the companion [Workshop document](Workshop.html).
+
 ## For Further Information
 
 See the [Scalding GitHub page](https://github.com/twitter/scalding) for more information about Scalding. The [wiki](https://github.com/twitter/scalding/wiki) is very useful.
 
-[Dean Wampler](mailto:dean@deanwampler.com) from [Think Big Analytics](http://thinkbiganalytics.com) prepared this tutorial. [Contact Dean](mailto:dean@deanwampler.com) with questions about the tutorial. For information about consulting and training on Scalding and other Hadoop-related topics, [send us email](mailto:info@thinkbiganalytics.com).
+[Dean Wampler](mailto:dean@deanwampler.com) from [Think Big Analytics](http://thinkbiganalytics.com) prepared this workshop. [Contact Dean](mailto:dean@deanwampler.com) with questions about the workshop. For information about consulting and training on Scalding and other Hadoop-related topics, [send us email](mailto:info@thinkbiganalytics.com).
 
 **Dean Wampler**<br/>
 [dean@deanwampler.com](mailto:dean@deanwampler.com)<br/>

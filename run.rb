@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 #-------------------------------------------
 # run.rb - Simple driver for the Scalding workshop.
+# usage: run.rb scaldingscript.scala [options]
+#
 # It verifies that you passed a Scalding script (a Scala source file)
 # as an argument, compiles it, and invokes Scalding in "local" mode.
 # Scalding comes with a more sophisticated driver script called "scald.rb".
@@ -20,6 +22,7 @@ def run_command(command)
 	end
 end
 
+# TODO: Use a real option processor.
 if ARGV.length == 0
 	puts "Must specify a Scalding script!"
 	exit(1)
@@ -36,7 +39,7 @@ begin
 	FileUtils.mkdir_p(tmpnow)
 	puts "Compiling script \"#{script}\""
 	run_command("scalac -cp 'lib/*' -d #{tmpnow} #{script}")
-	run_command("java -Xmx3g -cp 'lib/*:'#{tmpnow} com.twitter.scalding.Tool #{classfile} --local #{ARGV}")
+	run_command("java -Xmx3g -cp 'lib/*:'#{tmpnow} com.twitter.scalding.Tool #{classfile} --local #{ARGV.join(" ")}")
 rescue Exception => e
 	puts "Exception #{e} raised!"
 	status = 1

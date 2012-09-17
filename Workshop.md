@@ -16,13 +16,13 @@ The [README](README.html) tells you to run a `SanityCheck0.scala` Scalding scrip
 
 Using `bash`: 
 
-    cd $HOME/fun/scalding-workshop
-    ./run.rb scripts/SanityCheck0.scala
+		cd $HOME/fun/scalding-workshop
+		./run.rb scripts/SanityCheck0.scala
 
 On Windows:
 
-    cd C:\fun\scalding-workshop
-    ruby run.rb scripts/SanityCheck0.scala
+		cd C:\fun\scalding-workshop
+		ruby run.rb scripts/SanityCheck0.scala
 
 From now on, we'll assume you are working in the `scalding-workshop` directory, unless otherwise noted. Also, we'll just show the `bash` versions of the subsequent `run.rb` commands. Finally, because we're lazy, we'll sometimes drop the `.scala` extension from script names when we discuss them.
 
@@ -43,9 +43,9 @@ When you write a SQL `SELECT` statement like the following, you are *projecting*
 Scalding also has a `project` method for the same purpose. Let's modify `SanityCheck0` to project out just the line we read from the file, discarding the line number. `Scripts/Project1.scala` has this change near the end of the file:
 
 	in
-      .read
-      .project('line')
-      .write(out)
+			.read
+			.project('line')
+			.write(out)
 
 This expression is a sequence of Cascading [Pipes](http://docs.cascading.org/cascading/2.0/javadoc/cascading/pipe/Pipe.html). However, there is not `write` method defined on the `Pipe` class. Scalding uses Scala's *implicit conversion* feature to wrap `Pipe` with a Scalding-specific `com.twitter.scalding.RichPipe` type that provides most of the methods we'll actually use.
 
@@ -68,8 +68,8 @@ First, we'll use two new invocation command options:
 Run the script like this, where have wrapped lines and used `\\` in to indicate the line breaks:
 	
 	./run.rb script/WordCount2.scala \
-	  --input  data/shakespeare/plays.txt \
-	  --output output/shakespeare-wc.txt
+		--input  data/shakespeare/plays.txt \
+		--output output/shakespeare-wc.txt
 
 The output should be identical to the contents of `data/shakespeare-wc/simple/wc.txt`. Using the `bash diff` command (or a similar command for Windows), should show no differences:
 
@@ -124,6 +124,115 @@ You'll see the line number, the whole line, and an individual word from the line
 
 Now restore the `groupBy` line, and after it, add this line:
 
-    .groupBy('count) { group => group.mkString('word -> 'words, "\t") }
+	.groupBy('count){ group => group.mkString('word -> 'words, "\t") }
 
 The output lines will be extremely long at the beginning of the file, but very short at the end. This second `groupBy` regroups the `'word` and `'count` output from the previous pipe. It groups by count so we now have all the words with two occurrence on a line, followed by all the words with two occurrences, etc. At the end of the output, which words have the most occurrences?
+
+#### Improve the Word Tokenization
+
+You probably noticed that simply splitting on whitespace is not very good, as punctuation is not removed. Replace the expression `line.toLowerCase.split("\\s+")` with a call to a `tokenize` function. Implement `tokenize` to remove punctuation. An example implementation can be found in the [Scalding README](https://github.com/twitter/scalding).
+
+## Input Parsing
+
+Let's do a similar `groupBy` operation, this time to compute the average of Apple's (AAPL) closing stock price year over year (so you'll know what entry points you missed...). Also, in this exercise we'll solve a common problem; the input data is in an unsupported format.
+
+Oddly enough, while there is a built-in `Tsv` class for tab-separated values, there is no corresponding `Csv` class, so we'll handle that ourselves.
+
+	./run.rb script/StockAverages3.scala \
+		--input  data/stocks/AAPL.csv \
+		--output output/AAPL-year-avg.txt
+
+You should get the following output (the input data ends in early 2010):
+
+	1984    25.578624999999995
+	1985    20.19367588932806
+	1986    32.46102766798416
+	1987    53.8896837944664
+	1988    41.540079051383415
+	1989    41.65976190476193
+	1990    37.562687747035575
+	1991    52.49553359683798
+	1992    54.80338582677166
+	1993    41.02671936758894
+	1994    34.08134920634922
+	1995    40.54210317460316
+	1996    24.91755905511811
+	1997    17.96584980237154
+	1998    30.56511904761905
+	1999    57.7707142857143
+	2000    71.7489285714286
+	2001    20.219112903225806
+	2002    19.139444444444454
+	2003    18.5447619047619
+	2004    35.52694444444441
+	2005    52.401746031746065
+	2006    70.81063745019917
+	2007    128.2739043824701
+	2008    141.9790118577075
+	2009    146.81412698412706
+	2010    204.7216
+
+Note that as I write this, AAPL is currently trading at ~$700!
+
+By the way, here's the same query written using *Hive*, assuming there exists a `stocks` table and we have to select for the stock symbol and exchange:
+
+	SELECT year(s.ymd), avg(s.price_close) 
+	FROM stocks s 
+	WHERE s.symbol = 'AAPL' AND s.exchange = 'NASDAQ'
+	GROUP BY year(s.ymd);
+
+It's a little more compact, in part because we can handle all issues of record parsing, etc. when we set up Hive tables, etc. However, Scalding gives us more flexibility when our SQL dialect and built-in functions aren't flexible enough for our needs.
+
+Here's what the corresponding *Pig* script looks like (see also `scripts/StockAverages3.pig`):
+
+	aapl = load 'data/stocks/AAPL.csv' using PigStorage(',') as (
+	  date:            chararray,
+	  price_open:      float,
+	  price_high:      float,
+	  price_low:       float,
+	  price_close:     float,
+	  volume:          int,
+	  price_adj_close: float);
+
+	by_year = group aapl by SUBSTRING(date, 0, 4);
+
+	year_avg = foreach by_year generate group, AVG(aapl.price_close);
+
+	-- You always specify output directories:
+	store year_avg into 'output/AAPL-year-avg-pig';
+
+If you have *Pig* installed, you can run this script (from this directory) with the following command:
+
+	pig -x local scripts/StockAverages3.pig
+
+# Conclusions
+
+## Comparisons with Other Tools
+
+It's interesting to contrast Scalding with other tools.
+
+### Cascading
+
+Because Scala is a *functional programming* language with excellent support for DSL creation, I would argue that using Scalding is much nicer than the Java-based Cascading itself.
+
+### Cascalog
+
+This Clojure dialect written by Nathan Marz also benefits from the functional nature and concision of Clojure. Nathan has also built in logic-programming features from Datalog.
+
+### Pig
+
+Pig has very similar capabilities, with notable advantages and disadvantages.
+
+#### Advantages
+
+* *Lazy evaluation* - you define the workflow, then Pig compiles, optimizes, and runs it when output is required. Scalding, following Scala, uses eager evalution.
+* *Describe* - The describe feature is very helpful when learning how each Pig statement defines a new schema.
+
+#### Disadvantages
+
+* *Not Turing complete* - You have to write extensions in other languages. By using Scala, Scalding lets you write everything in one language.
+
+### Hive
+
+Hive is ideal when your problem fits the SQL model for queries. It's less useful for complex transformations. Also, like Pig, extensions must be written in another language.
+

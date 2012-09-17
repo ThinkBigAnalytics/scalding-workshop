@@ -117,6 +117,8 @@ See the [Scalding GitHub page](https://github.com/twitter/scalding) for more inf
 
 [Dean Wampler](mailto:dean@deanwampler.com) from [Think Big Analytics](http://thinkbiganalytics.com) prepared this workshop. [Contact Dean](mailto:dean@deanwampler.com) with questions about the workshop. For information about consulting and training on Scalding and other Hadoop-related topics, [send us email](mailto:info@thinkbiganalytics.com).
 
+Some of the data used in these exercises was obtained from [InfoChimps](http://infochimps.com).
+
 **Dean Wampler**<br/>
 [dean@deanwampler.com](mailto:dean@deanwampler.com)<br/>
 [@deanwampler](https://twitter.com/deanwampler)<br/>

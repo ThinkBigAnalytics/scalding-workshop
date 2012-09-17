@@ -81,17 +81,17 @@ On Windows:
 
 ### Build Scalding
 
-Build Scalding according to its [Getting Started](https://github.com/twitter/scalding/wiki/Getting-Started) page. Here is a synopsis of the steps. Note that we'll assume that you'll use the SBT command that was installed in the `$HOME/fun/scalding-workshop` directory. Using `bash`: 
+Build Scalding according to its [Getting Started](https://github.com/twitter/scalding/wiki/Getting-Started) page. Here is a synopsis of the steps. Using `bash`: 
 
     cd $HOME/fun/scalding
-    ../scalding-workshop/sbt.sh update
-    ../scalding-workshop/sbt.sh assembly
+    sbt update
+    sbt assembly
 
 On Windows:
 
     cd C:\fun\scalding
-    ..\scalding-workshop\sbt.bat update
-    ..\scalding-workshop\sbt.bat assembly
+    sbt update
+    sbt assembly
 
 (The Getting Started page says to build the `test` target between `update` and `assembly`, but the later builds `test` itself.)
 

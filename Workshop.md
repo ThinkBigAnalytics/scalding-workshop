@@ -67,7 +67,7 @@ First, we'll use two new invocation command options:
 
 Run the script like this, where have wrapped lines and used `\\` in to indicate the line breaks:
 	
-	./run.rb script/WordCount2.scala \
+	./run.rb scripts/WordCount2.scala \
 		--input  data/shakespeare/plays.txt \
 		--output output/shakespeare-wc.txt
 
@@ -138,7 +138,7 @@ Let's do a similar `groupBy` operation, this time to compute the average of Appl
 
 Oddly enough, while there is a built-in `Tsv` class for tab-separated values, there is no corresponding `Csv` class, so we'll handle that ourselves.
 
-	./run.rb script/StockAverages3.scala \
+	./run.rb scripts/StockAverages3.scala \
 		--input  data/stocks/AAPL.csv \
 		--output output/AAPL-year-avg.txt
 
@@ -174,6 +174,8 @@ You should get the following output (the input data ends in early 2010):
 
 Note that as I write this, AAPL is currently trading at ~$700!
 
+### Musical Interlude: Comparison with Hive and Pig
+
 By the way, here's the same query written using *Hive*, assuming there exists a `stocks` table and we have to select for the stock symbol and exchange:
 
 	SELECT year(s.ymd), avg(s.price_close) 
@@ -186,7 +188,7 @@ It's a little more compact, in part because we can handle all issues of record p
 Here's what the corresponding *Pig* script looks like (see also `scripts/StockAverages3.pig`):
 
 	aapl = load 'data/stocks/AAPL.csv' using PigStorage(',') as (
-	  date:            chararray,
+	  ymd:             chararray,
 	  price_open:      float,
 	  price_high:      float,
 	  price_low:       float,
@@ -194,7 +196,7 @@ Here's what the corresponding *Pig* script looks like (see also `scripts/StockAv
 	  volume:          int,
 	  price_adj_close: float);
 
-	by_year = group aapl by SUBSTRING(date, 0, 4);
+	by_year = group aapl by SUBSTRING(ymd, 0, 4);
 
 	year_avg = foreach by_year generate group, AVG(aapl.price_close);
 
@@ -204,6 +206,68 @@ Here's what the corresponding *Pig* script looks like (see also `scripts/StockAv
 If you have *Pig* installed, you can run this script (from this directory) with the following command:
 
 	pig -x local scripts/StockAverages3.pig
+
+### Further Exploration
+
+Try these additional "mini-exercises" to learn more.
+
+#### Project Other Averages
+
+Try projecting averages for one or more other fields.
+
+#### Pig
+
+If you have Pig installed, try the Pig script. Compare the performance of the Pig vs. Scalding script, but keep in mind that because we're running in local mode, the performance comparison won't mean as much as when you run in a Hadoop cluster.
+
+#### Hive
+
+If you have Hive installed, try the Hive query shown above. You'll need to create a table that uses the data files first. Compare the performance of the Hive vs. Scalding script, keeping in mind the caveats mentioned for Pig.
+
+
+## Joins
+
+Let's join stocks and dividend data. To join two data sources, you set up to pipe assemblies and use one of the join operations.
+
+`scripts/StocksDividendsJoin4` performs an *inner join* of stock and dividend records. Let's invoke for Apple data (yes, although Apple only recently announced that it would pay a dividend, Apple paid dividends back in the late 80s and early 90s.):
+
+	./run.rb scripts/StocksDividendsJoin4.scala \
+	  --stocks data/stocks/AAPL.csv \
+	  --dividends data/dividends/AAPL.csv \
+	  --output output/AAPL-stocks-dividends-join.txt
+
+Note that we need to input sources, we use flags `--stocks` and `--dividends` for them.
+
+### Further Exploration
+
+Try these additional "mini-exercises" to learn more.
+
+#### Left Outer Join
+
+Change `joinWithSmaller` to `leftJoinWithSmaller` to perform a left-outer join. (Also change the output file name to something else). You have to scroll a ways into file to find dividends. See also the next mini-exercise.
+
+#### Filtering
+
+Sometimes you want to filter records, say to limit the output. Add the following filter clause to limit the records to 1988:
+
+	.filter('symd){ ymd: String => ymd.startsWith("1988")}
+
+Try moving it to different positions in the pipe assembly and see if the execution times change. However, the data set is small enough that you might not notice a difference.
+
+# Using Scalding with Hadoop
+
+If you copy `data` to HDFS under your HDFS home directory:
+
+	hadoop fs -cp data data
+
+Then you can using the `scripts/scald.rb` script in the Scalding distribution to run any of our scripts as Hadoop jobs. For example, using the `StocksDividendsJoin4` exercise:
+
+	cd $SCALDING_HOME
+	scripts/scald.rb --host your_hadoop_host \
+		../scalding-workshop/scripts/StocksDividendsJoin4.scala \
+		--stocks data/stocks --dividends data/dividends \
+		--output AAPL_stocks_divs
+
+On my laptop, I use `localhost` for `your_hadoop_host`.
 
 # Conclusions
 
@@ -225,12 +289,14 @@ Pig has very similar capabilities, with notable advantages and disadvantages.
 
 #### Advantages
 
-* *Lazy evaluation* - you define the workflow, then Pig compiles, optimizes, and runs it when output is required. Scalding, following Scala, uses eager evalution.
+* *A custom language* - A language customized for a particular purpose can optimize expressiveness for common scenarios.
+* *Lazy evaluation* - you define the workflow, then Pig compiles, optimizes, and runs it when output is required. Scalding, following Scala, uses eager evaluation.
 * *Describe* - The describe feature is very helpful when learning how each Pig statement defines a new schema.
 
 #### Disadvantages
 
 * *Not Turing complete* - You have to write extensions in other languages. By using Scala, Scalding lets you write everything in one language.
+* *Slower* - At least for local jobs, Scalding (and Cascading) avoid Hadoop APIs more effectively and therefore run noticeably faster.
 
 ### Hive
 

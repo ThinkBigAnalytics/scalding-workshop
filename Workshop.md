@@ -10,9 +10,13 @@ This document will explain many features of the Scalding and Cascading. The scri
 * [Scalding Wiki](https://github.com/twitter/scalding/wiki).
 * Scalding Scaladocs are not online, but they can be built from the [Scalding Repo](https://github.com/twitter/scalding). For convenience, we have included these files in the workshop as `api.zip`. Unzip the file and open the [index](api/index.html).
 
+# Basic Operations
+
+This first section covers the common data manipulation constructs that Scalding provides, which are analogous to features found in SQL and other systems.
+
 ## Sanity Check
 
-The [README](README.html) tells you to run a `SanityCheck0.scala` Scalding script as a sanity check to verify that your environment is ready to go.
+First, the [README](README.html) tells you to run a `SanityCheck0.scala` Scalding script as a sanity check to verify that your environment is ready to go.
 
 Using `bash`: 
 
@@ -43,9 +47,9 @@ When you write a SQL `SELECT` statement like the following, you are *projecting*
 Scalding also has a `project` method for the same purpose. Let's modify `SanityCheck0` to project out just the line we read from the file, discarding the line number. `Scripts/Project1.scala` has this change near the end of the file:
 
 	in
-			.read
-			.project('line')
-			.write(out)
+	  .read
+	  .project('line')
+	  .write(out)
 
 This expression is a sequence of Cascading [Pipes](http://docs.cascading.org/cascading/2.0/javadoc/cascading/pipe/Pipe.html). However, there is not `write` method defined on the `Pipe` class. Scalding uses Scala's *implicit conversion* feature to wrap `Pipe` with a Scalding-specific `com.twitter.scalding.RichPipe` type that provides most of the methods we'll actually use.
 
@@ -131,6 +135,10 @@ The output lines will be extremely long at the beginning of the file, but very s
 #### Improve the Word Tokenization
 
 You probably noticed that simply splitting on whitespace is not very good, as punctuation is not removed. Replace the expression `line.toLowerCase.split("\\s+")` with a call to a `tokenize` function. Implement `tokenize` to remove punctuation. An example implementation can be found in the [Scalding README](https://github.com/twitter/scalding).
+
+#### Eliminate Blank Lines
+
+The very first line in the output is an empty word and a count of approximately 49,000! These are blank lines in the text. The implementation removes all other whitespace, but as written, it still returns an empty word for blank lines. Adding a filter clause will remove these lines. We'll see how below, but you can search for that section now if you want to try it.
 
 ## Input Parsing
 
@@ -245,13 +253,23 @@ Try these additional "mini-exercises" to learn more.
 
 Change `joinWithSmaller` to `leftJoinWithSmaller` to perform a left-outer join. (Also change the output file name to something else). You have to scroll a ways into file to find dividends. See also the next mini-exercise.
 
-#### Filtering
+#### Filtering by Year
 
 Sometimes you want to filter records, say to limit the output. Add the following filter clause to limit the records to 1988:
 
 	.filter('symd){ ymd: String => ymd.startsWith("1988")}
 
 Try moving it to different positions in the pipe assembly and see if the execution times change. However, the data set is small enough that you might not notice a difference.
+
+#### Filtering Blank Lines from WordCount2
+
+Recall in the `WordCount2` exercise that we had thousands of blank lines that got counted. Add a `filter` before the `groupBy` that keeps only those words whose lengths are greater than zero.
+
+# Matrix API
+
+# Fields-Based API
+
+# Type-Safe API
 
 # Using Scalding with Hadoop
 

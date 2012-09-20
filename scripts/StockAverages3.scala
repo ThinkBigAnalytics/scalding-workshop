@@ -48,7 +48,7 @@ class StockAverages3(args : Args) extends Job(args) {
    * (it's not zero-indexed).
    */
     .mapTo(('ymd, 'price_close) -> ('year, 'closing_price)) { 
-      ymd_close: Tuple2[String, String] => 
+      ymd_close: (String, String) =>   // (String, String) === Tuple2[String, String]
       // TODO: Add exception handling logic!
       (year(ymd_close._1), java.lang.Double.parseDouble(ymd_close._2))
     }

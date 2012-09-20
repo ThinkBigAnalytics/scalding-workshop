@@ -39,15 +39,16 @@ class WordCount2(args : Args) extends Job(args) {
 
   /*
    * Note we don't bother capturing the input and output objects in vals.
-   * Read the file specified by the --input argument and convert each line to
-   * lower case, then tokenize it into words by splitting on whitespace.
+   * Read the file specified by the --input argument and process each line
+   * by trimming leading and trailing whitespace, converting to lower case,
+   * then tokenizing it into words by splitting on whitespace.
    * The first argument list to flatMap specifies that we pass the 'line field
    * to the anonymous function on each call and each word in the returned 
    * collection of words is given the name 'word.
    */
   TextLine(args("input"))
     .read
-    .flatMap('line -> 'word){ line : String => line.toLowerCase.split("\\s+")}
+    .flatMap('line -> 'word){ line : String => line.trim.toLowerCase.split("\\s+") }
 
   /*
    * At this point we have a stream of words in the pipeline. To count 
@@ -59,13 +60,11 @@ class WordCount2(args : Args) extends Job(args) {
    * All we need to do is compute the size of the group and we give it an 
    * optional name, 'count.
    */
-
-    .groupBy('word) {group => group.size('count)}
+    .groupBy('word){ group => group.size('count) }
 
   /**
    * Don't we need to project out just the word and count? No, unlike most 
    * operations, groupBy has eliminated everything but these two fields.
    */
-
     .write(Tsv(args("output")))
 }

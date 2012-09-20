@@ -109,7 +109,7 @@ On Windows:
 
 ## Next Steps
 
-The Workshop/Tutorial proper is described in the companion [Workshop document](Workshop.html).
+The Workshop/Tutorial proper is described in the companion [Workshop document](scalding-workshop/Workshop.html).
 
 ## For Further Information
 

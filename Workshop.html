@@ -152,9 +152,13 @@ pre .apache .tag {
 <li>Scalding Scaladocs are not online, but they can be built from the <a href="https://github.com/twitter/scalding">Scalding Repo</a>. For convenience, we have included these files in the workshop as <code>api.zip</code>. Unzip the file and open the <a href="api/index.html">index</a>.</li>
 </ul>
 
+<h1 id="basicoperations">Basic Operations</h1>
+
+<p>This first section covers the common data manipulation constructs that Scalding provides, which are analogous to features found in SQL and other systems.</p>
+
 <h2 id="sanitycheck">Sanity Check</h2>
 
-<p>The <a href="README.html">README</a> tells you to run a <code>SanityCheck0.scala</code> Scalding script as a sanity check to verify that your environment is ready to go.</p>
+<p>First, the <a href="README.html">README</a> tells you to run a <code>SanityCheck0.scala</code> Scalding script as a sanity check to verify that your environment is ready to go.</p>
 
 <p>Using <code>bash</code>: </p>
 
@@ -190,9 +194,9 @@ pre .apache .tag {
 <p>Scalding also has a <code>project</code> method for the same purpose. Let&#8217;s modify <code>SanityCheck0</code> to project out just the line we read from the file, discarding the line number. <code>Scripts/Project1.scala</code> has this change near the end of the file:</p>
 
 <pre><code>in
-        .read
-        .project('line')
-        .write(out)
+  .read
+  .project('line')
+  .write(out)
 </code></pre>
 
 <p>This expression is a sequence of Cascading <a href="http://docs.cascading.org/cascading/2.0/javadoc/cascading/pipe/Pipe.html">Pipes</a>. However, there is not <code>write</code> method defined on the <code>Pipe</code> class. Scalding uses Scala&#8217;s <em>implicit conversion</em> feature to wrap <code>Pipe</code> with a Scalding-specific <code>com.twitter.scalding.RichPipe</code> type that provides most of the methods we&#8217;ll actually use.</p>
@@ -288,6 +292,10 @@ pre .apache .tag {
 <h4 id="improvethewordtokenization">Improve the Word Tokenization</h4>
 
 <p>You probably noticed that simply splitting on whitespace is not very good, as punctuation is not removed. Replace the expression <code>line.toLowerCase.split(&quot;\\s+&quot;)</code> with a call to a <code>tokenize</code> function. Implement <code>tokenize</code> to remove punctuation. An example implementation can be found in the <a href="https://github.com/twitter/scalding">Scalding README</a>.</p>
+
+<h4 id="eliminateblanklines">Eliminate Blank Lines</h4>
+
+<p>The very first line in the output is an empty word and a count of approximately 49,000! These are blank lines in the text. The implementation removes all other whitespace, but as written, it still returns an empty word for blank lines. Adding a filter clause will remove these lines. We&#8217;ll see how below, but you can search for that section now if you want to try it.</p>
 
 <h2 id="inputparsing">Input Parsing</h2>
 
@@ -407,7 +415,7 @@ store year_avg into 'output/AAPL-year-avg-pig';
 
 <p>Change <code>joinWithSmaller</code> to <code>leftJoinWithSmaller</code> to perform a left-outer join. (Also change the output file name to something else). You have to scroll a ways into file to find dividends. See also the next mini-exercise.</p>
 
-<h4 id="filtering">Filtering</h4>
+<h4 id="filteringbyyear">Filtering by Year</h4>
 
 <p>Sometimes you want to filter records, say to limit the output. Add the following filter clause to limit the records to 1988:</p>
 
@@ -415,6 +423,95 @@ store year_avg into 'output/AAPL-year-avg-pig';
 </code></pre>
 
 <p>Try moving it to different positions in the pipe assembly and see if the execution times change. However, the data set is small enough that you might not notice a difference.</p>
+
+<h4 id="filteringblanklinesfromwordcount2">Filtering Blank Lines from WordCount2</h4>
+
+<p>Recall in the <code>WordCount2</code> exercise that we had thousands of blank lines that got counted. Add a <code>filter</code> before the <code>groupBy</code> that keeps only those words whose lengths are greater than zero.</p>
+
+<h2 id="cogroups">CoGroups</h2>
+
+<p>CoGroups in Scalding are used internally to implement joins of two pipe assemblies. Clients can also use them to implement joins of three or more pipe assemblies, so-called <em>star joins</em>. You should always use the largest data stream as the first one in the join, because the Cascading implementation is optimized for this scenario. </p>
+
+<p>However, in this exercise, we&#8217;ll do a four-way self-join of the data files for the four stocks symbols we provided, AAPL, INTC, GE, and IBM. </p>
+
+<p>For this script, the <code>--input</code> flag is used to specify the directory where the stocks files are located.</p>
+
+<pre><code>run.rb scripts/StockCoGroup5.scala \
+  --input  data/stocks \
+  --output output/AAPL-INTC-GE-IBM.txt
+</code></pre>
+
+<p>When you look at the implementation, it is not obvious how to use the CoGroup feature. You could do pair-wise joins, which would be conceptually easier perhaps, but offer poor performance in a large MapReduce job, as each pair would require a separate MapReduce Job. The CoGroup feature tries to do as many joins at one as possible.</p>
+
+<p>For comparison, here is the equivalent Hive join.</p>
+
+<pre><code>SELECT a.ymd, a.symbol, a.price_close, b.symbol, b.price_close, 
+              c.symbol, c.price_close, d.symbol, d.price_close 
+</code></pre>
+
+<p>FROM stocks a
+JOIN stocks b ON a.ymd = b.ymd
+JOIN stocks c ON a.ymd = c.ymd
+JOIN stocks d ON a.ymd = d.ymd
+ a.symbol = &#8216;AAPL&#8217; AND
+ b.symbol = &#8216;INTC&#8217; AND
+ c.symbol = &#8216;GE&#8217; AND
+ d.symbol = &#8216;IBM&#8217;</p>
+
+<p>Note that because <code>a.ymd</code> appears in all <code>ON</code> clauses, Hive will perform this four-way join in a single MapReduce job.</p>
+
+<h3 id="furtherexploration">Further Exploration</h3>
+
+<h4 id="starjoinsonepairatatime">Star Joins, One Pair at a Time</h4>
+
+<p>Try implementing the same four-way join doing a sequence of pair-wise joins. Compare the complexity of the code and the performance of the join with the CoGroup implementation.</p>
+
+<h2 id="splittingapipe">Splitting a Pipe</h2>
+
+<p>This exercise shows how to split a data stream and use various features on the splits, including finding unique values.</p>
+
+<pre><code>run.rb scripts/Twitter6.scala \
+  --input  data/twitter/tweets.tsv \
+--uniques output/unique-languages.txt
+</code></pre>
+
+<p>The output in <code>output/unique-languages.txt</code> is the following:</p>
+
+<pre><code>\N
+en
+es
+id
+ja
+ko
+pt
+ru
+</code></pre>
+
+<p>There are seven languages and an invalid value that looks vaguely like a null! These &#8220;languages&#8221; are actually from messages in the stream that aren&#8217;t tweets, but the results of other user-invoked actions.</p>
+
+<h3 id="furtherexploration">Further Exploration</h3>
+
+<h4 id="filterforbadlanguages">Filter for Bad Languages</h4>
+
+<p>Add a filter that removes these &#8220;bad&#8221; records. <strong>Hint:</strong> You&#8217;ll want to remove all tuples where the language value is <code>&quot;&quot;&quot;\N&quot;&quot;&quot;</code>. Without the triple quotes, you would have to write <code>&quot;\\N&quot;</code>.</p>
+
+<h4 id="mergingpipes">Merging Pipes</h4>
+
+<p>The inverse option is merging two pipes into one, where the tuples are simply streamed together in no particular order. Revisit the CoGroup exercise. Use the <code>RichPipe..++</code> method to merge the input streams before any further processing.</p>
+
+<p>TODO: NEED THE SYMBOLS! </p>
+
+<h1 id="matrixapi">Matrix API</h1>
+
+<p>TODO</p>
+
+<h1 id="type-safeapi">Type-Safe API</h1>
+
+<p>So far, we have been using the more mature <em>Fields-Based API</em>, which emphasizes naming fields and uses a relatively dynamic approach to typing. This is consistent with Cascading&#8217;s model.</p>
+
+<p>There is now a newer, more experimental <em>Type-Safe API</em> that attempts to more fully exploit the type safety provided by Scala.</p>
+
+<p>TODO</p>
 
 <h1 id="usingscaldingwithhadoop">Using Scalding with Hadoop</h1>
 

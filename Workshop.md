@@ -265,11 +265,86 @@ Try moving it to different positions in the pipe assembly and see if the executi
 
 Recall in the `WordCount2` exercise that we had thousands of blank lines that got counted. Add a `filter` before the `groupBy` that keeps only those words whose lengths are greater than zero.
 
+## CoGroups
+
+CoGroups in Scalding are used internally to implement joins of two pipe assemblies. Clients can also use them to implement joins of three or more pipe assemblies, so-called *star joins*. You should always use the largest data stream as the first one in the join, because the Cascading implementation is optimized for this scenario. 
+
+However, in this exercise, we'll do a four-way self-join of the data files for the four stocks symbols we provided, AAPL, INTC, GE, and IBM. 
+
+For this script, the `--input` flag is used to specify the directory where the stocks files are located.
+
+	run.rb scripts/StockCoGroup5.scala \
+	  --input  data/stocks \
+	  --output output/AAPL-INTC-GE-IBM.txt
+
+When you look at the implementation, it is not obvious how to use the CoGroup feature. You could do pair-wise joins, which would be conceptually easier perhaps, but offer poor performance in a large MapReduce job, as each pair would require a separate MapReduce Job. The CoGroup feature tries to do as many joins at one as possible.
+
+For comparison, here is the equivalent Hive join.
+
+	SELECT a.ymd, a.symbol, a.price_close, b.symbol, b.price_close, 
+	              c.symbol, c.price_close, d.symbol, d.price_close 
+FROM stocks a 
+JOIN stocks b ON a.ymd = b.ymd
+JOIN stocks c ON a.ymd = c.ymd
+JOIN stocks d ON a.ymd = d.ymd
+   a.symbol = 'AAPL' AND 
+   b.symbol = 'INTC' AND 
+   c.symbol = 'GE'   AND 
+   d.symbol = 'IBM'
+
+Note that because `a.ymd` appears in all `ON` clauses, Hive will perform this four-way join in a single MapReduce job.
+
+### Further Exploration
+
+#### Star Joins, One Pair at a Time
+
+Try implementing the same four-way join doing a sequence of pair-wise joins. Compare the complexity of the code and the performance of the join with the CoGroup implementation.
+
+## Splitting a Pipe
+
+This exercise shows how to split a data stream and use various features on the splits, including finding unique values.
+
+	run.rb scripts/Twitter6.scala \
+	  --input  data/twitter/tweets.tsv \
+    --uniques output/unique-languages.txt
+
+The output in `output/unique-languages.txt` is the following:
+
+	\N
+	en
+	es
+	id
+	ja
+	ko
+	pt
+	ru
+
+There are seven languages and an invalid value that looks vaguely like a null! These "languages" are actually from messages in the stream that aren't tweets, but the results of other user-invoked actions.
+
+### Further Exploration
+
+#### Filter for Bad Languages
+
+Add a filter that removes these "bad" records. **Hint:** You'll want to remove all tuples where the language value is `"""\N"""`. Without the triple quotes, you would have to write `"\\N"`.
+
+
+#### Merging Pipes
+
+The inverse option is merging two pipes into one, where the tuples are simply streamed together in no particular order. Revisit the CoGroup exercise. Use the `RichPipe..++` method to merge the input streams before any further processing.
+
+TODO: NEED THE SYMBOLS! 
+
 # Matrix API
 
-# Fields-Based API
+TODO
 
 # Type-Safe API
+
+So far, we have been using the more mature *Fields-Based API*, which emphasizes naming fields and uses a relatively dynamic approach to typing. This is consistent with Cascading's model.
+
+There is now a newer, more experimental *Type-Safe API* that attempts to more fully exploit the type safety provided by Scala.
+
+TODO
 
 # Using Scalding with Hadoop
 

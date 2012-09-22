@@ -12,12 +12,10 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-
-This script was adapted from the tutorial/Tutorial[2-4].scala scripts that
-come with the Scalding distribution, which is subject to the same Apache License.
 */
 
 import com.twitter.scalding._
+import workshop.Csv
 
 /**
  * This exercise explores joining two data sets, stocks and dividends.
@@ -40,11 +38,11 @@ class StocksDividendsJoin4(args : Args) extends Job(args) {
   /*
    * We read CSV input for the stocks and dividends. 
    */
-  val stocksPipe = new Tsv(args("stocks"), stockSchema) { override val separator = "," }
+  val stocksPipe = new Csv(args("stocks"), stockSchema)
     .read
     .project('symd, 'price_close)
 
-  val dividendsPipe = new Tsv(args("dividends"), dividendSchema) { override val separator = "," }
+  val dividendsPipe = new Csv(args("dividends"), dividendSchema)
     .read
 
   /*

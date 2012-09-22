@@ -12,12 +12,10 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-
-This script was adapted from the tutorial/Tutorial[2-4].scala scripts that
-come with the Scalding distribution, which is subject to the same Apache License.
 */
 
 import com.twitter.scalding._
+import workshop.Csv
 
 /**
  * This exercise uses the same features as the previous exercise, but this time
@@ -31,13 +29,9 @@ class StockAverages3(args : Args) extends Job(args) {
     ('ymd, 'price_open, 'price_high, 'price_low, 'price_close, 'volume, 'price_adj_close)
 
   /*
-   * We read CSV input for the stock records. However, Scalding Doesn't currently 
-   * have a built-in class for CSV, like there is for TSV data (Tsv).
-   * So we'll use an easy Scala hack. There is a base class inherited by Tsv with
-   * the separated defined to "\t". We just need to instantiate a Tsv and provide
-   * a class body that overrides the separator to be ",". You're welcome...
+   * We read CSV input for the stock records.
    */
-  new Tsv(args("input"), stockSchema) { override val separator = "," }
+  new Csv(args("input"), stockSchema)
     .read
     .project('ymd, 'price_close)
 

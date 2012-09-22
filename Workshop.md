@@ -306,7 +306,9 @@ This exercise shows how to split a data stream and use various features on the s
 
 	run.rb scripts/Twitter6.scala \
 	  --input  data/twitter/tweets.tsv \
-    --uniques output/unique-languages.txt
+	  --uniques output/unique-languages.txt \
+	  --count_star output/count-star.txt \
+	  --count_star_limit output/count-star-limit.txt
 
 The output in `output/unique-languages.txt` is the following:
 
@@ -321,18 +323,34 @@ The output in `output/unique-languages.txt` is the following:
 
 There are seven languages and an invalid value that looks vaguely like a null! These "languages" are actually from messages in the stream that aren't tweets, but the results of other user-invoked actions.
 
+The output in `output/count-star.txt` is a single line with the value 1000, the same as the number of lines in the data file. Similarly, `output/count-star-limit.txt` should have 100, reflecting the limit to the first 100 lines.
+
+Note that the implementations use `groupAll`, then count the elements in the single group, via the `GroupBuilder` object. (The `count` method requires that we specify a field. We arbitrarily picked `tweet_id`.) 
+
+By the way, this is *exactly* how Pig implements `COUNT(*)`. For example:
+
+	grouped = group tweets all;
+	count = foreach grouped generate COUNT(tweets);
+
+Here, `tweets` would be the equivalent of a Pipe, `grouped` is the name of a new Pipe created by the grouping. It effectively has one record with all tweet records in the grouping, `foreach ... generate` iterates through this single record and projects the `COUNT` the group contents (named `tweets` after the original relation).
+
+Finally, note that we commented out the additional example using the `limit` feature. Unfortunately, there is a bug where running in local mode causes a *divide by zero* error.
+
 ### Further Exploration
+
+#### Debug Setting
+
+Add the `debug` pipe to the pipe assembly. How does it change the console output?
 
 #### Filter for Bad Languages
 
 Add a filter that removes these "bad" records. **Hint:** You'll want to remove all tuples where the language value is `"""\N"""`. Without the triple quotes, you would have to write `"\\N"`.
 
-
 #### Merging Pipes
 
 The inverse option is merging two pipes into one, where the tuples are simply streamed together in no particular order. Revisit the CoGroup exercise. Use the `RichPipe..++` method to merge the input streams before any further processing.
 
-TODO: NEED THE SYMBOLS! 
+TODO: NEED TO ADD SYMBOLS TO THE DATA! 
 
 # Matrix API
 

@@ -142,7 +142,7 @@ pre .apache .tag {
 
 <p><strong>StrangeLoop 2012</strong><br/>
 <strong>Dean Wampler, Think Big Analytics</strong><br/>
-<a href="&#x6d;&#97;&#105;&#x6c;&#116;&#111;&#58;&#100;&#101;&#97;&#x6e;&#x40;&#x64;&#x65;&#97;&#x6e;&#119;&#x61;&#x6d;&#x70;&#108;&#x65;&#x72;&#x2e;&#x63;&#x6f;&#x6d;">&#x64;&#x65;&#x61;&#110;&#64;&#x64;&#x65;&#97;&#x6e;&#x77;&#97;&#109;&#112;&#108;&#x65;&#114;&#46;&#x63;&#111;&#x6d;</a><br/>
+<a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#111;&#x3a;&#x64;&#101;&#x61;&#x6e;&#64;&#x64;&#x65;&#97;&#110;&#119;&#97;&#109;&#112;&#108;&#x65;&#114;&#x2e;&#x63;&#x6f;&#x6d;">&#x64;&#101;&#x61;&#x6e;&#64;&#x64;&#101;&#x61;&#110;&#119;&#97;&#109;&#x70;&#x6c;&#101;&#x72;&#46;&#x63;&#111;&#109;</a><br/>
 <a href="https://twitter.com/deanwampler">@deanwampler</a><br/>
 <a href="http://thinkbiganalytics.com">Hire Us!</a></p>
 
@@ -157,6 +157,7 @@ pre .apache .tag {
 <li><a href="https://github.com/twitter/scalding/wiki">Scalding Wiki</a>.</li>
 <li>Scalding Scaladocs are not online, but they can be built from the <a href="https://github.com/twitter/scalding">Scalding Repo</a>. For convenience, we have included these files in the workshop as <code>api.zip</code>. Unzip the file and open the <a href="api/index.html">index</a>.</li>
 <li><a href="http://blog.echen.me/2012/02/09/movie-recommendations-and-more-via-mapreduce-and-scalding/">Movie Recommendations</a> is a fantastic blog post with detailed, non-trivial examples using Scalding.</li>
+<li><a href="https://github.com/snowplow/scalding-example-project">Scalding Example Project</a> is a full example designed to run on Hadoop, specifically on Amazon&#8217;s EMR (Elastic MapReduce) platform.</li>
 </ul>
 
 <h2 id="adisclaimer">A Disclaimer&#8230;</h2>
@@ -615,7 +616,7 @@ count = foreach grouped generate COUNT(tweets);
 <p>Let&#8217;s revisit the exercise to join stock and dividend records and generalize it to read in multiple sets of data, for different companies, and process them as one stream. A complication is that the data files don&#8217;t contain the stock (&#8220;instrument&#8221;) symbol, so we&#8217;ll see another way to add data to tuples.</p>
 
 <pre><code>run.rb scripts/StocksDividendsRevisited8.scala \
-    --stocks-root-path    data/stocks/ \
+  --stocks-root-path    data/stocks/ \
   --dividends-root-path data/dividends/ \
   --symbols AAPL,INTC,GE,IBM \
   --output output/stocks-dividends-join.txt
@@ -623,15 +624,47 @@ count = foreach grouped generate COUNT(tweets);
 
 <h1 id="matrixapi">Matrix API</h1>
 
-<p>TODO</p>
+<h2 id="jaccardsimilarityandadjacencymatrices">Jaccard Similarity and Adjacency Matrices</h2>
+
+<p><em>Adjacency matrices</em> are used to record the similarities between two things. For example, the &#8220;things&#8221; might be users who have rated movies and the <em>adjacency</em> might be how many movies they have reviewed in common. Higher adjacency numbers indicate more likely similarity of interests. Note that this simple representation says nothing about whether or not they both rated the movies in a similar way.</p>
+
+<p>Once you have adjacency data, you need a <em>similarity measure</em> to determine how similar to things (e.g., people) really are. One is <em>Jaccard Similarity</em>:</p>
+
+<figure>
+<img src="images/JaccardSimilarity.png" alt="" /></figure>
+
+
+
+<p>This is set notation; the size of the intersection of two sets over the size of the union. It can be generalized and is similar to the cosine of two vectors normalized by length. Note that the distance would be 1 - similarity.</p>
+
+<p>Run the script this way on a small matrix:</p>
+
+<pre><code>run.rb scripts/MatrixJaccardSimilarity9.scala \
+  --input data/matrix/graph.tsv \
+  --output output/jaccardSim.tsv
+</code></pre>
+
+<h2 id="termfrequency-inversedocumentfrequencytfidf">Term Frequency-Inverse Document Frequency (TF*IDF)</h2>
+
+<p>TF*IDF is a widely used <em>Natural Language Processing</em> tool to analyze text. It&#8217;s useful for indexing documents, e.g., for web search engines. Naively, you might calculate the <em>frequency</em> of words in a corpus of documents and assume that if a word appears more frequently in one document, then that document is probably a &#8220;definitive&#8221; place for that word, such as the way you search for web pages on a particular topic. Similarly, the most frequent words indicate the primary topics for a document.</p>
+
+<p>There&#8217;s a problem, though. Very common words, e.g., articles like &#8220;the&#8221;, &#8220;a&#8221;, etc. will appear very frequently, undermining results. So we want to remove them so how. Fortunately, they tend to appear frequently in <em>every</em> document, so you can reduce the ranking of a particular word if you <em>divide</em> its frequency in a given document by its frequency in <em>all</em> documents. That&#8217;s the essence of TF*IDF.</p>
+
+<p>For more information, see the <a href="http://en.wikipedia.org/wiki/Tf*idf">Wikipedia</a> page.</p>
+
+<p>Run the script this way on a small matrix:</p>
+
+<pre><code>run.rb scripts/TfIdf10.scala \
+  --input data/matrix/docBOW.tsv \
+  --output output/featSelectedMatrix.tsv \
+  --nWords 300
+</code></pre>
 
 <h1 id="type-safeapi">Type-Safe API</h1>
 
 <p>So far, we have been using the more mature <em>Fields-Based API</em>, which emphasizes naming fields and uses a relatively dynamic approach to typing. This is consistent with Cascading&#8217;s model.</p>
 
-<p>There is now a newer, more experimental <em>Type-Safe API</em> that attempts to more fully exploit the type safety provided by Scala.</p>
-
-<p>TODO</p>
+<p>There is now a newer, more experimental <em>Type-Safe API</em> that attempts to more fully exploit the type safety provided by Scala. We won&#8217;t discuss it here, but refer you to the <a href="https://github.com/twitter/scalding/wiki/Type-safe-api-reference">Type-Safe API Wiki page</a>.</p>
 
 <h1 id="usingscaldingwithhadoop">Using Scalding with Hadoop</h1>
 
@@ -674,8 +707,8 @@ scripts/scald.rb --hdfs --host localhost \
 <h4 id="advantages">Advantages</h4>
 
 <ul>
-<li><em>A custom language</em> - A language customized for a particular purpose can optimize expressiveness for common scenarios.</li>
-<li><em>Lazy evaluation</em> - you define the workflow, then Pig compiles, optimizes, and runs it when output is required. Scalding, following Scala, uses eager evaluation.</li>
+<li><em>A custom language</em> - A purpose-built language for a particular domain can optimize expressiveness for common scenarios.</li>
+<li><em>Lazy evaluation</em> - you define the work flow, then Pig compiles, optimizes, and runs it when output is required. Scalding, following Scala, uses eager evaluation.</li>
 <li><em>Describe</em> - The describe feature is very helpful when learning how each Pig statement defines a new schema.</li>
 </ul>
 

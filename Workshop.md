@@ -112,7 +112,7 @@ Scalding also has a `project` method for the same purpose. Let's modify `SanityC
 
 	in
 	  .read
-	  .project('line')
+	  .project('line)
 	  .write(out)
 
 This expression is a sequence of Cascading [Pipes](http://docs.cascading.org/cascading/2.0/javadoc/cascading/pipe/Pipe.html). However, there is not `write` method defined on the `Pipe` class. Scalding uses Scala's *implicit conversion* feature to wrap `Pipe` with a Scalding-specific `com.twitter.scalding.RichPipe` type that provides most of the methods we'll actually use.

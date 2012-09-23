@@ -36,10 +36,16 @@ tmpnow = "tmp/#{now}"
 
 status = 0
 begin
+	FileUtils.mkdir_p('classes') unless File.exists?('classes')
+	unless File.exists?('classes/workshop/Csv.class')
+		puts "Compiling Helper \"lib/Csv.scala\""
+		run_command("scalac -cp 'lib/*' -d classes lib/Csv.scala")
+	end
+
 	FileUtils.mkdir_p(tmpnow)
 	puts "Compiling script \"#{script}\""
-	run_command("scalac -cp 'lib/*' -d #{tmpnow} #{script}")
-	run_command("java -Xmx3g -cp 'lib/*:'#{tmpnow} com.twitter.scalding.Tool #{classfile} --local #{ARGV.join(" ")}")
+	run_command("scalac -cp 'classes:lib/*' -d #{tmpnow} #{script}")
+	run_command("java -Xmx3g -cp 'classes:lib/*:'#{tmpnow} com.twitter.scalding.Tool #{classfile} --local #{ARGV.join(" ")}")
 rescue Exception => e
 	puts "Exception #{e} raised!"
 	status = 1

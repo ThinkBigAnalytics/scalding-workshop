@@ -1,6 +1,7 @@
 package workshop
 
 import com.twitter.scalding._
+import cascading.tuple.Fields
 
 /*
  * Scalding has a built-in Tsv type for tab-separated values, but not a 

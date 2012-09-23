@@ -48,7 +48,7 @@ class Twitter6(args : Args) extends Job(args) {
    * Another split used to implement "COUNT(*)".
    */
   new RichPipe(tweets)
-      .groupAll{_.count('tweet_id)}
+      .groupAll { _.count('tweet_id).reducers(2) }
       .write(Tsv(args("count_star")))
 
   /*
@@ -56,8 +56,8 @@ class Twitter6(args : Args) extends Job(args) {
    * Unfortunately, when running in local mode, a bug causes a 
    * divide by zero error.
    */
-  // new RichPipe(tweets)
-  //     .limit(100)
-  //     .groupAll{_.count('tweet_id)}
-  //     .write(Tsv(args("count_star_limit")))
+  new RichPipe(tweets)
+      .limit(100)
+      .groupAll { _.count('tweet_id).reducers(2) }
+      .write(Tsv(args("count_star_limit")))
 }

@@ -140,6 +140,12 @@ pre .apache .tag {
   <div id="wrapper">
       <h1 id="scaldingworkshop">Scalding Workshop</h1>
 
+<p><strong>StrangeLoop 2012</strong><br/>
+<strong>Dean Wampler, Think Big Analytics</strong><br/>
+<a href="&#x6d;&#97;&#105;&#x6c;&#116;&#111;&#58;&#100;&#101;&#97;&#x6e;&#x40;&#x64;&#x65;&#97;&#x6e;&#119;&#x61;&#x6d;&#x70;&#108;&#x65;&#x72;&#x2e;&#x63;&#x6f;&#x6d;">&#x64;&#x65;&#x61;&#110;&#64;&#x64;&#x65;&#97;&#x6e;&#x77;&#97;&#109;&#112;&#108;&#x65;&#114;&#46;&#x63;&#111;&#x6d;</a><br/>
+<a href="https://twitter.com/deanwampler">@deanwampler</a><br/>
+<a href="http://thinkbiganalytics.com">Hire Us!</a></p>
+
 <p>This workshop/tutorial takes you through the basic principles of writing data analysis applications with <a href="https://github.com/twitter/scalding">Scalding</a>, a Scala API that wraps <a href="http://www.cascading.org/">Cascading</a>.</p>
 
 <p>These instructions walk you through a series of exercises. Note that most of the exercises have a corresponding Scalding script (Scala source file). We use a convention of adding a number suffix to the name to indicate the order of the exercises. Note that some of these exercises are adapted from the Tutorial examples that are part of the Scalding Github repo.</p>
@@ -147,14 +153,71 @@ pre .apache .tag {
 <p>This document will explain many features of the Scalding and Cascading. The scripts themselves contain additional details. The Scalding and Cascading documentation has more information than we can cover here:</p>
 
 <ul>
-<li><a href="http://www.cascading.org/documentation/">Cascading Documentation</a>, including the <a href="http://docs.cascading.org/cascading/2.0/javadoc/">Javadocs</a>.</li>
+<li><a href="http://www.cascading.org/documentation/">Cascading Documentation</a>, especially the <a href="http://www.cascading.org/documentation/">Cascading User Guide</a> and the <a href="http://docs.cascading.org/cascading/2.0/javadoc/">Javadocs</a>.</li>
 <li><a href="https://github.com/twitter/scalding/wiki">Scalding Wiki</a>.</li>
 <li>Scalding Scaladocs are not online, but they can be built from the <a href="https://github.com/twitter/scalding">Scalding Repo</a>. For convenience, we have included these files in the workshop as <code>api.zip</code>. Unzip the file and open the <a href="api/index.html">index</a>.</li>
+<li><a href="http://blog.echen.me/2012/02/09/movie-recommendations-and-more-via-mapreduce-and-scalding/">Movie Recommendations</a> is a fantastic blog post with detailed, non-trivial examples using Scalding.</li>
 </ul>
 
-<h1 id="basicoperations">Basic Operations</h1>
+<h2 id="adisclaimer">A Disclaimer&#8230;</h2>
 
-<p>This first section covers the common data manipulation constructs that Scalding provides, which are analogous to features found in SQL and other systems.</p>
+<p>I&#8217;m not a Scalding or Cascading expert. Feedback welcome! <a href="https://github.com/ThinkBigAnalytics/scalding-workshop">Fork me</a>.</p>
+
+<h1 id="basiccascadingconcepts">Basic Cascading Concepts</h1>
+
+<p>Let&#8217;s start with a very brief synopsis of key Cascading concepts useful for understanding Scalding. Not all Cascading features are wrapped with Scalding APIs. In some cases, equivalent Scala idioms are used, even though the implementations may delegate to Cascading equivalents. </p>
+
+<p>See the Cascading User Guide for more details.</p>
+
+<h2 id="tuple">Tuple</h2>
+
+<p>A common data structure in many programming languages, a tuple is a grouping of a fixed number of fields, where each element has a specific type, the types of the different fields can be different and the fields can have names. It is analogous to a SQL record, a <code>struct</code> in C, and an object in object-oriented languages.</p>
+
+<h2 id="tap">Tap</h2>
+
+<p>A <strong>Tap</strong> is a data <em>source</em> (for reading) or <em>sink</em> (for writing), corresponding to a file on the local file system, <em>Hadoop Distributed File System</em> (HDFS), or Amazon S3. You instantiate an <code>Hfs</code> instance for Hadoop or S3 file systems, and a <code>FileTap</code> instance for local file system. There are also more specialized versions for particular scenarios, like specifying a &#8220;template&#8221; for file or directory naming conventions.</p>
+
+<h2 id="scheme">Scheme</h2>
+
+<p>The <strong>Scheme</strong> encapsulates the file format. There are several supported natively by Cascading. The corresponding Java class names are used in the following subsections.</p>
+
+<h3 id="textline">TextLine</h3>
+
+<p>When read, each line of text in the file is returned, with no attempt to tokenize it into fields. The position, byte offset or line number, in the file for the line is also returned. In the Hadoop model of key-value data pairs, the offset is the key and the line is the value.</p>
+
+<p>When written, tuple fields are serialized to text and separated by tabs.</p>
+
+<p>Available for both local file systems and Hadoop.</p>
+
+<h3 id="textdelimited">TextDelimited</h3>
+
+<p>Handles data where each line is a tuple with fields separated by delimiters, such as tabs and commas. Quoted strings with nested delimiters and files with column headers can be handled. Fields can be cast to primitive types.</p>
+
+<p>Available for both local file systems and Hadoop.</p>
+
+<h3 id="sequencefile">SequenceFile</h3>
+
+<p>A binary, Hadoop-only data format.</p>
+
+<h3 id="writablesequencefile">WritableSequenceFile</h3>
+
+<p>A more efficient implementation of SequenceFile.</p>
+
+<h2 id="pipe">Pipe</h2>
+
+<p><strong>Pipes</strong> are units of processing through which tuples are streamed. They are composed into <strong>Assemblies</strong>. Pipes are provided to merge and join streams, split them into separate streams, group them, filter them, etc.</p>
+
+<h2 id="flow">Flow</h2>
+
+<p>A <strong>Flow</strong> is created whenever a Tap is connected to a Pipe. Flows can also be composed.</p>
+
+<h2 id="cascade">Cascade</h2>
+
+<p>A <strong>Cascade</strong> joins flows and supports a model where a flow is only executed if the target output doesn&#8217;t exist is older than the input data, analogous to build tools like <code>make</code>.</p>
+
+<h1 id="theworkshop">The Workshop</h1>
+
+<p>Each section introduces one or more features for data manipulation, most of which are analogous to features found in SQL, Pig (the Hadoop <em>data flow</em> tool), and other systems.</p>
 
 <h2 id="sanitycheck">Sanity Check</h2>
 
@@ -172,7 +235,7 @@ pre .apache .tag {
     ruby run.rb scripts/SanityCheck0.scala
 </code></pre>
 
-<p>From now on, we&#8217;ll assume you are working in the <code>scalding-workshop</code> directory, unless otherwise noted. Also, we&#8217;ll just show the <code>bash</code> versions of the subsequent <code>run.rb</code> commands. Finally, because we&#8217;re lazy, we&#8217;ll sometimes drop the <code>.scala</code> extension from script names when we discuss them.</p>
+<p>From now on, we&#8217;ll assume you are working in the <code>scalding-workshop</code> directory, unless otherwise noted. Also, we&#8217;ll just show the <code>bash</code> versions of the subsequent <code>run.rb</code> commands. Finally, because we&#8217;re lazy, we&#8217;ll sometimes drop the <code>.scala</code> extension from script names when we discuss them in the text.</p>
 
 <p>Run these commands again and verify that they run without error. The output is written to <code>output/SanityCheck0.txt</code>. What&#8217;s in that file?</p>
 
@@ -204,6 +267,11 @@ pre .apache .tag {
 <blockquote>
 <p>There are also comments in this and other scripts about specific Scalding and Cascading features that we won&#8217;t cover in these notes.</p>
 </blockquote>
+
+<p>Run the script thusly:</p>
+
+<pre><code>    ./run.rb scripts/Project1.scala
+</code></pre>
 
 <p>Now, if you look at the output in <code>output/Project1.txt</code>, you&#8217;ll see just the original lines from <code>scripts/Project1.scala</code>.</p>
 
@@ -472,7 +540,9 @@ JOIN stocks d ON a.ymd = d.ymd
 
 <pre><code>run.rb scripts/Twitter6.scala \
   --input  data/twitter/tweets.tsv \
---uniques output/unique-languages.txt
+  --uniques output/unique-languages.txt \
+  --count_star output/count-star.txt \
+  --count_star_limit output/count-star-limit.txt
 </code></pre>
 
 <p>The output in <code>output/unique-languages.txt</code> is the following:</p>
@@ -489,17 +559,67 @@ ru
 
 <p>There are seven languages and an invalid value that looks vaguely like a null! These &#8220;languages&#8221; are actually from messages in the stream that aren&#8217;t tweets, but the results of other user-invoked actions.</p>
 
+<p>The output in <code>output/count-star.txt</code> is a single line with the value 1000, the same as the number of lines in the data file. Similarly, <code>output/count-star-limit.txt</code> should have 100, reflecting the limit to the first 100 lines.</p>
+
+<p>Note that the implementations use <code>groupAll</code>, then count the elements in the single group, via the <code>GroupBuilder</code> object. (The <code>count</code> method requires that we specify a field. We arbitrarily picked <code>tweet_id</code>.) </p>
+
+<p>By the way, this is <em>exactly</em> how Pig implements <code>COUNT(*)</code>. For example:</p>
+
+<pre><code>grouped = group tweets all;
+count = foreach grouped generate COUNT(tweets);
+</code></pre>
+
+<p>Here, <code>tweets</code> would be the equivalent of a Pipe, <code>grouped</code> is the name of a new Pipe created by the grouping. It effectively has one record with all tweet records in the grouping, <code>foreach ... generate</code> iterates through this single record and projects the <code>COUNT</code> the group contents (named <code>tweets</code> after the original relation).</p>
+
+<p>Finally, note that we commented out the additional example using the <code>limit</code> feature. Unfortunately, there is a bug where running in local mode causes a <em>divide by zero</em> error. As we&#8217;ll demonstrate later, this bug doesn&#8217;t appear when running with Hadoop.</p>
+
 <h3 id="furtherexploration">Further Exploration</h3>
+
+<h4 id="debugsetting">Debug Setting</h4>
+
+<p>Add the <code>debug</code> pipe to the pipe assembly. How does it change the console output?</p>
 
 <h4 id="filterforbadlanguages">Filter for Bad Languages</h4>
 
 <p>Add a filter that removes these &#8220;bad&#8221; records. <strong>Hint:</strong> You&#8217;ll want to remove all tuples where the language value is <code>&quot;&quot;&quot;\N&quot;&quot;&quot;</code>. Without the triple quotes, you would have to write <code>&quot;\\N&quot;</code>.</p>
 
-<h4 id="mergingpipes">Merging Pipes</h4>
+<h2 id="computengrams">Compute NGrams</h2>
 
-<p>The inverse option is merging two pipes into one, where the tuples are simply streamed together in no particular order. Revisit the CoGroup exercise. Use the <code>RichPipe..++</code> method to merge the input streams before any further processing.</p>
+<p>Let&#8217;s return to the Shakespeare data to compute <em>context ngrams</em>, a common natural language processing technique, where we provide a prefix of words and find occurrences of the prefix followed by an additional word. The ranked most common <code>n</code> phrases are returned. </p>
 
-<p>TODO: NEED THE SYMBOLS! </p>
+<pre><code>run.rb scripts/ContextNGrams7.scala \
+  --input  data/shakespeare/plays.txt \
+  --output output/context-ngrams.txt \
+  --ngram-prefix &quot;I love&quot; \
+  --count 10
+</code></pre>
+
+<p>Unfortunately, the data set isn&#8217;t large enough to find a lot of examples.</p>
+
+<h3 id="furtherexploration">Further Exploration</h3>
+
+<h4 id="experimentwithdifferentprefixes">Experiment with Different Prefixes</h4>
+
+<p>Try other prefixes of different lengths.</p>
+
+<h4 id="tryusingshakespearesplays">Try Using Shakespeare&#8217;s Plays</h4>
+
+<p>The script hard-codes the Twitter schema, so we can ignore everything except the <code>text</code>. Create a variation that just reads the whole line as text, using <code>TextLine</code>. Try it on <code>data/shakespeare/plays.txt</code>.</p>
+
+<h4 id="ngramdetector">NGram Detector</h4>
+
+<p>Context ngrams are special case of ngrams, where you just find the most common n-length phrases. Write a script to compute the most common ngrams. </p>
+
+<h2 id="joiningpipes">Joining Pipes</h2>
+
+<p>Let&#8217;s revisit the exercise to join stock and dividend records and generalize it to read in multiple sets of data, for different companies, and process them as one stream. A complication is that the data files don&#8217;t contain the stock (&#8220;instrument&#8221;) symbol, so we&#8217;ll see another way to add data to tuples.</p>
+
+<pre><code>run.rb scripts/StocksDividendsRevisited8.scala \
+    --stocks-root-path    data/stocks/ \
+  --dividends-root-path data/dividends/ \
+  --symbols AAPL,INTC,GE,IBM \
+  --output output/stocks-dividends-join.txt
+</code></pre>
 
 <h1 id="matrixapi">Matrix API</h1>
 
@@ -520,13 +640,15 @@ ru
 <pre><code>hadoop fs -cp data data
 </code></pre>
 
-<p>Then you can using the <code>scripts/scald.rb</code> script in the Scalding distribution to run any of our scripts as Hadoop jobs. For example, using the <code>StocksDividendsJoin4</code> exercise:</p>
+<p>Then you can using the <code>scripts/scald.rb</code> script in the Scalding distribution to run any of our scripts as Hadoop jobs. For example, using the <code>Twitter6</code> exercise:</p>
 
 <pre><code>cd $SCALDING_HOME
-scripts/scald.rb --host your_hadoop_host \
-    ../scalding-workshop/scripts/StocksDividendsJoin4.scala \
-    --stocks data/stocks --dividends data/dividends \
-    --output AAPL_stocks_divs
+scripts/scald.rb --hdfs --host localhost \
+  ../scalding-workshop/scripts/Twitter6.scala \
+  --input            data/twitter/tweets.tsv \
+  --uniques          output/unique-languages.txt \
+  --count_star       output/count-star.txt \
+  --count_star_limit output/count-star-limit.txt
 </code></pre>
 
 <p>On my laptop, I use <code>localhost</code> for <code>your_hadoop_host</code>.</p>

@@ -1,9 +1,10 @@
 # Scalding Workshop README
 
 **StrangeLoop 2012**<br/>
-**Dean Wampler**<br/>
+**Dean Wampler, Think Big Analytics**<br/>
 [dean@deanwampler.com](mailto:dean@deanwampler.com)<br/>
 [@deanwampler](https://twitter.com/deanwampler)<br/>
+[Hire Us!](http://thinkbiganalytics.com)
 
 ## About this Workshop
 

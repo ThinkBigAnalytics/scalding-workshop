@@ -1,18 +1,81 @@
 # Scalding Workshop
 
+**StrangeLoop 2012**<br/>
+**Dean Wampler, Think Big Analytics**<br/>
+[dean@deanwampler.com](mailto:dean@deanwampler.com)<br/>
+[@deanwampler](https://twitter.com/deanwampler)<br/>
+[Hire Us!](http://thinkbiganalytics.com)
+
 This workshop/tutorial takes you through the basic principles of writing data analysis applications with [Scalding](https://github.com/twitter/scalding), a Scala API that wraps [Cascading](http://www.cascading.org/).
 
 These instructions walk you through a series of exercises. Note that most of the exercises have a corresponding Scalding script (Scala source file). We use a convention of adding a number suffix to the name to indicate the order of the exercises. Note that some of these exercises are adapted from the Tutorial examples that are part of the Scalding Github repo.
 
 This document will explain many features of the Scalding and Cascading. The scripts themselves contain additional details. The Scalding and Cascading documentation has more information than we can cover here:
 
-* [Cascading Documentation](http://www.cascading.org/documentation/), including the [Javadocs](http://docs.cascading.org/cascading/2.0/javadoc/).
+* [Cascading Documentation](http://www.cascading.org/documentation/), especially the [Cascading User Guide](http://www.cascading.org/documentation/) and the [Javadocs](http://docs.cascading.org/cascading/2.0/javadoc/).
 * [Scalding Wiki](https://github.com/twitter/scalding/wiki).
 * Scalding Scaladocs are not online, but they can be built from the [Scalding Repo](https://github.com/twitter/scalding). For convenience, we have included these files in the workshop as `api.zip`. Unzip the file and open the [index](api/index.html).
+* [Movie Recommendations](http://blog.echen.me/2012/02/09/movie-recommendations-and-more-via-mapreduce-and-scalding/) is a fantastic blog post with detailed, non-trivial examples using Scalding.
 
-# Basic Operations
+## A Disclaimer...
 
-This first section covers the common data manipulation constructs that Scalding provides, which are analogous to features found in SQL and other systems.
+I'm not a Scalding or Cascading expert. Feedback welcome! [Fork me](https://github.com/ThinkBigAnalytics/scalding-workshop).
+
+# Basic Cascading Concepts
+
+Let's start with a very brief synopsis of key Cascading concepts useful for understanding Scalding. Not all Cascading features are wrapped with Scalding APIs. In some cases, equivalent Scala idioms are used, even though the implementations may delegate to Cascading equivalents. 
+
+See the Cascading User Guide for more details.
+
+## Tuple
+
+A common data structure in many programming languages, a tuple is a grouping of a fixed number of fields, where each element has a specific type, the types of the different fields can be different and the fields can have names. It is analogous to a SQL record, a `struct` in C, and an object in object-oriented languages.
+
+## Tap 
+
+A **Tap** is a data *source* (for reading) or *sink* (for writing), corresponding to a file on the local file system, *Hadoop Distributed File System* (HDFS), or Amazon S3. You instantiate an `Hfs` instance for Hadoop or S3 file systems, and a `FileTap` instance for local file system. There are also more specialized versions for particular scenarios, like specifying a "template" for file or directory naming conventions.
+
+## Scheme
+
+The **Scheme** encapsulates the file format. There are several supported natively by Cascading. The corresponding Java class names are used in the following subsections.
+
+### TextLine
+
+When read, each line of text in the file is returned, with no attempt to tokenize it into fields. The position, byte offset or line number, in the file for the line is also returned. In the Hadoop model of key-value data pairs, the offset is the key and the line is the value.
+
+When written, tuple fields are serialized to text and separated by tabs.
+
+Available for both local file systems and Hadoop.
+
+### TextDelimited
+
+Handles data where each line is a tuple with fields separated by delimiters, such as tabs and commas. Quoted strings with nested delimiters and files with column headers can be handled. Fields can be cast to primitive types.
+
+Available for both local file systems and Hadoop.
+
+### SequenceFile
+
+A binary, Hadoop-only data format.
+
+### WritableSequenceFile
+
+A more efficient implementation of SequenceFile.
+
+## Pipe
+
+**Pipes** are units of processing through which tuples are streamed. They are composed into **Assemblies**. Pipes are provided to merge and join streams, split them into separate streams, group them, filter them, etc.
+
+## Flow
+
+A **Flow** is created whenever a Tap is connected to a Pipe. Flows can also be composed.
+
+## Cascade
+
+A **Cascade** joins flows and supports a model where a flow is only executed if the target output doesn't exist is older than the input data, analogous to build tools like `make`.
+
+# The Workshop
+
+Each section introduces one or more features for data manipulation, most of which are analogous to features found in SQL, Pig (the Hadoop *data flow* tool), and other systems.
 
 ## Sanity Check
 
@@ -28,7 +91,7 @@ On Windows:
 		cd C:\fun\scalding-workshop
 		ruby run.rb scripts/SanityCheck0.scala
 
-From now on, we'll assume you are working in the `scalding-workshop` directory, unless otherwise noted. Also, we'll just show the `bash` versions of the subsequent `run.rb` commands. Finally, because we're lazy, we'll sometimes drop the `.scala` extension from script names when we discuss them.
+From now on, we'll assume you are working in the `scalding-workshop` directory, unless otherwise noted. Also, we'll just show the `bash` versions of the subsequent `run.rb` commands. Finally, because we're lazy, we'll sometimes drop the `.scala` extension from script names when we discuss them in the text.
 
 Run these commands again and verify that they run without error. The output is written to `output/SanityCheck0.txt`. What's in that file?
 
@@ -54,6 +117,10 @@ Scalding also has a `project` method for the same purpose. Let's modify `SanityC
 This expression is a sequence of Cascading [Pipes](http://docs.cascading.org/cascading/2.0/javadoc/cascading/pipe/Pipe.html). However, there is not `write` method defined on the `Pipe` class. Scalding uses Scala's *implicit conversion* feature to wrap `Pipe` with a Scalding-specific `com.twitter.scalding.RichPipe` type that provides most of the methods we'll actually use.
 
 > There are also comments in this and other scripts about specific Scalding and Cascading features that we won't cover in these notes.
+
+Run the script thusly:
+
+		./run.rb scripts/Project1.scala
  
 Now, if you look at the output in `output/Project1.txt`, you'll see just the original lines from `scripts/Project1.scala`.
 
@@ -334,7 +401,7 @@ By the way, this is *exactly* how Pig implements `COUNT(*)`. For example:
 
 Here, `tweets` would be the equivalent of a Pipe, `grouped` is the name of a new Pipe created by the grouping. It effectively has one record with all tweet records in the grouping, `foreach ... generate` iterates through this single record and projects the `COUNT` the group contents (named `tweets` after the original relation).
 
-Finally, note that we commented out the additional example using the `limit` feature. Unfortunately, there is a bug where running in local mode causes a *divide by zero* error.
+Finally, note that we commented out the additional example using the `limit` feature. Unfortunately, there is a bug where running in local mode causes a *divide by zero* error. As we'll demonstrate later, this bug doesn't appear when running with Hadoop.
 
 ### Further Exploration
 
@@ -346,11 +413,41 @@ Add the `debug` pipe to the pipe assembly. How does it change the console output
 
 Add a filter that removes these "bad" records. **Hint:** You'll want to remove all tuples where the language value is `"""\N"""`. Without the triple quotes, you would have to write `"\\N"`.
 
-#### Merging Pipes
+## Compute NGrams
 
-The inverse option is merging two pipes into one, where the tuples are simply streamed together in no particular order. Revisit the CoGroup exercise. Use the `RichPipe..++` method to merge the input streams before any further processing.
+Let's return to the Shakespeare data to compute *context ngrams*, a common natural language processing technique, where we provide a prefix of words and find occurrences of the prefix followed by an additional word. The ranked most common `n` phrases are returned. 
 
-TODO: NEED TO ADD SYMBOLS TO THE DATA! 
+	run.rb scripts/ContextNGrams7.scala \
+	  --input  data/shakespeare/plays.txt \
+	  --output output/context-ngrams.txt \
+	  --ngram-prefix "I love" \
+	  --count 10
+
+Unfortunately, the data set isn't large enough to find a lot of examples.
+
+### Further Exploration
+
+#### Experiment with Different Prefixes
+
+Try other prefixes of different lengths.
+
+#### Try Using Shakespeare's Plays
+
+The script hard-codes the Twitter schema, so we can ignore everything except the `text`. Create a variation that just reads the whole line as text, using `TextLine`. Try it on `data/shakespeare/plays.txt`.
+
+#### NGram Detector
+
+Context ngrams are special case of ngrams, where you just find the most common n-length phrases. Write a script to compute the most common ngrams. 
+
+## Joining Pipes
+
+Let's revisit the exercise to join stock and dividend records and generalize it to read in multiple sets of data, for different companies, and process them as one stream. A complication is that the data files don't contain the stock ("instrument") symbol, so we'll see another way to add data to tuples.
+
+	run.rb scripts/StocksDividendsRevisited8.scala \
+		--stocks-root-path    data/stocks/ \
+	  --dividends-root-path data/dividends/ \
+	  --symbols AAPL,INTC,GE,IBM \
+	  --output output/stocks-dividends-join.txt
 
 # Matrix API
 
@@ -370,15 +467,18 @@ If you copy `data` to HDFS under your HDFS home directory:
 
 	hadoop fs -cp data data
 
-Then you can using the `scripts/scald.rb` script in the Scalding distribution to run any of our scripts as Hadoop jobs. For example, using the `StocksDividendsJoin4` exercise:
+Then you can using the `scripts/scald.rb` script in the Scalding distribution to run any of our scripts as Hadoop jobs. For example, using the `Twitter6` exercise:
 
 	cd $SCALDING_HOME
-	scripts/scald.rb --host your_hadoop_host \
-		../scalding-workshop/scripts/StocksDividendsJoin4.scala \
-		--stocks data/stocks --dividends data/dividends \
-		--output AAPL_stocks_divs
+	scripts/scald.rb --hdfs --host localhost \
+	  ../scalding-workshop/scripts/Twitter6.scala \
+	  --input            data/twitter/tweets.tsv \
+	  --uniques          output/unique-languages.txt \
+	  --count_star       output/count-star.txt \
+	  --count_star_limit output/count-star-limit.txt
 
 On my laptop, I use `localhost` for `your_hadoop_host`.
+
 
 # Conclusions
 

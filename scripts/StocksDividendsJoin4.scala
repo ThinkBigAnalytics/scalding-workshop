@@ -33,7 +33,7 @@ class StocksDividendsJoin4(args : Args) extends Job(args) {
    */
   val stockSchema = 
     ('symd, 'price_open, 'price_high, 'price_low, 'price_close, 'volume, 'price_adj_close)
-  val dividendSchema = ('dymd, 'dividend)
+  val dividendsSchema = ('dymd, 'dividend)
 
   /*
    * We read CSV input for the stocks and dividends. 
@@ -42,15 +42,16 @@ class StocksDividendsJoin4(args : Args) extends Job(args) {
     .read
     .project('symd, 'price_close)
 
-  val dividendsPipe = new Csv(args("dividends"), dividendSchema)
+  val dividendsPipe = new Csv(args("dividends"), dividendsSchema)
     .read
 
   /*
-   * Inner join!
+   * Inner join! Use the "tiny" variant that attempts to replicate the dividend table
+   * to all nodes for faster joining.
    * Then suppress the extra ymd and specify the remaining fields in the desired order.
    */
   stocksPipe
-    .joinWithSmaller('symd -> 'dymd, dividendsPipe)
+    .joinWithTiny('symd -> 'dymd, dividendsPipe)
     .project('symd, 'price_close, 'dividend)  
     .write(Tsv(args("output")))
 }

@@ -16,6 +16,7 @@ This document will explain many features of the Scalding and Cascading. The scri
 * [Scalding Wiki](https://github.com/twitter/scalding/wiki).
 * Scalding Scaladocs are not online, but they can be built from the [Scalding Repo](https://github.com/twitter/scalding). For convenience, we have included these files in the workshop as `api.zip`. Unzip the file and open the [index](api/index.html).
 * [Movie Recommendations](http://blog.echen.me/2012/02/09/movie-recommendations-and-more-via-mapreduce-and-scalding/) is a fantastic blog post with detailed, non-trivial examples using Scalding.
+* [Scalding Example Project](https://github.com/snowplow/scalding-example-project) is a full example designed to run on Hadoop, specifically on Amazon's EMR (Elastic MapReduce) platform.
 
 ## A Disclaimer...
 
@@ -444,22 +445,49 @@ Context ngrams are special case of ngrams, where you just find the most common n
 Let's revisit the exercise to join stock and dividend records and generalize it to read in multiple sets of data, for different companies, and process them as one stream. A complication is that the data files don't contain the stock ("instrument") symbol, so we'll see another way to add data to tuples.
 
 	run.rb scripts/StocksDividendsRevisited8.scala \
-		--stocks-root-path    data/stocks/ \
+	  --stocks-root-path    data/stocks/ \
 	  --dividends-root-path data/dividends/ \
 	  --symbols AAPL,INTC,GE,IBM \
 	  --output output/stocks-dividends-join.txt
 
 # Matrix API
 
-TODO
+## Jaccard Similarity and Adjacency Matrices
+
+*Adjacency matrices* are used to record the similarities between two things. For example, the "things" might be users who have rated movies and the *adjacency* might be how many movies they have reviewed in common. Higher adjacency numbers indicate more likely similarity of interests. Note that this simple representation says nothing about whether or not they both rated the movies in a similar way.
+
+Once you have adjacency data, you need a *similarity measure* to determine how similar to things (e.g., people) really are. One is *Jaccard Similarity*:
+
+![](images/JaccardSimilarity.png)
+
+This is set notation; the size of the intersection of two sets over the size of the union. It can be generalized and is similar to the cosine of two vectors normalized by length. Note that the distance would be 1 - similarity.
+
+Run the script this way on a small matrix:
+
+	run.rb scripts/MatrixJaccardSimilarity9.scala \
+	  --input data/matrix/graph.tsv \
+	  --output output/jaccardSim.tsv
+
+## Term Frequency-Inverse Document Frequency (TF*IDF)
+
+TF*IDF is a widely used *Natural Language Processing* tool to analyze text. It's useful for indexing documents, e.g., for web search engines. Naively, you might calculate the *frequency* of words in a corpus of documents and assume that if a word appears more frequently in one document, then that document is probably a "definitive" place for that word, such as the way you search for web pages on a particular topic. Similarly, the most frequent words indicate the primary topics for a document.
+
+There's a problem, though. Very common words, e.g., articles like "the", "a", etc. will appear very frequently, undermining results. So we want to remove them so how. Fortunately, they tend to appear frequently in *every* document, so you can reduce the ranking of a particular word if you *divide* its frequency in a given document by its frequency in *all* documents. That's the essence of TF*IDF.
+
+For more information, see the [Wikipedia](http://en.wikipedia.org/wiki/Tf*idf) page.
+
+Run the script this way on a small matrix:
+
+	run.rb scripts/TfIdf10.scala \
+ 	  --input data/matrix/docBOW.tsv \
+	  --output output/featSelectedMatrix.tsv \
+	  --nWords 300
 
 # Type-Safe API
 
 So far, we have been using the more mature *Fields-Based API*, which emphasizes naming fields and uses a relatively dynamic approach to typing. This is consistent with Cascading's model.
 
-There is now a newer, more experimental *Type-Safe API* that attempts to more fully exploit the type safety provided by Scala.
-
-TODO
+There is now a newer, more experimental *Type-Safe API* that attempts to more fully exploit the type safety provided by Scala. We won't discuss it here, but refer you to the [Type-Safe API Wiki page](https://github.com/twitter/scalding/wiki/Type-safe-api-reference).
 
 # Using Scalding with Hadoop
 
@@ -500,8 +528,8 @@ Pig has very similar capabilities, with notable advantages and disadvantages.
 
 #### Advantages
 
-* *A custom language* - A language customized for a particular purpose can optimize expressiveness for common scenarios.
-* *Lazy evaluation* - you define the workflow, then Pig compiles, optimizes, and runs it when output is required. Scalding, following Scala, uses eager evaluation.
+* *A custom language* - A purpose-built language for a particular domain can optimize expressiveness for common scenarios.
+* *Lazy evaluation* - you define the work flow, then Pig compiles, optimizes, and runs it when output is required. Scalding, following Scala, uses eager evaluation.
 * *Describe* - The describe feature is very helpful when learning how each Pig statement defines a new schema.
 
 #### Disadvantages

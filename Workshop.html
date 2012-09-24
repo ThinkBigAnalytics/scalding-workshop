@@ -140,15 +140,15 @@ pre .apache .tag {
   <div id="wrapper">
       <h1 id="scaldingworkshop">Scalding Workshop</h1>
 
-<p><strong>StrangeLoop 2012</strong><br/>
+<p><a href="http://thestrangeloop.com">StrangeLoop 2012</a><br/>
 <strong>Dean Wampler, Think Big Analytics</strong><br/>
-<a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#111;&#x3a;&#x64;&#101;&#x61;&#x6e;&#64;&#x64;&#x65;&#97;&#110;&#119;&#97;&#109;&#112;&#108;&#x65;&#114;&#x2e;&#x63;&#x6f;&#x6d;">&#x64;&#101;&#x61;&#x6e;&#64;&#x64;&#101;&#x61;&#110;&#119;&#97;&#109;&#x70;&#x6c;&#101;&#x72;&#46;&#x63;&#111;&#109;</a><br/>
+<a href="&#x6d;&#97;&#105;&#108;&#116;&#111;&#x3a;&#x64;&#x65;&#97;&#x6e;&#64;&#100;&#101;&#97;&#110;&#119;&#x61;&#x6d;&#112;&#108;&#101;&#114;&#46;&#99;&#111;&#109;">&#100;&#x65;&#x61;&#110;&#64;&#100;&#101;&#x61;&#110;&#119;&#x61;&#x6d;&#x70;&#x6c;&#101;&#114;&#x2e;&#99;&#x6f;&#x6d;</a><br/>
 <a href="https://twitter.com/deanwampler">@deanwampler</a><br/>
 <a href="http://thinkbiganalytics.com">Hire Us!</a></p>
 
-<p>This workshop/tutorial takes you through the basic principles of writing data analysis applications with <a href="https://github.com/twitter/scalding">Scalding</a>, a Scala API that wraps <a href="http://www.cascading.org/">Cascading</a>.</p>
+<p>This workshop/tutorial takes you through the basic principles of writing data analysis applications with <a href="https://github.com/twitter/scalding">Scalding</a>, a Scala API that wraps <a href="http://www.cascading.org/">Cascading</a>. I first went through this workshop at <a href="http://thestrangeloop.com">StrangeLoop 2012</a>. It took about 3 hours, but we didn&#8217;t do all the <em>mini-exercises</em>, so it make take you a bit longer if you do them all.</p>
 
-<p>These instructions walk you through a series of exercises. Note that most of the exercises have a corresponding Scalding script (Scala source file). We use a convention of adding a number suffix to the name to indicate the order of the exercises. Note that some of these exercises are adapted from the Tutorial examples that are part of the Scalding Github repo.</p>
+<p>These instructions walk you through a series of exercises. The exercises have a corresponding Scalding script (Scala source file). We use a convention of adding a number suffix to the name to indicate the order of the exercises. Note that some of these exercises are adapted from the Tutorial examples that are part of the Scalding Github repo, where noted.</p>
 
 <p>This document will explain many features of the Scalding and Cascading. The scripts themselves contain additional details. The Scalding and Cascading documentation has more information than we can cover here:</p>
 
@@ -259,7 +259,7 @@ pre .apache .tag {
 
 <pre><code>in
   .read
-  .project('line')
+  .project('line)
   .write(out)
 </code></pre>
 
@@ -274,7 +274,7 @@ pre .apache .tag {
 <pre><code>    ./run.rb scripts/Project1.scala
 </code></pre>
 
-<p>Now, if you look at the output in <code>output/Project1.txt</code>, you&#8217;ll see just the original lines from <code>scripts/Project1.scala</code>.</p>
+<p>Now, if you look at the output in <code>output/Project1.txt</code>, you&#8217;ll see just the original lines from <code>scripts/Project1.scala</code>. That is, running a <code>diff</code> command on the input and output files should show no differences.</p>
 
 <h2 id="flatmapandgroupby-implementingwordcount">FlatMap and GroupBy - Implementing Word Count</h2>
 
@@ -298,7 +298,7 @@ pre .apache .tag {
     --output output/shakespeare-wc.txt
 </code></pre>
 
-<p>The output should be identical to the contents of <code>data/shakespeare-wc/simple/wc.txt</code>. Using the <code>bash diff</code> command (or a similar command for Windows), should show no differences:</p>
+<p>The output should be identical to the contents of <code>data/shakespeare-wc/simple/wc.txt</code>. Using a <code>diff</code> command, should show no differences:</p>
 
 <pre><code>diff data/shakespeare-wc/simple/wc.txt output/shakespeare-wc.txt
 </code></pre>
@@ -360,7 +360,9 @@ pre .apache .tag {
 
 <h4 id="improvethewordtokenization">Improve the Word Tokenization</h4>
 
-<p>You probably noticed that simply splitting on whitespace is not very good, as punctuation is not removed. Replace the expression <code>line.toLowerCase.split(&quot;\\s+&quot;)</code> with a call to a <code>tokenize</code> function. Implement <code>tokenize</code> to remove punctuation. An example implementation can be found in the <a href="https://github.com/twitter/scalding">Scalding README</a>.</p>
+<p>You probably noticed that simply splitting on whitespace is not very good, as punctuation is not removed. There are several ways it can be improved. First, replacing the expression <code>&quot;\\s+&quot;</code> with <code>&quot;\\W+&quot;</code> will treat all runs of non-alphanumeric characters as word separators. This improves the result considerably.</p>
+
+<p>For a more complete tokenizer, refactor <code>line.toLowerCase.split(&quot;\\s+&quot;)</code> into a <code>tokenize</code> function. Then implement <code>tokenize</code> to remove punctuation, etc. An example implementation can be found in the <a href="https://github.com/twitter/scalding">Scalding README</a>.</p>
 
 <h4 id="eliminateblanklines">Eliminate Blank Lines</h4>
 
@@ -445,6 +447,8 @@ store year_avg into 'output/AAPL-year-avg-pig';
 
 <pre><code>pig -x local scripts/StockAverages3.pig
 </code></pre>
+
+<p>The <code>-x local</code> option means that Pig will treat the paths as references to the local file system, not the Hadoop Distributed File System (HDFS).</p>
 
 <h3 id="furtherexploration">Further Exploration</h3>
 
@@ -533,7 +537,7 @@ JOIN stocks d ON a.ymd = d.ymd
 
 <h4 id="starjoinsonepairatatime">Star Joins, One Pair at a Time</h4>
 
-<p>Try implementing the same four-way join doing a sequence of pair-wise joins. Compare the complexity of the code and the performance of the join with the CoGroup implementation.</p>
+<p>Try implementing the same four-way join doing a sequence of pair-wise joins. Compare the complexity of the code and the performance of the join with the CoGroup implementation. The performance would be much slower in MapReduce, where each pair-wise join would require a separate MapReduce job.</p>
 
 <h2 id="splittingapipe">Splitting a Pipe</h2>
 
@@ -564,13 +568,13 @@ ru
 
 <p>Note that the implementations use <code>groupAll</code>, then count the elements in the single group, via the <code>GroupBuilder</code> object. (The <code>count</code> method requires that we specify a field. We arbitrarily picked <code>tweet_id</code>.) </p>
 
-<p>By the way, this is <em>exactly</em> how Pig implements <code>COUNT(*)</code>. For example:</p>
+<p>By the way, this approach is <em>exactly</em> how Pig implements <code>COUNT(*)</code>. For example:</p>
 
 <pre><code>grouped = group tweets all;
 count = foreach grouped generate COUNT(tweets);
 </code></pre>
 
-<p>Here, <code>tweets</code> would be the equivalent of a Pipe, <code>grouped</code> is the name of a new Pipe created by the grouping. It effectively has one record with all tweet records in the grouping, <code>foreach ... generate</code> iterates through this single record and projects the <code>COUNT</code> the group contents (named <code>tweets</code> after the original relation).</p>
+<p>Here, <code>tweets</code> would be the equivalent of a Pipe and <code>grouped</code> is the name of a new Pipe created by grouping all records together into one new record. The <code>foreach ... generate</code> statement iterates through this single record and projects the <code>COUNT</code> of the group contents (named <code>tweets</code> after the original relation).</p>
 
 <p>Finally, note that we commented out the additional example using the <code>limit</code> feature. Unfortunately, there is a bug where running in local mode causes a <em>divide by zero</em> error. As we&#8217;ll demonstrate later, this bug doesn&#8217;t appear when running with Hadoop.</p>
 
@@ -578,11 +582,11 @@ count = foreach grouped generate COUNT(tweets);
 
 <h4 id="debugsetting">Debug Setting</h4>
 
-<p>Add the <code>debug</code> pipe to the pipe assembly. How does it change the console output?</p>
+<p>Add the <code>debug</code> pipe to the pipe assembly. How does it change the console output? This is a very useful feature when you&#8217;re learning or debugging problems.</p>
 
 <h4 id="filterforbadlanguages">Filter for Bad Languages</h4>
 
-<p>Add a filter that removes these &#8220;bad&#8221; records. <strong>Hint:</strong> You&#8217;ll want to remove all tuples where the language value is <code>&quot;&quot;&quot;\N&quot;&quot;&quot;</code>. Without the triple quotes, you would have to write <code>&quot;\\N&quot;</code>.</p>
+<p>Add a <code>filter</code> method call that removes these &#8220;bad&#8221; records. <strong>Hint:</strong> You&#8217;ll want to remove all tuples where the language value is <code>&quot;&quot;&quot;\N&quot;&quot;&quot;</code>. Without the triple quotes, you would have to write <code>&quot;\\N&quot;</code>.</p>
 
 <h2 id="computengrams">Compute NGrams</h2>
 
@@ -595,17 +599,17 @@ count = foreach grouped generate COUNT(tweets);
   --count 10
 </code></pre>
 
-<p>Unfortunately, the data set isn&#8217;t large enough to find a lot of examples.</p>
+<p>Unfortunately, the data set isn&#8217;t large enough to find a lot of examples for many possible ngrams.</p>
 
 <h3 id="furtherexploration">Further Exploration</h3>
 
 <h4 id="experimentwithdifferentprefixes">Experiment with Different Prefixes</h4>
 
-<p>Try other prefixes of different lengths.</p>
+<p>Try other prefixes of different lengths. You don&#8217;t have to specify a two-word prefix!</p>
 
-<h4 id="tryusingshakespearesplays">Try Using Shakespeare&#8217;s Plays</h4>
+<h4 id="tryusingothertextfiles">Try Using Other Text Files</h4>
 
-<p>The script hard-codes the Twitter schema, so we can ignore everything except the <code>text</code>. Create a variation that just reads the whole line as text, using <code>TextLine</code>. Try it on <code>data/shakespeare/plays.txt</code>.</p>
+<p>Run the script on other large text files you have.</p>
 
 <h4 id="ngramdetector">NGram Detector</h4>
 
@@ -623,6 +627,8 @@ count = foreach grouped generate COUNT(tweets);
 </code></pre>
 
 <h1 id="matrixapi">Matrix API</h1>
+
+<p>The Matrix API is relatively new and facilities many important machine learning algorithms.</p>
 
 <h2 id="jaccardsimilarityandadjacencymatrices">Jaccard Similarity and Adjacency Matrices</h2>
 
@@ -662,29 +668,27 @@ count = foreach grouped generate COUNT(tweets);
 
 <h1 id="type-safeapi">Type-Safe API</h1>
 
-<p>So far, we have been using the more mature <em>Fields-Based API</em>, which emphasizes naming fields and uses a relatively dynamic approach to typing. This is consistent with Cascading&#8217;s model.</p>
+<p>So far, we have been using the original <em>Fields-Based API</em>, which emphasizes naming fields and uses a relatively dynamic approach to typing. This is consistent with Cascading&#8217;s model.</p>
 
-<p>There is now a newer, more experimental <em>Type-Safe API</em> that attempts to more fully exploit the type safety provided by Scala. We won&#8217;t discuss it here, but refer you to the <a href="https://github.com/twitter/scalding/wiki/Type-safe-api-reference">Type-Safe API Wiki page</a>.</p>
+<p>There is newer, more experimental <em>Type-Safe API</em> that attempts to more fully exploit the type safety provided by Scala. We won&#8217;t discuss it here, but refer you to the <a href="https://github.com/twitter/scalding/wiki/Type-safe-api-reference">Type-Safe API Wiki page</a> for more information.</p>
 
 <h1 id="usingscaldingwithhadoop">Using Scalding with Hadoop</h1>
 
-<p>If you copy <code>data</code> to HDFS under your HDFS home directory:</p>
+<p>Now we&#8217;ll use the <code>scripts/scald.rb</code> script in the Scalding distribution to a script as a Hadoop job. For example, assuming that you cloned the Scalding repo in a sister directory of the workshop directory, here is a command to run <code>HadoopTwitter11</code>, which is identical to <code>Twitter6</code> that we ran previously, except that we now use the <code>limit</code> method, which <em>won&#8217;t</em> throw an exception when we run with Hadoop:</p>
 
-<pre><code>hadoop fs -cp data data
-</code></pre>
-
-<p>Then you can using the <code>scripts/scald.rb</code> script in the Scalding distribution to run any of our scripts as Hadoop jobs. For example, using the <code>Twitter6</code> exercise:</p>
-
-<pre><code>cd $SCALDING_HOME
-scripts/scald.rb --hdfs --host localhost \
-  ../scalding-workshop/scripts/Twitter6.scala \
+<pre><code>../scalding/scripts/scald.rb --hdfs-local --host localhost \
+  scripts/HadoopTwitter11.scala \
   --input            data/twitter/tweets.tsv \
-  --uniques          output/unique-languages.txt \
-  --count_star       output/count-star.txt \
-  --count_star_limit output/count-star-limit.txt
+  --uniques          output/unique-languages \
+  --count_star       output/count-star \
+  --count_star_limit output/count-star-limit
 </code></pre>
 
-<p>On my laptop, I use <code>localhost</code> for <code>your_hadoop_host</code>.</p>
+<p>On a laptop configuration using <em>pseudo-distributed</em> mode, use <code>localhost</code> for the Hadoop host name flag. Use the server name for the <em>JobTracker</em> master process when running on a real cluster. Note that the <code>--hdfs-local</code> option actually means use MapReduce, but ignore the <em>Hadoop Distributed File System</em> (HDFS). Instead, use the local file system like we have been doing. If we used the <code>--hdfs</code> option instead, all paths would be interpreted as relative to HDFS. The paths shown would be assumed to be relative to the user&#8217;s home directory in HDFS, which is <code>/user/&lt;name&gt;</code>, by default.</p>
+
+<p>Finally, the values specified for output using the <code>--uniques</code>, <code>count_star</code>, and <code>count_star_limit</code> flags will be interpreted as <em>directory</em>, not <em>file</em> names as previously. This follows conventional Hadoop practice, where the parallel processes might result in multiple, concurrently-written output files!</p>
+
+<p>In this case, the <code>limit</code> method doesn&#8217;t trigger an exception and each directory will contain two files, a <code>part-00000</code> file (partition number <code>00000</code>) that contains the data and a <code>.part-00000.crc</code> file that contains a CRC of the data file. With a larger data set and running on a real distributed cluster, instead of the <em>pseudo-distributed</em> mode you run on a single machine, there might be multiple files. The CRC file serves two purposes. First, it can be used to check for a corrupt data file and second, when it is written, processes watching the directory <em>know</em> that the process writing the corresponding data file has finished! This is important when sequencing processing tasks.</p>
 
 <h1 id="conclusions">Conclusions</h1>
 
@@ -694,7 +698,7 @@ scripts/scald.rb --hdfs --host localhost \
 
 <h3 id="cascading">Cascading</h3>
 
-<p>Because Scala is a <em>functional programming</em> language with excellent support for DSL creation, I would argue that using Scalding is much nicer than the Java-based Cascading itself.</p>
+<p>Because Scala is a <em>functional programming</em> language with excellent support for DSL (domain-specific language) creation, using Scalding is much nicer than the Java-based Cascading itself, because Scalding programs are more concise and intuitive.</p>
 
 <h3 id="cascalog">Cascalog</h3>
 
@@ -708,15 +712,16 @@ scripts/scald.rb --hdfs --host localhost \
 
 <ul>
 <li><em>A custom language</em> - A purpose-built language for a particular domain can optimize expressiveness for common scenarios.</li>
-<li><em>Lazy evaluation</em> - you define the work flow, then Pig compiles, optimizes, and runs it when output is required. Scalding, following Scala, uses eager evaluation.</li>
-<li><em>Describe</em> - The describe feature is very helpful when learning how each Pig statement defines a new schema.</li>
+<li><em>Type Safety</em> - Although Scala is strongly-typed, Cascading isn&#8217;t, at least in the sense that you don&#8217;t normally define the types of fields, except where necessary (e.g., to call math routines with numbers). Pig (like Hive) encourages specifying the type of every field.</li>
+<li><em>Lazy evaluation</em> - you define the work flow, then Pig compiles, optimizes, and runs it when output is required. Scalding, following Scala, uses eager evaluation; each expression is executed as soon as it&#8217;s parsed.</li>
+<li><em>Describe</em> - The describe feature is very helpful when learning how each Pig statement defines a new schema. There is an API call, <code>fields</code> on Pipes to get the field names, but it&#8217;s less convenient to use, especially in interactive scenarios.</li>
 </ul>
 
 <h4 id="disadvantages">Disadvantages</h4>
 
 <ul>
 <li><em>Not Turing complete</em> - You have to write extensions in other languages. By using Scala, Scalding lets you write everything in one language.</li>
-<li><em>Slower</em> - At least for local jobs, Scalding (and Cascading) avoid Hadoop APIs more effectively and therefore run noticeably faster.</li>
+<li><em>Slower</em> - At least for local jobs, Scalding (and Cascading) avoid Hadoop APIs completely and therefore run noticeably faster.</li>
 </ul>
 
 <h3 id="hive">Hive</h3>

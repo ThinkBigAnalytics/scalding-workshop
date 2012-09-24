@@ -29,11 +29,14 @@ class StockAverages3(args : Args) extends Job(args) {
     ('ymd, 'price_open, 'price_high, 'price_low, 'price_close, 'volume, 'price_adj_close)
 
   /*
-   * We read CSV input for the stock records.
+   * We read CSV input for the stock records. We'll just keep the year-month-day
+   * and the "adjusted" closing price, which accounts for historical stock splits
+   * and dividend payments to give you a better view of how much a stock has
+   * appreciated.
    */
   new Csv(args("input"), stockSchema)
     .read
-    .project('ymd, 'price_close)
+    .project('ymd, 'price_adj_close)
 
   /*
    * Unfortunately, we have to pass a single tuple argument to the anonymous function. 
@@ -41,16 +44,18 @@ class StockAverages3(args : Args) extends Job(args) {
    * list. Note that you reference the Nth field in a tuple with the "_N" method
    * (it's not zero-indexed).
    */
-    .mapTo(('ymd, 'price_close) -> ('year, 'closing_price)) { 
+    .mapTo(('ymd, 'price_adj_close) -> ('year, 'closing_price)) { 
       ymd_close: (String, String) =>   // (String, String) === Tuple2[String, String]
       // TODO: Add exception handling logic!
-      (year(ymd_close._1), java.lang.Double.parseDouble(ymd_close._2))
+      (year(ymd_close._1), (ymd_close._2).toDouble)
+      //(year(ymd_close._1), java.lang.Double.parseDouble(ymd_close._2))
     }
 
   /*
    * Finally, group by the year and average the closing price over each year.
    */
-    .groupBy('year) {group => group.average('closing_price -> 'average_close)}
+    .groupBy('year) {group => group.sizeAveStdev('closing_price -> ('size, 'average_close, 'std_dev))
+    .sizeAveStdev('closing_adj_price -> ('size2, 'average_close2, 'std_dev2))}
 
     .write(Tsv(args("output")))
 

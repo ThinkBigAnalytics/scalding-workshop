@@ -48,7 +48,9 @@ class WordCount2(args : Args) extends Job(args) {
    */
   TextLine(args("input"))
     .read
-    .flatMap('line -> 'word){ line : String => line.trim.toLowerCase.split("\\s+") }
+    .flatMap('line -> 'word) {
+      line : String => line.trim.toLowerCase.split("\\s+") 
+    }
 
   /*
    * At this point we have a stream of words in the pipeline. To count 

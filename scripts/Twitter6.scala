@@ -34,6 +34,7 @@ class Twitter6(args : Args) extends Job(args) {
 
   val tweets = Tsv(args("input"), twitterSchema)
       .read
+      .filter('language) { l:String => l != "\\N"}
 
   /*
    * Split the pipe in a stream were we find the unique languages.
@@ -56,8 +57,8 @@ class Twitter6(args : Args) extends Job(args) {
    * Unfortunately, when running in local mode, a bug causes a 
    * divide by zero error.
    */
-  new RichPipe(tweets)
-      .limit(100)
-      .groupAll { _.count('tweet_id).reducers(2) }
-      .write(Tsv(args("count_star_limit")))
+  // new RichPipe(tweets)
+  //     .limit(100)
+  //     .groupAll { _.count('tweet_id).reducers(2) }
+  //     .write(Tsv(args("count_star_limit")))
 }

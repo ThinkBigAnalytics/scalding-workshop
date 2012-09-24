@@ -41,7 +41,8 @@ class ContextNGrams7(args : Args) extends Job(args) {
     .flatMap('line -> 'ngram) { text: String => ngramRE.findAllIn(text).toIterable }
     .discard('num, 'line)
     .groupBy('ngram) { _.size('count) }
-    // .sortedTake[Int]('count -> 'ranked_count, numberOfNGrams)
-    .groupAll { _.sortedReverseTake[Int]('count -> 'ranked_ngrams, numberOfNGrams) }
+    // TODO: The following will sort by count, but it tosses the ngram field!
+    // .groupAll { _.sortedReverseTake[Int]('count -> 'ranked_ngrams, numberOfNGrams) }
+    .debug
     .write(Tsv(args("output")))
 }

@@ -61,7 +61,7 @@ class HadoopTwitter11(args : Args) extends Job(args) {
    * Another split used to implement "COUNT(*)".
    */
   new RichPipe(tweets)
-      .groupAll { _.count('tweet_id).reducers(2) }
+      .groupAll { _.count('tweet_id) }
       .write(Tsv(args("count_star")))
 
   /*
@@ -71,6 +71,6 @@ class HadoopTwitter11(args : Args) extends Job(args) {
    */
   new RichPipe(tweets)
       .limit(100)
-      .groupAll { _.count('tweet_id).reducers(2) }
+      .groupAll { _.count('tweet_id) }
       .write(Tsv(args("count_star_limit")))
 }

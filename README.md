@@ -110,7 +110,7 @@ On Windows:
 
 ## Next Steps
 
-The Workshop/Tutorial proper is described in the companion [Workshop document](https://github.com/deanwampler/scalding-workshop/blob/master/Workshop.html).
+The Workshop/Tutorial proper is described in the companion [Workshop document](https://github.com/thinkbiganalytics/scalding-workshop/blob/master/Workshop.html).
 
 ## For Further Information
 

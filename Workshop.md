@@ -151,7 +151,11 @@ The script uses two new data transformation features to compute the word count.
 
 ### Further Exploration
 
-Try this additional "mini-exercise" to explore what Scalding and Cascading are doing.
+Try these additional "mini-exercises" to explore what Scalding and Cascading are doing.
+
+#### Improve the Tokenization
+
+Look at the output and you'll notice that the tokenization is rather poor. How can you improve the value defined in `tokenizerRegex`? Can you pass in the regular expression as an argument to the program?
 
 #### Project the 'num Field 
 

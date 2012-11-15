@@ -37,11 +37,14 @@ import com.twitter.scalding._
 
 class WordCount2(args : Args) extends Job(args) {
 
+  // Tokenize into words by by splitting on whitespace.
+  val tokenizerRegex = """\s+"""
+  
   /*
    * Note we don't bother capturing the input and output objects in vals.
    * Read the file specified by the --input argument and process each line
    * by trimming leading and trailing whitespace, converting to lower case,
-   * then tokenizing it into words by splitting on whitespace.
+   * then tokenizing it into words.
    * The first argument list to flatMap specifies that we pass the 'line field
    * to the anonymous function on each call and each word in the returned 
    * collection of words is given the name 'word.
@@ -49,7 +52,7 @@ class WordCount2(args : Args) extends Job(args) {
   TextLine(args("input"))
     .read
     .flatMap('line -> 'word) {
-      line : String => line.trim.toLowerCase.split("\\s+") 
+      line : String => line.trim.toLowerCase.split(tokenizerRegex) 
     }
 
   /*

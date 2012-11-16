@@ -54,8 +54,9 @@ class StockAverages3(args : Args) extends Job(args) {
   /*
    * Finally, group by the year and average the closing price over each year.
    */
-    .groupBy('year) {group => group.sizeAveStdev('closing_price -> ('size, 'average_close, 'std_dev))
-    .sizeAveStdev('closing_adj_price -> ('size2, 'average_close2, 'std_dev2))}
+    .groupBy('year) {
+      group => group.sizeAveStdev('closing_price -> ('size, 'average_close, 'std_dev))
+    }
 
     .write(Tsv(args("output")))
 

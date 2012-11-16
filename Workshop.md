@@ -169,14 +169,17 @@ The `flatMap` operation is similar, but now the output of the function called fo
 
 `WordCount2` uses `flatMap` to convert each line of input text into many words:
 
-	.flatMap('line -> 'word){ line : String => line.toLowerCase.split("\\s+")}
+	.flatMap('line -> 'word){ 
+		line : String => line.toLowerCase.split(tokenizerRegex)
+	}
+
+where `tokenizerRegex` is `"\\s+"`.
 
 A bit of Scala syntax; there are *two* argument lists passed to `flatMap`. The first, `('line -> 'word)` specifies the field(s) in the tuple to pass to the mapping function, shown on the left-hand side of the arrow-like `->`, and it names the output field(s) the function will return, the single `'word` in this case.
 
-The second function argument list is `{ line : String => line.toLowerCase.split("\\s+")}`. Scala lets you substitute curly braces `{...}` for parentheses `(...)` for function argument lists, which is most useful when the content of the "block-like" structure is a single *function literal* (a.k.a. *anonymous function*). 
+The second function argument list is `{ line : String => line.toLowerCase.split(tokenizerRegex)}`. Scala lets you substitute curly braces `{...}` for parentheses `(...)` for function argument lists, which is most useful when the content of the "block-like" structure is a single *function literal* (a.k.a. *anonymous function*). 
 
 The `line : String` is the argument list passed to the anonymous function, a single parameter named `line` of type `String`. On the right-hand side of the arrow-like `=>` is the body of the anonymous function. In this case it converts `line` to lower case and splits it on whitespace into an array of words.
-
 
 ### groupBy
 
@@ -202,13 +205,13 @@ Now restore the `groupBy` line, and after it, add this line:
 
 	.groupBy('count){ group => group.mkString('word -> 'words, "\t") }
 
-The output lines will be extremely long at the beginning of the file, but very short at the end. This second `groupBy` regroups the `'word` and `'count` output from the previous pipe. It groups by count so we now have all the words with two occurrence on a line, followed by all the words with two occurrences, etc. At the end of the output, which words have the most occurrences?
+The output lines will be extremely long at the beginning of the file, but very short at the end. This second `groupBy` regroups the `'word` and `'count` output from the previous pipe. It groups by count so we now have all the words with one occurrence on a line, followed by all the words with two occurrences, etc. At the end of the output, which words have the most occurrences? What are those "words"?
 
 #### Improve the Word Tokenization
 
-You probably noticed that simply splitting on whitespace is not very good, as punctuation is not removed. There are several ways it can be improved. First, replacing the expression `"\\s+"` with `"\\W+"` will treat all runs of non-alphanumeric characters as word separators. This improves the result considerably.
+You probably noticed that simply splitting on whitespace is not very good, as punctuation is not removed. There are several ways it can be improved. First, replacing the definition of `tokenizerRegex`, which is `"\\s+"`, with `"\\W+"` will treat all runs of non-alphanumeric characters as word separators. This improves the result considerably (although it's still not perfect...).
 
-For a more complete tokenizer, refactor `line.toLowerCase.split("\\s+")` into a `tokenize` function. Then implement `tokenize` to remove punctuation, etc. An example implementation can be found in the [Scalding README](https://github.com/twitter/scalding).
+For a more complete tokenizer, refactor `line.toLowerCase.split(tokenizerRegex)` into a `tokenize` function. Then implement `tokenize` to remove punctuation, etc. An example implementation can be found in the [Scalding README](https://github.com/twitter/scalding).
 
 #### Eliminate Blank Lines
 
@@ -226,35 +229,37 @@ Oddly enough, while there is a built-in `Tsv` class for tab-separated values, th
 
 You should get the following output (the input data ends in early 2010):
 
-	1984    25.578624999999995
-	1985    20.19367588932806
-	1986    32.46102766798416
-	1987    53.8896837944664
-	1988    41.540079051383415
-	1989    41.65976190476193
-	1990    37.562687747035575
-	1991    52.49553359683798
-	1992    54.80338582677166
-	1993    41.02671936758894
-	1994    34.08134920634922
-	1995    40.54210317460316
-	1996    24.91755905511811
-	1997    17.96584980237154
-	1998    30.56511904761905
-	1999    57.7707142857143
-	2000    71.7489285714286
-	2001    20.219112903225806
-	2002    19.139444444444454
-	2003    18.5447619047619
-	2004    35.52694444444441
-	2005    52.401746031746065
-	2006    70.81063745019917
-	2007    128.2739043824701
-	2008    141.9790118577075
-	2009    146.81412698412706
-	2010    204.7216
+	1984    80      2.918625000000001       0.17609474544971507
+	1985    253     2.3041501976284584      0.5150177183048612
+	1986    253     3.7039130434782592      0.6311900614112455
+	1987    253     8.90608695652174        1.9436409195268336
+	1988    253     9.564703557312258       0.5662800839386863
+	1989    252     9.684563492063495       0.9768865589941155
+	1990    253     8.826126482213441       1.0871208010962554
+	1991    253     12.469169960474305      1.66952305050656
+	1992    254     13.130669291338577      1.7661116441071
+	1993    253     9.920395256916992       3.1660729659295854
+	1994    252     8.369880952380953       1.0934696061063884
+	1995    252     10.075198412698407      1.0061968512619912
+	1996    254     6.229881889763783       0.8162148485315347
+	1997    253     4.491818181818182       0.7140447712304852
+	1998    252     7.641666666666666       1.6581179568203712
+	1999    252     14.443214285714282      5.433605126282854
+	2000    252     22.856230158730177      8.415990854209504
+	2001    248     10.109758064516127      1.2389205523420814
+	2002    252     9.569920634920635       2.150379256336458
+	2003    252     9.272619047619047       1.6510305480966423
+	2004    252     17.763888888888886      6.577299642773537
+	2005    252     46.67595238095237       11.4046392452893
+	2006    251     70.81063745019917       9.507687243758655
+	2007    251     128.2739043824701       35.17547139617391
+	2008    253     141.9790118577075       33.66549448302255
+	2009    252     146.81412698412706      39.731840611338804
+	2010    25      204.7216        7.454055905344417
 
-Note that as I write this, AAPL is currently trading at ~$700!
+Note that as I write this (Septembe 2012), AAPL is currently trading at ~$700/share! [^sucks]
+
+[^sucks]:But when I refined these notes in November 2012, the stock had corrected to ~$500/share! 
 
 ### Musical Interlude: Comparison with Hive and Pig
 

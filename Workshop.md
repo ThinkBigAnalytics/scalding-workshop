@@ -364,14 +364,14 @@ For comparison, here is the equivalent Hive join.
 
 	SELECT a.ymd, a.symbol, a.price_close, b.symbol, b.price_close, 
 	              c.symbol, c.price_close, d.symbol, d.price_close 
-FROM stocks a 
-JOIN stocks b ON a.ymd = b.ymd
-JOIN stocks c ON a.ymd = c.ymd
-JOIN stocks d ON a.ymd = d.ymd
-   a.symbol = 'AAPL' AND 
-   b.symbol = 'INTC' AND 
-   c.symbol = 'GE'   AND 
-   d.symbol = 'IBM'
+	      	      FROM stocks a 
+	   	      JOIN stocks b ON a.ymd = b.ymd
+	   	      JOIN stocks c ON a.ymd = c.ymd
+	   	      JOIN stocks d ON a.ymd = d.ymd
+	   	         a.symbol = 'AAPL' AND 
+	   	         b.symbol = 'INTC' AND 
+	   	         c.symbol = 'GE'   AND 
+	   	         d.symbol = 'IBM'
 
 Note that because `a.ymd` appears in all `ON` clauses, Hive will perform this four-way join in a single MapReduce job.
 

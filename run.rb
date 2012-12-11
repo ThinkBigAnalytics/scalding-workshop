@@ -9,6 +9,12 @@
 # for example, scald.rb handles invoking Scalding scripts 
 # This script is simpler and avoids some issues using "scald.rb".
 
+# Increase (or decrease) this heap size value if necessary.
+HEAP = "-Xmx1g"
+SCALDING_VERSION = "0.7.3"
+#LIBS = "lib/scalding-assembly-#{SCALDING_VERSION}.jar"
+LIBS = "lib/*"
+
 $LOAD_PATH << File.join(File.expand_path(File.dirname(File.symlink?(__FILE__) ? File.readlink(__FILE__) : __FILE__)), 'lib')
 
 require 'fileutils'
@@ -39,13 +45,13 @@ begin
 	FileUtils.mkdir_p('classes') unless File.exists?('classes')
 	unless File.exists?('classes/workshop/Csv.class')
 		puts "Compiling Helper \"lib/Csv.scala\""
-		run_command("scalac -cp 'lib/*' -d classes lib/Csv.scala")
+		run_command("scalac -cp '#{LIBS}' -d classes lib/Csv.scala")
 	end
 
 	FileUtils.mkdir_p(tmpnow)
 	puts "Compiling script \"#{script}\""
-	run_command("scalac -cp 'classes:lib/*' -d #{tmpnow} #{script}")
-	run_command("java -Xmx3g -cp 'classes:lib/*:'#{tmpnow} com.twitter.scalding.Tool #{classfile} --local #{ARGV.join(" ")}")
+	run_command("scalac -cp 'classes:#{LIBS}' -d #{tmpnow} #{script}")
+	run_command("java #{HEAP} -cp 'classes:#{LIBS}:#{tmpnow}' com.twitter.scalding.Tool #{classfile} --local #{ARGV.join(" ")}")
 rescue Exception => e
 	puts "Exception #{e} raised!"
 	status = 1

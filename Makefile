@@ -1,18 +1,19 @@
 # Makefile to build releases, etc.
 
-VERSION = 0.2
+VERSION = 0.2.1
 RELEASE = scalding-workshop-${VERSION}
 DISTRO_ZIP = ${RELEASE}.zip
 DISTRO_TGZ = ${RELEASE}.tgz
 
 DISTRO_DIRS  = data images lib scripts
-DISTRO_FILES = LICENSE.txt Makefile README.md README.html \
-  run.rb runall.sh use-hadoop.sh Workshop.md Workshop.html
+DISTRO_FILES = LICENSE.txt Makefile api.zip \
+  run.rb runall.sh \
+  README.md README.html Workshop.md Workshop.html
 
 all: clean stage build-release
 
 clean:
-	rm -rf ${RELEASE} ${DISTRO}
+	rm -rf ${RELEASE} ${DISTRO_ZIP} ${DISTRO_TGZ}
 
 stage: ${RELEASE}
 	@for d in ${DISTRO_DIRS}; \

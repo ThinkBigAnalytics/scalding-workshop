@@ -22,7 +22,9 @@ You'll need git to clone the workshop repository and optionally for other instal
 
 ### This Workshop
 
-Clone this [workshop from GitHub](https://github.com/thinkbiganalytics/scalding-workshop). Using `bash`:
+Download or clone this [workshop from GitHub](https://github.com/thinkbiganalytics/scalding-workshop).
+
+To clone this workshop from GitHub using `bash`:
 
     cd $HOME/fun
     git clone https://github.com/thinkbiganalytics/scalding-workshop
@@ -32,7 +34,7 @@ On Windows:
     cd C:\fun
     git clone https://github.com/thinkbiganalytics/scalding-workshop
 
-Or, if you prefer, simply [download a release](https://github.com/thinkbiganalytics/scalding-workshop).
+Or, simply [download a release](https://github.com/ThinkBigAnalytics/scalding-workshop/downloads).
 
 ### Java v1.6 or Better
 
@@ -111,6 +113,21 @@ On Windows:
 ## Next Steps
 
 The Workshop/Tutorial proper is described in the companion [Workshop document](https://github.com/thinkbiganalytics/scalding-workshop/blob/master/Workshop.html).
+
+## Notes on Releases
+
+### V0.2.1 
+
+Added missing file to distribution. Refined the run scripts to work better with different Java versions.
+
+### V0.2 
+
+Refined several exercises and fixed bugs. Added `Makefile` for building releases.
+
+### V0.1 
+
+First release for StrangeLoop 2012 workshop.
+
 
 ## For Further Information
 

@@ -19,6 +19,12 @@ import workshop.Csv
 
 /**
  * This exercise explores joining two data sets, stocks and dividends.
+ * You invoke the script like this:
+ *   run.rb scripts/StocksDividendsJoin4.scala \
+ *     --stocks    data/stocks/IBM.csv \
+ *     --dividends data/dividends/IBM.csv \
+ *     --output output/IBM-stocks-dividends-join.txt
+ * You can also try AAPL, GE, and INTC.
  */
 
 class StocksDividendsJoin4(args : Args) extends Job(args) {

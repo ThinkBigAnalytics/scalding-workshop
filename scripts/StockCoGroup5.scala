@@ -63,6 +63,7 @@ class StockCoGroup5(args : Args) extends Job(args) {
    * The following is equivalent to ... stockName.map(name: String => startStockPipe(name))
    */
   val stocks = stockNames.map(startStockPipe(_))
+  // val stocks = stockNames.map(symbol => startStockPipe(symbol))
 
   /*
    * Finally, cogroup the other 3 stocks by the ymd, project out just the fields we want,

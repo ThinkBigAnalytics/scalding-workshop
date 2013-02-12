@@ -34,15 +34,17 @@ class ContextNGrams7(args : Args) extends Job(args) {
   val ngramPrefix = args.list("ngram-prefix").mkString(" ")
   val numberOfNGrams = args.getOrElse("count", "10").toInt
   
-  val ngramRE = new scala.util.matching.Regex(ngramPrefix + """\s+(\S+)""")
+  val ngramRE = new scala.util.matching.Regex(ngramPrefix + """\s+(\w+)""")
 
+  // Used to sort (phrase,count) by count, descending.
+  val countReverseComparator = (tuple1:(String,Int), tuple2:(String,Int)) => tuple1._2 > tuple2._2
+      
   val lines = TextLine(args("input"))
     .read
     .flatMap('line -> 'ngram) { text: String => ngramRE.findAllIn(text).toIterable }
     .discard('num, 'line)
     .groupBy('ngram) { _.size('count) }
-    // TODO: The following will sort by count, but it tosses the ngram field!
-    // .groupAll { _.sortedReverseTake[Int]('count -> 'ranked_ngrams, numberOfNGrams) }
+    .groupAll { _.sortWithTake[(String,Int)](('ngram,'count) -> 'sorted_ngrams, numberOfNGrams)(countReverseComparator) }
     .debug
     .write(Tsv(args("output")))
 }

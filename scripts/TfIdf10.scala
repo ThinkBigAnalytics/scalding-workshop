@@ -20,9 +20,11 @@ class TfIdf10(args : Args) extends Job(args) {
   
   import Matrix._
 
-  val docWordMatrix = Tsv( args("input"), ('doc, 'word, 'count) )
+  val docSchema = ('docId, 'word, 'count)
+
+  val docWordMatrix = Tsv( args("input"), docSchema )
     .read
-    .toMatrix[Long,String,Double]('doc, 'word, 'count)
+    .toMatrix[Long,String,Double](docSchema)
 
   // compute the overall document frequency of each row
   val docFreq = docWordMatrix.sumRowVectors

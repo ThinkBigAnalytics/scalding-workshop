@@ -1,10 +1,9 @@
 # Scalding Workshop
 
-[StrangeLoop 2012](http://thestrangeloop.com)<br/>
-**Dean Wampler, Think Big Analytics**<br/>
-[dean@deanwampler.com](mailto:dean@deanwampler.com)<br/>
+**Dean Wampler, Concurrent Thought**<br/>
+[dean@deanwampler.com](mailto:dean@deanwampler.com?subject=Question%20about%20your%20Scalding%20Workshop)<br/>
 [@deanwampler](https://twitter.com/deanwampler)<br/>
-[Hire Us!](http://thinkbiganalytics.com)
+[Hire Me!](mailto:dean@deanwampler.com?subject=Hiring%20Dean%20Wampler)
 
 This workshop/tutorial takes you through the basic principles of writing data analysis applications with [Scalding](https://github.com/twitter/scalding), a Scala API that wraps [Cascading](http://www.cascading.org/). I first went through this workshop at [StrangeLoop 2012](http://thestrangeloop.com). It took about 3 hours, but we didn't do all the *mini-exercises*, so it make take you a bit longer if you do them all.
 
@@ -20,7 +19,7 @@ This document will explain many features of the Scalding and Cascading. The scri
 
 ## A Disclaimer...
 
-I'm not a Scalding or Cascading expert. Feedback welcome! [Fork me](https://github.com/ThinkBigAnalytics/scalding-workshop).
+I still consider myself a *Journeyman* Scalding and Cascading programmer. Feedback welcome! [Fork me](https://github.com/deanwampler/scalding-workshop).
 
 # Basic Cascading Concepts
 

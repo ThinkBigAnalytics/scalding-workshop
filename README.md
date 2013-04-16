@@ -1,10 +1,9 @@
 # Scalding Workshop README
 
-**StrangeLoop 2012**<br/>
-**Dean Wampler, Think Big Analytics**<br/>
-[dean@deanwampler.com](mailto:dean@deanwampler.com)<br/>
+**Dean Wampler, Concurrent Thought**<br/>
+[dean@deanwampler.com](mailto:dean@deanwampler.com?subject=Question%20about%20your%20Scalding%20Workshop)<br/>
 [@deanwampler](https://twitter.com/deanwampler)<br/>
-[Hire Us!](http://thinkbiganalytics.com)
+[Hire Me!](mailto:dean@deanwampler.com?subject=Hiring%20Dean%20Wampler)
 
 ## About this Workshop
 
@@ -22,19 +21,17 @@ You'll need git to clone the workshop repository and optionally for other instal
 
 ### This Workshop
 
-Download or clone this [workshop from GitHub](https://github.com/thinkbiganalytics/scalding-workshop).
+Download or clone this [workshop from GitHub](https://github.com/deanwampler/scalding-workshop).
 
 To clone this workshop from GitHub using `bash`:
 
     cd $HOME/fun
-    git clone https://github.com/thinkbiganalytics/scalding-workshop
+    git clone git://github.com/deanwampler/scalding-workshop.git
 
 On Windows:
 
     cd C:\fun
-    git clone https://github.com/thinkbiganalytics/scalding-workshop
-
-Or, simply [download a release](https://github.com/ThinkBigAnalytics/scalding-workshop/downloads).
+    git clone git://github.com/deanwampler/scalding-workshop.git
 
 ### Java v1.6 or Better
 
@@ -77,10 +74,7 @@ Clone [Scalding from GitHub](https://github.com/twitter/scalding). Using `bash`:
     cd $HOME/fun
     git clone https://github.com/twitter/scalding.git
 
-On Windows:
-
-    cd C:\fun
-    git clone https://github.com/thinkbiganalytics/scalding-workshop
+Windows is similar.
 
 ### Build Scalding
 
@@ -133,11 +127,13 @@ First release for StrangeLoop 2012 workshop.
 
 See the [Scalding GitHub page](https://github.com/twitter/scalding) for more information about Scalding. The [wiki](https://github.com/twitter/scalding/wiki) is very useful.
 
-[Dean Wampler](mailto:dean@deanwampler.com) from [Think Big Analytics](http://thinkbiganalytics.com) prepared this workshop. [Contact Dean](mailto:dean@deanwampler.com) with questions about the workshop. For information about consulting and training on Scalding and other Hadoop-related topics, [send us email](mailto:info@thinkbiganalytics.com).
+I'm [Dean Wampler](mailto:dean@deanwampler.com) from [Concurrent Thought](http://concurrentthought.com). I prepared this workshop. Send me email with [questions about the workshop](mailto:dean@deanwampler.com?subject=Question%20about%20your%20Scalding%20Workshop) or for [information about consulting and training](mailto:dean@deanwampler.com?subject=Hiring%20Dean%20Wampler) on Scala, Scaldin, or other Hadoop-related topics.
 
 Some of the data used in these exercises was obtained from [InfoChimps](http://infochimps.com).
 
+**NOTE:** The first version of this workshop was written while I worked at Think Big Analytics. The original and now obsolete fork of the workshop is [here](https://github.com/ThinkBigAnalytics/scalding-workshop).
+
 **Dean Wampler**<br/>
-[dean@deanwampler.com](mailto:dean@deanwampler.com)<br/>
+[dean@deanwampler.com](mailto:dean@deanwampler.com?subject=Question%20about%20your%20Scalding%20Workshop)<br/>
 [@deanwampler](https://twitter.com/deanwampler)<br/>
 

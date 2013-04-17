@@ -13,7 +13,7 @@ DISTRO_FILES = LICENSE.txt Makefile api.zip \
 all: clean stage build-release
 
 clean:
-	rm -rf ${RELEASE} ${DISTRO_ZIP} ${DISTRO_TGZ}
+	rm -rf classes ${RELEASE} ${DISTRO_ZIP} ${DISTRO_TGZ}
 
 stage: ${RELEASE}
 	@for d in ${DISTRO_DIRS}; \

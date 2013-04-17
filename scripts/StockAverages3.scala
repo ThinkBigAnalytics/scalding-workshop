@@ -46,9 +46,9 @@ class StockAverages3(args : Args) extends Job(args) {
    */
     .mapTo(('ymd, 'price_adj_close) -> ('year, 'closing_price)) { 
       ymd_close: (String, String) =>   // (String, String) === Tuple2[String, String]
-      // TODO: Add exception handling logic!
+      // TODO: Add exception handling logic in case the 
+      // double conversion fails!
       (year(ymd_close._1), (ymd_close._2).toDouble)
-      //(year(ymd_close._1), java.lang.Double.parseDouble(ymd_close._2))
     }
 
   /*

@@ -34,9 +34,9 @@ import com.twitter.scalding._
  *   ../scalding/scripts/scald.rb --hdfs-local --host localhost \
  *     scripts/HadoopTwitter11.scala \
  *     --input  data/twitter/tweets.tsv \
- *     --uniques output/unique-languages.txt \
- *     --count_star output/count-star.txt \
- *     --count_star_limit output/count-star-limit.txt
+ *     --uniques output/unique-languages \
+ *     --count_star output/count-star \
+ *     --count_star_limit output/count-star-limit
  * If you're on a real cluster, replace "localhost" with the correct name.
  * The output directory will also be in your HDFS home directory.
  */

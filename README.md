@@ -1,9 +1,9 @@
 # Scalding Workshop README
 
 **Dean Wampler, Concurrent Thought**<br/>
-[dean@deanwampler.com](mailto:dean@deanwampler.com?subject=Question%20about%20your%20Scalding%20Workshop)<br/>
+[dean@concurrentthought.com](mailto:dean@concurrentthought.com?subject=Question%20about%20your%20Scalding%20Workshop)<br/>
 [@deanwampler](https://twitter.com/deanwampler)<br/>
-[Hire Me!](mailto:dean@deanwampler.com?subject=Hiring%20Dean%20Wampler)
+[Hire Me!](mailto:dean@concurrentthought.com?subject=Hiring%20Dean%20Wampler)
 
 ## About this Workshop
 

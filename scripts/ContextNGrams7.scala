@@ -1,4 +1,5 @@
 /*
+Copyright 2013 Concurrent Thought, Inc.
 Copyright 2012 Think Big Analytics, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -38,10 +39,11 @@ class ContextNGrams7(args : Args) extends Job(args) {
   // Used to sort (phrase,count) by count, descending.
   val countReverseComparator = (tuple1:(String,Int), tuple2:(String,Int)) => tuple1._2 > tuple2._2
       
+  // This flow adds a debug step, which writes the records to the console.
   val lines = TextLine(args("input"))
     .read
     .flatMap('line -> 'ngram) { text: String => ngramRE.findAllIn(text).toIterable }
-    .discard('num, 'line)
+    .discard('offset, 'line)
     .groupBy('ngram) { _.size('count) }
     .groupAll { _.sortWithTake[(String,Int)](('ngram,'count) -> 'sorted_ngrams, numberOfNGrams)(countReverseComparator) }
     .debug

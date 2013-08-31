@@ -11,8 +11,8 @@
 
 # Increase (or decrease) this heap size value if necessary.
 HEAP = "-Xmx1g"
-SCALDING_VERSION = "0.7.3"
-#LIBS = "lib/scalding-assembly-#{SCALDING_VERSION}.jar"
+VERSION = "0.3.0"
+ASSEMBLY = "target/ScaldingWorkshop-#{VERSION}.jar"
 LIBS = "lib/*"
 
 $LOAD_PATH << File.join(File.expand_path(File.dirname(File.symlink?(__FILE__) ? File.readlink(__FILE__) : __FILE__)), 'lib')
@@ -34,6 +34,9 @@ if ARGV.length == 0
 	exit(1)
 end
 script = ARGV[0]
+unless script =~ /\//
+	script="scripts/#{script}"
+end
 ARGV.shift
 classfile = File.basename(script, ".scala")
 
@@ -42,19 +45,20 @@ tmpnow = "tmp/#{now}"
 
 status = 0
 begin
-	FileUtils.mkdir_p('classes') unless File.exists?('classes')
-	unless File.exists?('classes/workshop/Csv.class')
-		puts "Compiling Helper \"lib/Csv.scala\""
-		run_command("scalac -cp '#{LIBS}' -d classes lib/Csv.scala")
+	unless File.exists?(ASSEMBLY)
+		puts "You must build the all-inclusive 'assembly' (#{ASSEMBLY}) first."
+		puts "See the README for instructions."
+		exit(1)
 	end
 
 	FileUtils.mkdir_p(tmpnow)
 	puts "Compiling script \"#{script}\""
-	run_command("scalac -cp 'classes:#{LIBS}' -d #{tmpnow} #{script}")
-	run_command("java #{HEAP} -cp 'classes:#{LIBS}:#{tmpnow}' com.twitter.scalding.Tool #{classfile} --local #{ARGV.join(" ")}")
+	run_command("scalac -deprecation -cp 'classes:#{ASSEMBLY}:#{LIBS}' -d #{tmpnow} #{script}")
+	run_command("java #{HEAP} -cp 'classes:#{ASSEMBLY}:#{LIBS}:#{tmpnow}' com.twitter.scalding.Tool #{classfile} --local #{ARGV.join(" ")}")
 rescue Exception => e
 	puts "Exception #{e} raised!"
 	status = 1
+ensure
+	FileUtils.remove_dir(tmpnow) if File.exists?(tmpnow)
 end
-FileUtils.remove_dir(tmpnow)
 exit(status)

@@ -1,4 +1,5 @@
 /*
+Copyright 2013 Concurrent Thought, Inc.
 Copyright 2012 Think Big Analytics, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +18,6 @@ limitations under the License.
 import com.twitter.scalding._
 import cascading.tuple.Fields
 import cascading.tuple.Fields._
-import workshop.Csv
 
 /**
  * This exercise uses the CoGroup feature. CoGroups in Cascading are really the basis
@@ -54,7 +54,7 @@ class StockCoGroup5(args : Args) extends Job(args) {
    * the fields before we join, so we have no name collisions.
    */
   def startStockPipe(name: String) = 
-    new Csv(stocksDir + "/" + name + ".csv", stockSchema)
+    new Csv(stocksDir + "/" + name + ".csv", fields = stockSchema)
       .read
       .project(('ymd, 'price_close))
       .rename(('ymd, 'price_close) -> (rename('ymd, name), rename('price_close, name)))

@@ -1,4 +1,5 @@
 /*
+Copyright 2013 Concurrent Thought, Inc.
 Copyright 2012 Think Big Analytics, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,12 +16,15 @@ limitations under the License.
 */
 
 import com.twitter.scalding._
-import workshop.Csv
 
 /**
  * This exercise uses the same features as the previous exercise, but this time
  * we'll look at the year-over-year average of Apple's stock price (so you'll 
  * know which entry points you missed...).
+ * You invoke the script like this:
+ *   run.rb scripts/StockAverages3.scala \
+ *     --input  data/stocks/APPL.csv \
+ *     --output output/AAPL-avg.txt
  */
 
 class StockAverages3(args : Args) extends Job(args) {
@@ -34,7 +38,7 @@ class StockAverages3(args : Args) extends Job(args) {
    * and dividend payments to give you a better view of how much a stock has
    * appreciated.
    */
-  new Csv(args("input"), stockSchema)
+  new Csv(args("input"), fields = stockSchema)
     .read
     .project('ymd, 'price_adj_close)
 
@@ -47,8 +51,8 @@ class StockAverages3(args : Args) extends Job(args) {
     .mapTo(('ymd, 'price_adj_close) -> ('year, 'closing_price)) { 
       ymd_close: (String, String) =>   // (String, String) === Tuple2[String, String]
       // TODO: Add exception handling logic in case the 
-      // double conversion fails!
-      (year(ymd_close._1), (ymd_close._2).toDouble)
+      // double conversion fails! (See StocksAverages3b ...)
+      (toYear(ymd_close._1), (ymd_close._2).toDouble)
     }
 
   /*
@@ -60,5 +64,5 @@ class StockAverages3(args : Args) extends Job(args) {
 
     .write(Tsv(args("output")))
 
-  def year(date: String): Int = Integer.parseInt(date.split("-")(0))
+  def toYear(date: String): Int = date.split("-")(0).toInt
 }

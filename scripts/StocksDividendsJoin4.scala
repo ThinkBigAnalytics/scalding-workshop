@@ -1,4 +1,5 @@
 /*
+Copyright 2013 Concurrent Thought, Inc.
 Copyright 2012 Think Big Analytics, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +16,6 @@ limitations under the License.
 */
 
 import com.twitter.scalding._
-import workshop.Csv
 
 /**
  * This exercise explores joining two data sets, stocks and dividends.
@@ -36,19 +36,26 @@ class StocksDividendsJoin4(args : Args) extends Job(args) {
    * e.g., 'symd for stocks.ymd and 'dymd for dividends.ymd.
    * Note that for these particular data samples, the symbol and exchange
    * are not in the data.
+   * Finally, we previously used Tuples to declare schemas like these, but here
+   * we use two alternatives, a List and an Enumeration. The tuple is the most
+   * compact syntax, BUT it's limited to 22 fields. Some data sets can have
+   * more than 22 fields!
    */
   val stockSchema = 
-    ('symd, 'price_open, 'price_high, 'price_low, 'price_close, 'volume, 'price_adj_close)
-  val dividendsSchema = ('dymd, 'dividend)
+    List ('symd, 'price_open, 'price_high, 'price_low, 'price_close, 'volume, 'price_adj_close)
+  object dividendsSchema extends Enumeration {
+    val dymd, dividend = Value
+  }
+  import dividendsSchema._    // Note that the import is required
 
   /*
    * We read CSV input for the stocks and dividends. 
    */
-  val stocksPipe = new Csv(args("stocks"), stockSchema)
+  val stocksPipe = new Csv(args("stocks"), fields = stockSchema)
     .read
     .project('symd, 'price_close)
 
-  val dividendsPipe = new Csv(args("dividends"), dividendsSchema)
+  val dividendsPipe = new Csv(args("dividends"), fields = dividendsSchema)
     .read
 
   /*

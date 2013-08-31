@@ -1,0 +1,70 @@
+#!/usr/bin/env scala
+// ------------------------------------------
+// run - Simple scala driver for the Scalding workshop.
+// usage (*nix): run scaldingscript.scala [options]
+// usage (Windowx): scala run scaldingscript.scala [options]
+//
+// This is an "approximate" port of run.rb, but because it's written in scala,
+// you don't also need a Ruby environment to run it.
+// It verifies that you passed the name of a Scalding script (a Scala source file)
+// as an argument, compiles it, and invokes Scalding in "local" mode.
+// Scalding comes with a more sophisticated driver script called "scald.rb".
+// For example, scald.rb handles invoking Scalding scripts as Hadoop jobs. 
+// This script is simpler and avoids some issues using "scald.rb".
+//
+// TODO: Does not handle invocation from another directory.
+// NOTE: This script requires Scala 2.10 or newer.
+
+// Increase (or decrease) this heap size size value if necessary.
+val heapSize = "-Xmx1g"
+
+val version = "0.3.0"
+val assembly = s"target/ScaldingWorkshop-$version.jar"
+val libs = "target/*"
+
+args.length match {
+    case 0 => println("Must specify a Scalding script!"); sys.exit(1)
+    case _ =>
+}
+val separator = sys.props("file.separator")
+val fullPathScriptREstr = s"""(.*${separator})([^${separator}]+).scala$$"""
+val fullPathScriptRE = fullPathScriptREstr.r 
+val scriptREstr = s"""([^${separator}]+)(.scala)?$$"""
+val scriptRE = scriptREstr.r 
+val (path, name, script) = args(0) match {
+    case fullPathScriptRE(path, name) => (path, name, s"${path}${name}.scala")
+    case scriptRE(name, _) => (s"scripts${separator}", name, s"scripts${separator}${name}.scala")
+    case _  => 
+        println(s"Could not parse input script name: ${args(0)}")
+        sys.exit(1)
+}
+println(s"Running script: $script")
+val scriptArgs = args.toList.tail.mkString(" ")
+
+import scala.language.postfixOps
+import scala.sys.process._
+
+def mkdir(path: String): Unit = {
+    val dir = new java.io.File(path)
+    if (dir.exists == false) {
+        if (dir.mkdir == false) {
+            println(s"Could not create a required directory: $dir")
+            sys.exit(1)
+        }
+    }
+}
+mkdir("classes")
+
+def command(message: String)(cmd: => Int):Int = {
+    val status = cmd
+    if (status != 0) {
+        println(s"Failed $message")
+        sys.exit(1)
+    }
+    status
+}
+command(s"compiling the script: $script")(
+    s"scalac -deprecation -cp $assembly:$libs -d classes $script" !)
+println(    s"java $heapSize -cp classes:$assembly:$libs com.twitter.scalding.Tool $name --local $scriptArgs" )
+command("running the script!")(
+    s"java $heapSize -cp classes:$assembly:$libs com.twitter.scalding.Tool $name --local $scriptArgs" !)

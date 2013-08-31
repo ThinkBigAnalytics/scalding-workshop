@@ -1,4 +1,5 @@
 /*
+Copyright 2013 Concurrent Thought, Inc.
 Copyright 2012 Think Big Analytics, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,8 +25,8 @@ import com.twitter.scalding._
  *   run.rb scripts/Twitter6.scala \
  *     --input  data/twitter/tweets.tsv \
  *     --uniques output/unique-languages.txt \
- *     --count_star output/count-star.txt \
- *     --count_star_limit output/count-star-limit.txt
+ *     --count-star output/count-star.txt \
+ *     --count-star-100 output/count-star-100.txt
  */
 
 class Twitter6(args : Args) extends Job(args) {
@@ -49,16 +50,14 @@ class Twitter6(args : Args) extends Job(args) {
    * Another split used to implement "COUNT(*)".
    */
   new RichPipe(tweets)
-      .groupAll { _.count('tweet_id).reducers(2) }
-      .write(Tsv(args("count_star")))
+      .groupAll { _.size('tweet_id).reducers(2) }
+      .write(Tsv(args("count-star")))
 
   /*
    * Yet another split used to implement "LIMIT N".
-   * Unfortunately, when running in local mode, a bug causes a 
-   * divide by zero error.
    */
-  // new RichPipe(tweets)
-  //     .limit(100)
-  //     .groupAll { _.count('tweet_id).reducers(2) }
-  //     .write(Tsv(args("count_star_limit")))
+  new RichPipe(tweets)
+      .limit(100)
+      .groupAll { _.size('tweet_id).reducers(2) }
+      .write(Tsv(args("count-star-100")))
 }

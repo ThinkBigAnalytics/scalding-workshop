@@ -17,9 +17,9 @@ This document will explain many features of the Scalding and Cascading. The scri
 * [Movie Recommendations](http://blog.echen.me/2012/02/09/movie-recommendations-and-more-via-mapreduce-and-scalding/) is a fantastic blog post with detailed, non-trivial examples using Scalding.
 * [Scalding Example Project](https://github.com/snowplow/scalding-example-project) is a full example designed to run on Hadoop, specifically on Amazon's EMR (Elastic MapReduce) platform.
 
-## A Disclaimer...
+## Help a Brother Out!
 
-I still consider myself a *Journeyman* Scalding and Cascading programmer. Feedback welcome! [Fork me](https://github.com/deanwampler/scalding-workshop).
+Feedback, patches, suggested additions are welcome! [Fork me](https://github.com/deanwampler/scalding-workshop).
 
 # Basic Cascading Concepts
 
@@ -220,8 +220,6 @@ The very first line in the output is an empty word and a count of approximately 
 
 Let's do a similar `groupBy` operation, this time to compute the average of Apple's (AAPL) closing stock price year over year (so you'll know what entry points you missed...). Also, in this exercise we'll solve a common problem; the input data is in an unsupported format.
 
-Oddly enough, while there is a built-in `Tsv` class for tab-separated values, there is no corresponding `Csv` class, so we'll handle that ourselves.
-
 	./run.rb scripts/StockAverages3.scala \
 		--input  data/stocks/AAPL.csv \
 		--output output/AAPL-year-avg.txt
@@ -311,6 +309,36 @@ If you have Pig installed, try the Pig script. Compare the performance of the Pi
 
 If you have Hive installed, try the Hive query shown above. You'll need to create a table that uses the data files first. Compare the performance of the Hive vs. Scalding script, keeping in mind the caveats mentioned for Pig.
 
+## Error Handling
+
+What if some of the input records are bad. This is actually common in real-world data analytics. Let's adapt `StockAverages3` to handle the case where invalid entries for the date or closing price are encountered. That is, they don't successfuly parse the year as an integer or the closing price as a double. We'll split the stream into "good" and "bad" data, writing the bad data to a separate "errors" output for subsequent inspection, clean-up, or whatever.
+
+The script is very similar to the previous one, so we'll just call it `StockAverages3b`. (The comments in the script describe the implementation differences, as usual...) Note that we need to specify a different input file, where we've introduced 5 bad records, and an `errors` argument for the errors stream, which will contain 5 errors records after the script has finished: 
+
+	./run.rb scripts/StockAverages3b.scala \
+		--input  data/stocks/APPL-with-errors.csv \
+		--output output/AAPL-year-avg.txt \ 
+		--errors output/AAPL-errors.txt
+
+### Further Exploration
+
+Try these additional "mini-exercises" to learn more.
+
+#### What Happens if You Use the Bad Input with StocksAverages3?
+
+Run the previous command replacing `StockAverages3b` with `StockAverages3`. (Omit the `--errors` argument or leave it, in which case it will be ignored by `StockAverages3`.) Notice the exceptions that are thrown when you hit the first bad input record.
+
+#### Improve the Bad Record Information
+
+When you look at the content of `output/AAPL-errors.txt`, it isn't very helpful for debugging the problem because it only shows a bad year and/or closing price value, not the full record that was bad. At least having the full dates would help track down the bad records.
+
+We're using `mapTo` to discard the fields we no longer need, rather than `map`, which would append the new fields to the existing fields.
+
+Fortunately, all you need to do is modify the script to use `map` instead, because the subsequent `groupBy` will discard the unwanted fields anyway. (In fact, the `project` we do early on isn't really necessary, although it probably improves performance by reducing network I/O to shuffle larger records around the cluster...) We don't use `groupBy` on the error stream, so it keeps the data we want in that output.
+
+Change `mapTo` to `map`, rerun the script, and look at the new content of `output/AAPL-errors.txt`. Did `output/AAPL-year-avg.txt` change?
+
+A final note, if we didn't do a grouping operation of some kind, you could follow the `map` step with a `project` on the `good` pipe to keep just the final `year` and `close` fields, etc. Using `mapTo` is more efficient than separate `map` and `project` (or `discard`) steps.
 
 ## Joins
 
@@ -323,7 +351,7 @@ Let's join stocks and dividend data. To join two data sources, you set up to pip
 	  --dividends data/dividends/AAPL.csv \
 	  --output output/AAPL-stocks-dividends-join.txt
 
-Note that we need to input sources, we use flags `--stocks` and `--dividends` for them.
+Note that we need to two input sources, so we use flags `--stocks` and `--dividends` for them, instead of `--input`.
 
 ### Further Exploration
 
@@ -387,8 +415,8 @@ This exercise shows how to split a data stream and use various features on the s
 	run.rb scripts/Twitter6.scala \
 	  --input  data/twitter/tweets.tsv \
 	  --uniques output/unique-languages.txt \
-	  --count_star output/count-star.txt \
-	  --count_star_limit output/count-star-limit.txt
+	  --count-star output/count-star.txt \
+	  --count-star-100 output/count-star-100.txt
 
 The output in `output/unique-languages.txt` is the following:
 
@@ -403,18 +431,20 @@ The output in `output/unique-languages.txt` is the following:
 
 There are seven languages and an invalid value that looks vaguely like a null! These "languages" are actually from messages in the stream that aren't tweets, but the results of other user-invoked actions.
 
-The output in `output/count-star.txt` is a single line with the value 1000, the same as the number of lines in the data file. Similarly, `output/count-star-limit.txt` should have 100, reflecting the limit to the first 100 lines.
+The output in `output/count-star.txt` is a single line with the value < 1000; there are 1000 lines, but not all have a non-null value for the language of the tweet. Similarly, `output/count-star-100.txt` should contain the value of 100, reflecting the `limit(100)` step added to its dataflow.
 
 Note that the implementations use `groupAll`, then count the elements in the single group, via the `GroupBuilder` object. (The `count` method requires that we specify a field. We arbitrarily picked `tweet_id`.) 
 
-By the way, this approach is *exactly* how Pig implements `COUNT(*)`. For example:
+By the way, this pattern is *exactly* how Pig implements `COUNT(*)`. For example:
 
 	grouped = group tweets all;
 	count = foreach grouped generate COUNT(tweets);
 
+Now you're a Pig programmer. You're welcome...
+
 Here, `tweets` would be the equivalent of a Pipe and `grouped` is the name of a new Pipe created by grouping all records together into one new record. The `foreach ... generate` statement iterates through this single record and projects the `COUNT` of the group contents (named `tweets` after the original relation).
 
-Finally, note that we commented out the additional example using the `limit` feature. Unfortunately, there is a bug where running in local mode causes a *divide by zero* error. As we'll demonstrate later, this bug doesn't appear when running with Hadoop.
+Note, the `limit(...)` feature appeared to have a bug that caused a *divide by zero* error in earlier versions of Scalding that only appeared when running in local mode, but not when running Hadoop jobs. (Or, it might have been a Cascading bug...)
 
 ### Further Exploration
 
@@ -428,7 +458,7 @@ Add a `filter` method call that removes these "bad" records. **Hint:** You'll wa
 
 ## Compute NGrams
 
-Let's return to the Shakespeare data to compute *context ngrams*, a common natural language processing technique, where we provide a prefix of words and find occurrences of the prefix followed by an additional word. The ranked most common `n` phrases are returned. 
+Let's return to the Shakespeare data to compute *context ngrams*, a common natural language processing technique, where we provide a prefix of words and find occurrences of the prefix followed by an additional word. The ngrams are returned in order of frequency, descending. 
 
 	run.rb scripts/ContextNGrams7.scala \
 	  --input  data/shakespeare/plays.txt \
@@ -436,7 +466,9 @@ Let's return to the Shakespeare data to compute *context ngrams*, a common natur
 	  --ngram-prefix "I love" \
 	  --count 10
 
-Unfortunately, the data set isn't large enough to find a lot of examples for many possible ngrams.
+The output is the list containing each ngram along with a count of its occurrences. Note that the list is actually written to the console, as well as to the output location. We added a `debug` step to the dataflow that dumps the tuples to the console.
+ 
+The data set isn't large enough to find a lot of examples for many possible ngrams.
 
 ### Further Exploration
 
@@ -450,7 +482,7 @@ Run the script on other large text files you have.
 
 #### NGram Detector
 
-Context ngrams are special case of ngrams, where you just find the most common n-length phrases. Write a script to compute the most common ngrams. 
+Context ngrams are a special case of ngrams, where you just find the most common n-length phrases. Put another way, "regular" ngrams are like context ngrams with no prefix. Write a script to compute the most common ngrams. 
 
 ## Joining Pipes
 
@@ -492,8 +524,8 @@ For more information, see the [Wikipedia](http://en.wikipedia.org/wiki/Tf*idf) p
 
 Run the script this way on a small matrix:
 
-	run.rb scripts/TfIdf10.scala \
- 	  --input data/matrix/docBOW.tsv \
+	run.rb scripts/TfIdf10.scala \ 
+	  --input data/matrix/docBOW.tsv \ 
 	  --output output/featSelectedMatrix.tsv \
 	  --nWords 300
 
@@ -505,21 +537,34 @@ There is newer, more experimental *Type-Safe API* that attempts to more fully ex
 
 # Using Scalding with Hadoop
 
-Now we'll use the `scripts/scald.rb` script in the Scalding distribution to a script as a Hadoop job. For example, assuming that you cloned the Scalding repo in a sister directory of the workshop directory, here is a command to run `HadoopTwitter11`, which is identical to `Twitter6` that we ran previously, except that we now use the `limit` method, which *won't* throw an exception when we run with Hadoop:
+A great feature of Cascading, which Scalding exploits, is the ability to test locally before running on Hadoop. This improves the iterative development and feedback cycle. 
 
-	../scalding/scripts/scald.rb --hdfs-local --host localhost \
-	  scripts/HadoopTwitter11.scala \
-	  --input            data/twitter/tweets.tsv \
-	  --uniques          output/unique-languages \
-	  --count_star       output/count-star \
-	  --count_star_limit output/count-star-limit
+We've provided a bash shell script, `run11.sh` to run the job on Hadoop, but first, lets discuss Scalding's own approach.
 
-On a laptop configuration using *pseudo-distributed* mode, use `localhost` for the Hadoop host name flag. Use the server name for the *JobTracker* master process when running on a real cluster. Note that the `--hdfs-local` option actually means use MapReduce, but ignore the *Hadoop Distributed File System* (HDFS). Instead, use the local file system like we have been doing. If we used the `--hdfs` option instead, all paths would be interpreted as relative to HDFS. The paths shown would be assumed to be relative to the user's home directory in HDFS, which is `/user/<name>`, by default.
+Once you're ready to try it in Hadoop, the "official" Scalding way is to use the `scripts/scald.rb` script in the Scalding distribution. For example, assuming that you cloned the Scalding repo into `$SCALDING_HOME`, here is a command to run `src/main/scala/HadoopTwitter11.scala`, which is actually *identical* to `Twitter6` that we ran previously, except for comments. (We put it in `src/main/scala` so the sbt build adds it to the assembly.):
 
-Finally, the values specified for output using the `--uniques`, `count_star`, and `count_star_limit` flags will be interpreted as *directory*, not *file* names as previously. This follows conventional Hadoop practice, where the parallel processes might result in multiple, concurrently-written output files!
+	../scalding/scripts/scald.rb -local --host localhost \
+	  src/main/scala/HadoopTwitter11.scala \
+	  --input           data/twitter/tweets.tsv \
+	  --uniques         output/unique-languages \
+	  --count-star      output/count-star \
+	  --count-star-100  output/count-star-100
 
-In this case, the `limit` method doesn't trigger an exception and each directory will contain two files, a `part-00000` file (partition number `00000`) that contains the data and a `.part-00000.crc` file that contains a CRC of the data file. With a larger data set and running on a real distributed cluster, instead of the *pseudo-distributed* mode you run on a single machine, there might be multiple files. The CRC file serves two purposes. First, it can be used to check for a corrupt data file and second, when it is written, processes watching the directory *know* that the process writing the corresponding data file has finished! This is important when sequencing processing tasks.
+Use the server address with your *JobTracker* for the `--host` flag on a real Hadoop cluster. Also, replace `--local` with `--hdfs` so that HDFS is actually used. For this to work, you'll need to copy the `data/twitter` directory to your HDFS home directory (i.e., `/user/$USER`) and also create an `output` directory there.
 
+Finally, when using HDFS, the values specified for output using the `--uniques`, `count-star`, and `count-star-limit` flags will be used as *directories*, not *files*, which is why we omitted the `.txt` suffixes used before. This follows conventional Hadoop practice, where the parallel processes might result in multiple, concurrently-written output files.
+
+To simplify matters, such as removing the need for you to install the Scalding distribution, we've provided a bash script, `run11.sh`, to run this exercise. You'll need access to a computer with Hadoop and bash installed. You can install Hadoop on a Mac using HomeBrew, on Linux using the appropriate package installer, and Microsoft has recently released a port of Hadoop for Windows. However, the easiest way to play with Hadoop is to install a VMWare or VirtualBox runner and download a completely configured image file from Cloudera, MapR, or Hortonworks.
+
+We'll just demonstrate using `run11.sh` in the Workshop. Using all the default settings, just run:
+
+	run11.sh
+
+This runs in local mode using the local file system, the MapReduce APIs, but not the full set of Hadoop services and HDFS. For help on the options to change the defaults:
+
+	run11.sh --help
+
+The output will be identical to what you saw for the previous Twitter exercise.
 
 # Conclusions
 
@@ -529,11 +574,11 @@ It's interesting to contrast Scalding with other tools.
 
 ### Cascading
 
-Because Scala is a *functional programming* language with excellent support for DSL (domain-specific language) creation, using Scalding is much nicer than the Java-based Cascading itself, because Scalding programs are more concise and intuitive.
+Because Scala is a *functional programming* language with excellent support for DSL (domain-specific language) creation, using Scalding is much more concise than the Java-based Cascading itself, because Scalding programs are more concise and intuitive, fully exploiting FP idioms for data manipulation. For more on this comparison, see [this talk](http://polyglotprogramming.com/papers/ScaldingForHadoop.pdf) that Dean Wampler gave recently at the Chicago Hadoop Users Group and Big Data Techcon Boston, 2013.
 
 ### Cascalog
 
-This Clojure dialect written by Nathan Marz also benefits from the functional nature and concision of Clojure. Nathan has also built in logic-programming features from Datalog.
+This Clojure dialect written by Nathan Marz also benefits from the functional nature and concision of Clojure. Nathan has also built in the logic-based query model of Datalog.
 
 ### Pig
 
@@ -554,4 +599,6 @@ Pig has very similar capabilities, with notable advantages and disadvantages.
 ### Hive
 
 Hive is ideal when your problem fits the SQL model for queries. It's less useful for complex transformations. Also, like Pig, extensions must be written in another language.
+
+When I work in Hadoop, my two tools for almost all work are Hive and Scalding. To learn more about Hive, see [Programming Hive](http://shop.oreilly.com/product/0636920023555.do).
 

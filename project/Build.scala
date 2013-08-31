@@ -40,9 +40,7 @@ object BuildSettings {
         "minlog-1.2.jar", // Otherwise causes conflicts with Kyro (which bundles it)
         "janino-2.5.16.jar", // Janino includes a broken signature, and is not needed anyway
         "commons-beanutils-core-1.8.0.jar", // Clash with each other and with commons-collections
-        "commons-beanutils-1.7.0.jar",
-        "hadoop-core-0.20.2.jar", 
-        "hadoop-tools-0.20.2.jar" 
+        "commons-beanutils-1.7.0.jar"
       ) 
       cp filter { jar => excludes(jar.data.getName) }
     },
@@ -57,7 +55,7 @@ object BuildSettings {
 
   lazy val buildSettings = basicSettings ++ sbtAssemblySettings
 
-  unmanagedBase <<= baseDirectory { base => base / "lib" }
+  // unmanagedBase <<= baseDirectory { base => base / "lib" }
 }
 
 // Shell prompt which show the current project,
@@ -89,11 +87,9 @@ object Resolvers {
   val mvnrepository = "MVN Repo" at "http://mvnrepository.com/artifact"
   val conjars  = "Concurrent Maven Repo" at "http://conjars.org/repo"
   val clojars  = "Clojars Repo" at "http://clojars.org/repo"
-  val cloudera = "cloudera" at "https://repository.cloudera.com/artifactory/cloudera-repos/"
   val twitterMaven = "Twitter Maven" at "http://maven.twttr.com"
-  val twitterSVNMaven = "Twitter SVN Maven" at "https://svn.twitter.biz/maven-public"
   
-  val allResolvers = Seq(typesafe, sonatype, mvnrepository, conjars, clojars, cloudera, twitterMaven, twitterSVNMaven)
+  val allResolvers = Seq(typesafe, sonatype, mvnrepository, conjars, clojars, twitterMaven)
 
 }
 
@@ -101,7 +97,7 @@ object Dependency {
   object Version {
     val Scalding   = "0.8.6"
     val Algebird   = "0.1.13"
-    val Hadoop     = "2.0.0-mr1-cdh4.2.0"
+    val Hadoop     = "1.1.2"
     val ScalaTest  = "1.9.1"
     val ScalaCheck = "1.10.1"
   }
@@ -131,7 +127,7 @@ object Dependencies {
 
   val scaldingWorkshop = Seq(
     scalaCompiler, scalding_args, scalding_core, scalding_date, 
-    algebird_core, algebird_util) // hadoop_core,
+    algebird_core, algebird_util) //, hadoop_core)
     // scalaTest, scalaCheck)
 }
 

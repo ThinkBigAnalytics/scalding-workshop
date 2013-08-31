@@ -1,4 +1,5 @@
 /*
+Copyright 2013 Concurrent Thought, Inc.
 Copyright 2012 Think Big Analytics, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,7 +17,6 @@ limitations under the License.
 
 import com.twitter.scalding._
 import cascading.tuple.Fields
-import workshop.Csv
 
 /**
  * This exercise returns to the original join exercise and generalizes 
@@ -46,7 +46,7 @@ class StocksDividendsRevisited8(args : Args) extends Job(args) {
    * Yea, we're using "symbol" to mean both the company symbol and the Scala symbol type.
    */
   def startPipe(rootPath: String, symbol: String, beforeSchema: Fields, afterSchema: Fields) = 
-    new Csv(rootPath+"/"+symbol+".csv", beforeSchema)
+    new Csv(rootPath+"/"+symbol+".csv", fields = beforeSchema)
       .read
       .write(Tsv("output/dump1"))
       .map(beforeSchema -> afterSchema) { before: Fields => (symbol, before)}
@@ -57,7 +57,7 @@ class StocksDividendsRevisited8(args : Args) extends Job(args) {
   val dividendsRoot = args("dividends-root-path")
   
   val stocksPipes = symbols.map { symbol => 
-          new Csv(stocksRoot+"/"+symbol+".csv", stocksSchema)
+          new Csv(stocksRoot+"/"+symbol+".csv", fields = stocksSchema)
           .read
           .mapTo(stocksSchema -> ('symd, 'ssymbol, 'price_close)) { 
             record: (String,String,String,String,String,String,String) => (symbol, record._1, record._5) 
@@ -66,7 +66,7 @@ class StocksDividendsRevisited8(args : Args) extends Job(args) {
       .reduceLeft( _ ++ _ )
 
   val dividendsPipe = symbols.map { symbol => 
-          new Csv(dividendsRoot+"/"+symbol+".csv", dividendsSchema)
+          new Csv(dividendsRoot+"/"+symbol+".csv", fields = dividendsSchema)
           .read
           .mapTo(dividendsSchema -> ('dymd, 'dsymbol, 'dividend)) { 
             record: (String,String) => (symbol, record._1, record._2) 

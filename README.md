@@ -1,13 +1,13 @@
-# Scalding Workshop README
+# Scalding Workshop/Tutorial README
 
 **Dean Wampler, Concurrent Thought**<br/>
 [dean@concurrentthought.com](mailto:dean@concurrentthought.com?subject=Question%20about%20your%20Scalding%20Workshop)<br/>
 [@deanwampler](https://twitter.com/deanwampler)<br/>
 [Hire Me!](mailto:dean@concurrentthought.com?subject=Hiring%20Dean%20Wampler)
 
-## About this Workshop
+## About this Workshop/Tutorial
 
-This workshop is a half-day tutorial on Scalding and its place in the Hadoop ecosystem. [Scalding](https://github.com/twitter/scalding) is a Scala API developed at Twitter for distributed data programming that uses the [Cascading](http://www.cascading.org/) Java API, which in turn sits on top of Hadoop's Java API. However, Scalding, through Cascading, also offers a *local* mode that makes it easy to run jobs without using the Hadoop libraries, for simpler testing and learning. We'll use this feature for most of this workshop.
+This session is a half-day tutorial on Scalding and its place in the Hadoop ecosystem. [Scalding](https://github.com/twitter/scalding) is a Scala API developed at Twitter for distributed data programming that uses the [Cascading](http://www.cascading.org/) Java API, which in turn sits on top of Hadoop's Java API. However, Scalding, through Cascading, also offers a *local* mode that makes it easy to run jobs without using the Hadoop libraries, for simpler testing and learning. We'll use this feature for most of this session.
 
 ## Getting Started
 

@@ -22,7 +22,7 @@ import com.twitter.scalding._
  * we'll look at the year-over-year average of Apple's stock price (so you'll 
  * know which entry points you missed...).
  * You invoke the script like this:
- *   run.rb scripts/StockAverages3.scala \
+ *   ./run scripts/StockAverages3.scala \
  *     --input  data/stocks/APPL.csv \
  *     --output output/AAPL-avg.txt
  */

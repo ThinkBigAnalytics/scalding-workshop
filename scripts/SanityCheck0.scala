@@ -23,7 +23,7 @@ import com.twitter.scalding._
 /**
  * This script functions as a sanity check that everything is setup properly.
  * From the project root directory, run this command:
- *   ruby run.rb tutorial/SanityCheck0.scala
+ *   ruby ./run tutorial/SanityCheck0.scala
  * It should run without error. The output is written to
  *   output/SanityCheck0.txt
  * What's in that file?

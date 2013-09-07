@@ -4,9 +4,7 @@
 // usage (*nix): run scaldingscript.scala [options]
 // usage (Windowx): scala run scaldingscript.scala [options]
 //
-// This is an "approximate" port of run.rb, but because it's written in scala,
-// you don't also need a Ruby environment to run it.
-// It verifies that you passed the name of a Scalding script (a Scala source file)
+// Run verifies that you passed the name of a Scalding script (a Scala source file)
 // as an argument, compiles it, and invokes Scalding in "local" mode.
 // Scalding comes with a more sophisticated driver script called "scald.rb".
 // For example, scald.rb handles invoking Scalding scripts as Hadoop jobs. 

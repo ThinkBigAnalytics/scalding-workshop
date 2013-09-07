@@ -84,14 +84,14 @@ First, the [README](README.html) tells you to run a `SanityCheck0.scala` Scaldin
 Using `bash`: 
 
 		cd $HOME/fun/scalding-workshop
-		./run.rb scripts/SanityCheck0.scala
+		./run scripts/SanityCheck0.scala
 
 On Windows:
 
 		cd C:\fun\scalding-workshop
-		ruby run.rb scripts/SanityCheck0.scala
+		scala run scripts/SanityCheck0.scala
 
-From now on, we'll assume you are working in the `scalding-workshop` directory, unless otherwise noted. Also, we'll just show the `bash` versions of the subsequent `run.rb` commands. Finally, because we're lazy, we'll sometimes drop the `.scala` extension from script names when we discuss them in the text.
+From now on, we'll assume you are working in the `scalding-workshop` directory, unless otherwise noted. Also, we'll just show the `bash` versions of the subsequent `run` commands. Finally, because we're lazy, we'll sometimes drop the `.scala` extension from script names when we discuss them in the text.
 
 Run these commands again and verify that they run without error. The output is written to `output/SanityCheck0.txt`. What's in that file?
 
@@ -120,7 +120,7 @@ This expression is a sequence of Cascading [Pipes](http://docs.cascading.org/cas
 
 Run the script thusly:
 
-		./run.rb scripts/Project1.scala
+		./run scripts/Project1.scala
  
 Now, if you look at the output in `output/Project1.txt`, you'll see just the original lines from `scripts/Project1.scala`. That is, running a `diff` command on the input and output files should show no differences.
 
@@ -138,7 +138,7 @@ First, we'll use two new invocation command options:
 
 Run the script like this, where have wrapped lines and used `\\` in to indicate the line breaks:
 	
-	./run.rb scripts/WordCount2.scala \
+	./run scripts/WordCount2.scala \
 		--input  data/shakespeare/plays.txt \
 		--output output/shakespeare-wc.txt
 
@@ -220,7 +220,7 @@ The very first line in the output is an empty word and a count of approximately 
 
 Let's do a similar `groupBy` operation, this time to compute the average of Apple's (AAPL) closing stock price year over year (so you'll know what entry points you missed...). Also, in this exercise we'll solve a common problem; the input data is in an unsupported format.
 
-	./run.rb scripts/StockAverages3.scala \
+	./run scripts/StockAverages3.scala \
 		--input  data/stocks/AAPL.csv \
 		--output output/AAPL-year-avg.txt
 
@@ -315,7 +315,7 @@ What if some of the input records are bad. This is actually common in real-world
 
 The script is very similar to the previous one, so we'll just call it `StockAverages3b`. (The comments in the script describe the implementation differences, as usual...) Note that we need to specify a different input file, where we've introduced 5 bad records, and an `errors` argument for the errors stream, which will contain 5 errors records after the script has finished: 
 
-	./run.rb scripts/StockAverages3b.scala \
+	./run scripts/StockAverages3b.scala \
 		--input  data/stocks/APPL-with-errors.csv \
 		--output output/AAPL-year-avg.txt \ 
 		--errors output/AAPL-errors.txt
@@ -346,7 +346,7 @@ Let's join stocks and dividend data. To join two data sources, you set up to pip
 
 `scripts/StocksDividendsJoin4` performs an *inner join* of stock and dividend records. Let's invoke for Apple data (yes, although Apple only recently announced that it would pay a dividend, Apple paid dividends back in the late 80s and early 90s.):
 
-	./run.rb scripts/StocksDividendsJoin4.scala \
+	./run scripts/StocksDividendsJoin4.scala \
 	  --stocks data/stocks/AAPL.csv \
 	  --dividends data/dividends/AAPL.csv \
 	  --output output/AAPL-stocks-dividends-join.txt
@@ -381,7 +381,7 @@ However, in this exercise, we'll do a four-way self-join of the data files for t
 
 For this script, the `--input` flag is used to specify the directory where the stocks files are located.
 
-	run.rb scripts/StockCoGroup5.scala \
+	./run scripts/StockCoGroup5.scala \
 	  --input  data/stocks \
 	  --output output/AAPL-INTC-GE-IBM.txt
 
@@ -412,7 +412,7 @@ Try implementing the same four-way join doing a sequence of pair-wise joins. Com
 
 This exercise shows how to split a data stream and use various features on the splits, including finding unique values.
 
-	run.rb scripts/Twitter6.scala \
+	./run scripts/Twitter6.scala \
 	  --input  data/twitter/tweets.tsv \
 	  --uniques output/unique-languages.txt \
 	  --count-star output/count-star.txt \
@@ -460,7 +460,7 @@ Add a `filter` method call that removes these "bad" records. **Hint:** You'll wa
 
 Let's return to the Shakespeare data to compute *context ngrams*, a common natural language processing technique, where we provide a prefix of words and find occurrences of the prefix followed by an additional word. The ngrams are returned in order of frequency, descending. 
 
-	run.rb scripts/ContextNGrams7.scala \
+	./run scripts/ContextNGrams7.scala \
 	  --input  data/shakespeare/plays.txt \
 	  --output output/context-ngrams.txt \
 	  --ngram-prefix "I love" \
@@ -488,7 +488,7 @@ Context ngrams are a special case of ngrams, where you just find the most common
 
 Let's revisit the exercise to join stock and dividend records and generalize it to read in multiple sets of data, for different companies, and process them as one stream. A complication is that the data files don't contain the stock ("instrument") symbol, so we'll see another way to add data to tuples.
 
-	run.rb scripts/StocksDividendsRevisited8.scala \
+	./run scripts/StocksDividendsRevisited8.scala \
 	  --stocks-root-path    data/stocks/ \
 	  --dividends-root-path data/dividends/ \
 	  --symbols AAPL,INTC,GE,IBM \
@@ -510,7 +510,7 @@ This is set notation; the size of the intersection of two sets over the size of 
 
 Run the script this way on a small matrix:
 
-	run.rb scripts/MatrixJaccardSimilarity9.scala \
+	./run scripts/MatrixJaccardSimilarity9.scala \
 	  --input data/matrix/graph.tsv \
 	  --output output/jaccardSim.tsv
 
@@ -524,7 +524,7 @@ For more information, see the [Wikipedia](http://en.wikipedia.org/wiki/Tf*idf) p
 
 Run the script this way on a small matrix:
 
-	run.rb scripts/TfIdf10.scala \ 
+	./run scripts/TfIdf10.scala \ 
 	  --input data/matrix/docBOW.tsv \ 
 	  --output output/featSelectedMatrix.tsv \
 	  --nWords 300

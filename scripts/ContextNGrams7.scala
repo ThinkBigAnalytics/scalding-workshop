@@ -23,7 +23,7 @@ import com.twitter.scalding._
 /**
  * This exercise revisits the Twitter data to demonstrate fold and reduce operations.
  * You invoke the script like this:
- *   run.rb scripts/ContextNGrams7.scala \
+ *   ./run scripts/ContextNGrams7.scala \
  *     --input  data/shakespeare/plays.txt \
  *     --output output/context-ngrams.txt \
  *     --ngram-prefix "I love" \

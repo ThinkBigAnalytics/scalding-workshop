@@ -30,7 +30,7 @@ import com.twitter.scalding._
  *   flatMap, which is discussed in the Workshop document.
  *   groupBy, which is also discussed in the Workshop document.
  * You invoke the script like this:
- *   run.rb scripts/WordCount2.scala \
+ *   ./run scripts/WordCount2.scala \
  *     --input  data/shakespeare/plays.txt \
  *     --output output/shakespeare-wc.txt
  * The output should be identical to the contents of data/shakespeare-wc/simple/wc.txt.

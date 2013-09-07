@@ -11,7 +11,7 @@ import com.twitter.scalding.mathematics.Matrix
  * (see http://en.wikipedia.org/wiki/Tf*idf for more info)
  * 
  * You invoke the script like this:
- *   run.rb scripts/TfIdf10.scala \
+ *   ./run scripts/TfIdf10.scala \
  *     --input data/matrix/docBOW.tsv \
  *     --output output/featSelectedMatrix.tsv \
  *     --nWords 300

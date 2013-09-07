@@ -20,7 +20,7 @@ import com.twitter.scalding._
 /**
  * This exercise explores joining two data sets, stocks and dividends.
  * You invoke the script like this:
- *   run.rb scripts/StocksDividendsJoin4.scala \
+ *   ./run scripts/StocksDividendsJoin4.scala \
  *     --stocks    data/stocks/IBM.csv \
  *     --dividends data/dividends/IBM.csv \
  *     --output output/IBM-stocks-dividends-join.txt

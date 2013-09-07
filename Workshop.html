@@ -254,16 +254,16 @@ pre .tex .formula {
 <p>Using <code>bash</code>: </p>
 
 <pre><code>    cd $HOME/fun/scalding-workshop
-    ./run.rb scripts/SanityCheck0.scala
+    ./run scripts/SanityCheck0.scala
 </code></pre>
 
 <p>On Windows:</p>
 
 <pre><code>    cd C:\fun\scalding-workshop
-    ruby run.rb scripts/SanityCheck0.scala
+    scala run scripts/SanityCheck0.scala
 </code></pre>
 
-<p>From now on, we&#8217;ll assume you are working in the <code>scalding-workshop</code> directory, unless otherwise noted. Also, we&#8217;ll just show the <code>bash</code> versions of the subsequent <code>run.rb</code> commands. Finally, because we&#8217;re lazy, we&#8217;ll sometimes drop the <code>.scala</code> extension from script names when we discuss them in the text.</p>
+<p>From now on, we&#8217;ll assume you are working in the <code>scalding-workshop</code> directory, unless otherwise noted. Also, we&#8217;ll just show the <code>bash</code> versions of the subsequent <code>run</code> commands. Finally, because we&#8217;re lazy, we&#8217;ll sometimes drop the <code>.scala</code> extension from script names when we discuss them in the text.</p>
 
 <p>Run these commands again and verify that they run without error. The output is written to <code>output/SanityCheck0.txt</code>. What&#8217;s in that file?</p>
 
@@ -298,7 +298,7 @@ pre .tex .formula {
 
 <p>Run the script thusly:</p>
 
-<pre><code>    ./run.rb scripts/Project1.scala
+<pre><code>    ./run scripts/Project1.scala
 </code></pre>
 
 <p>Now, if you look at the output in <code>output/Project1.txt</code>, you&#8217;ll see just the original lines from <code>scripts/Project1.scala</code>. That is, running a <code>diff</code> command on the input and output files should show no differences.</p>
@@ -320,7 +320,7 @@ pre .tex .formula {
 
 <p>Run the script like this, where have wrapped lines and used <code>\\</code> in to indicate the line breaks:</p>
 
-<pre><code>./run.rb scripts/WordCount2.scala \
+<pre><code>./run scripts/WordCount2.scala \
     --input  data/shakespeare/plays.txt \
     --output output/shakespeare-wc.txt
 </code></pre>
@@ -407,7 +407,7 @@ pre .tex .formula {
 
 <p>Let&#8217;s do a similar <code>groupBy</code> operation, this time to compute the average of Apple&#8217;s (AAPL) closing stock price year over year (so you&#8217;ll know what entry points you missed&#8230;). Also, in this exercise we&#8217;ll solve a common problem; the input data is in an unsupported format.</p>
 
-<pre><code>./run.rb scripts/StockAverages3.scala \
+<pre><code>./run scripts/StockAverages3.scala \
     --input  data/stocks/AAPL.csv \
     --output output/AAPL-year-avg.txt
 </code></pre>
@@ -505,7 +505,7 @@ store year_avg into 'output/AAPL-year-avg-pig';
 
 <p>The script is very similar to the previous one, so we&#8217;ll just call it <code>StockAverages3b</code>. (The comments in the script describe the implementation differences, as usual&#8230;) Note that we need to specify a different input file, where we&#8217;ve introduced 5 bad records, and an <code>errors</code> argument for the errors stream, which will contain 5 errors records after the script has finished: </p>
 
-<pre><code>./run.rb scripts/StockAverages3b.scala \
+<pre><code>./run scripts/StockAverages3b.scala \
     --input  data/stocks/APPL-with-errors.csv \
     --output output/AAPL-year-avg.txt \ 
     --errors output/AAPL-errors.txt
@@ -537,7 +537,7 @@ store year_avg into 'output/AAPL-year-avg-pig';
 
 <p><code>scripts/StocksDividendsJoin4</code> performs an <em>inner join</em> of stock and dividend records. Let&#8217;s invoke for Apple data (yes, although Apple only recently announced that it would pay a dividend, Apple paid dividends back in the late 80s and early 90s.):</p>
 
-<pre><code>./run.rb scripts/StocksDividendsJoin4.scala \
+<pre><code>./run scripts/StocksDividendsJoin4.scala \
   --stocks data/stocks/AAPL.csv \
   --dividends data/dividends/AAPL.csv \
   --output output/AAPL-stocks-dividends-join.txt
@@ -574,7 +574,7 @@ store year_avg into 'output/AAPL-year-avg-pig';
 
 <p>For this script, the <code>--input</code> flag is used to specify the directory where the stocks files are located.</p>
 
-<pre><code>run.rb scripts/StockCoGroup5.scala \
+<pre><code>./run scripts/StockCoGroup5.scala \
   --input  data/stocks \
   --output output/AAPL-INTC-GE-IBM.txt
 </code></pre>
@@ -607,7 +607,7 @@ store year_avg into 'output/AAPL-year-avg-pig';
 
 <p>This exercise shows how to split a data stream and use various features on the splits, including finding unique values.</p>
 
-<pre><code>run.rb scripts/Twitter6.scala \
+<pre><code>./run scripts/Twitter6.scala \
   --input  data/twitter/tweets.tsv \
   --uniques output/unique-languages.txt \
   --count-star output/count-star.txt \
@@ -658,7 +658,7 @@ count = foreach grouped generate COUNT(tweets);
 
 <p>Let&#8217;s return to the Shakespeare data to compute <em>context ngrams</em>, a common natural language processing technique, where we provide a prefix of words and find occurrences of the prefix followed by an additional word. The ngrams are returned in order of frequency, descending. </p>
 
-<pre><code>run.rb scripts/ContextNGrams7.scala \
+<pre><code>./run scripts/ContextNGrams7.scala \
   --input  data/shakespeare/plays.txt \
   --output output/context-ngrams.txt \
   --ngram-prefix &quot;I love&quot; \
@@ -687,7 +687,7 @@ count = foreach grouped generate COUNT(tweets);
 
 <p>Let&#8217;s revisit the exercise to join stock and dividend records and generalize it to read in multiple sets of data, for different companies, and process them as one stream. A complication is that the data files don&#8217;t contain the stock (&#8220;instrument&#8221;) symbol, so we&#8217;ll see another way to add data to tuples.</p>
 
-<pre><code>run.rb scripts/StocksDividendsRevisited8.scala \
+<pre><code>./run scripts/StocksDividendsRevisited8.scala \
   --stocks-root-path    data/stocks/ \
   --dividends-root-path data/dividends/ \
   --symbols AAPL,INTC,GE,IBM \
@@ -713,7 +713,7 @@ count = foreach grouped generate COUNT(tweets);
 
 <p>Run the script this way on a small matrix:</p>
 
-<pre><code>run.rb scripts/MatrixJaccardSimilarity9.scala \
+<pre><code>./run scripts/MatrixJaccardSimilarity9.scala \
   --input data/matrix/graph.tsv \
   --output output/jaccardSim.tsv
 </code></pre>
@@ -728,7 +728,7 @@ count = foreach grouped generate COUNT(tweets);
 
 <p>Run the script this way on a small matrix:</p>
 
-<pre><code>run.rb scripts/TfIdf10.scala \ 
+<pre><code>./run scripts/TfIdf10.scala \ 
   --input data/matrix/docBOW.tsv \ 
   --output output/featSelectedMatrix.tsv \
   --nWords 300
@@ -744,7 +744,7 @@ count = foreach grouped generate COUNT(tweets);
 
 <p>A great feature of Cascading, which Scalding exploits, is the ability to test locally before running on Hadoop. This improves the iterative development and feedback cycle. </p>
 
-<p>We&#8217;ve provided a bash shell script, <code>run11.sh</code> to run the job on Hadoop, but first, lets discuss Scalding&#8217;s own approach.</p>
+<p>We&#8217;ve provided a bash shell script, <code>./run11.sh</code> to run the job on Hadoop, but first, lets discuss Scalding&#8217;s own approach.</p>
 
 <p>Once you&#8217;re ready to try it in Hadoop, the &#8220;official&#8221; Scalding way is to use the <code>scripts/scald.rb</code> script in the Scalding distribution. For example, assuming that you cloned the Scalding repo into <code>$SCALDING_HOME</code>, here is a command to run <code>src/main/scala/HadoopTwitter11.scala</code>, which is actually <em>identical</em> to <code>Twitter6</code> that we ran previously, except for comments. (We put it in <code>src/main/scala</code> so the sbt build adds it to the assembly.):</p>
 
@@ -760,16 +760,16 @@ count = foreach grouped generate COUNT(tweets);
 
 <p>Finally, when using HDFS, the values specified for output using the <code>--uniques</code>, <code>count-star</code>, and <code>count-star-limit</code> flags will be used as <em>directories</em>, not <em>files</em>, which is why we omitted the <code>.txt</code> suffixes used before. This follows conventional Hadoop practice, where the parallel processes might result in multiple, concurrently-written output files.</p>
 
-<p>To simplify matters, such as removing the need for you to install the Scalding distribution, we&#8217;ve provided a bash script, <code>run11.sh</code>, to run this exercise. You&#8217;ll need access to a computer with Hadoop and bash installed. You can install Hadoop on a Mac using HomeBrew, on Linux using the appropriate package installer, and Microsoft has recently released a port of Hadoop for Windows. However, the easiest way to play with Hadoop is to install a VMWare or VirtualBox runner and download a completely configured image file from Cloudera, MapR, or Hortonworks.</p>
+<p>To simplify matters, such as removing the need for you to install the Scalding distribution, we&#8217;ve provided a bash script, <code>./run11.sh</code>, to run this exercise. You&#8217;ll need access to a computer with Hadoop and bash installed. You can install Hadoop on a Mac using HomeBrew, on Linux using the appropriate package installer, and Microsoft has recently released a port of Hadoop for Windows. However, the easiest way to play with Hadoop is to install a VMWare or VirtualBox runner and download a completely configured image file from Cloudera, MapR, or Hortonworks.</p>
 
-<p>We&#8217;ll just demonstrate using <code>run11.sh</code> in the Workshop. Using all the default settings, just run:</p>
+<p>We&#8217;ll just demonstrate using <code>./run11.sh</code> in the Workshop. Using all the default settings, just run:</p>
 
-<pre><code>run11.sh
+<pre><code>./run11.sh
 </code></pre>
 
 <p>This runs in local mode using the local file system, the MapReduce APIs, but not the full set of Hadoop services and HDFS. For help on the options to change the defaults:</p>
 
-<pre><code>run11.sh --help
+<pre><code>./run11.sh --help
 </code></pre>
 
 <p>The output will be identical to what you saw for the previous Twitter exercise.</p>

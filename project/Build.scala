@@ -95,8 +95,9 @@ object Resolvers {
 
 object Dependency {
   object Version {
-    val Scalding   = "0.8.6"
-    val Algebird   = "0.1.13"
+    val Scalding   = "0.8.11"
+    val Algebird   = "0.2.0"
+    val Bijection  = "0.5.2"
     val Hadoop     = "1.1.2"
     val ScalaTest  = "1.9.1"
     val ScalaCheck = "1.10.1"
@@ -107,14 +108,15 @@ object Dependency {
   // Include the Scala compiler itself for reification and evaluation of expressions. 
   val scalaCompiler = "org.scala-lang"  %  "scala-compiler" % BuildSettings.ScalaVersion
   
-  val scalding_args = "com.twitter"     %% "scalding-args"  % Version.Scalding
-  val scalding_core = "com.twitter"     %% "scalding-core"  % Version.Scalding
-  val scalding_date = "com.twitter"     %% "scalding-date"  % Version.Scalding
+  val scalding_args  = "com.twitter"     %% "scalding-args"  % Version.Scalding
+  val scalding_core  = "com.twitter"     %% "scalding-core"  % Version.Scalding
+  val scalding_date  = "com.twitter"     %% "scalding-date"  % Version.Scalding
 
-  val algebird_core = "com.twitter"     %% "algebird-core"  % Version.Algebird
-  val algebird_util = "com.twitter"     %% "algebird-util"  % Version.Algebird
-  
-  val hadoop_core   = "org.apache.hadoop"  % "hadoop-core"  % Version.Hadoop
+  val algebird_core  = "com.twitter"     %% "algebird-core"  % Version.Algebird
+  val algebird_util  = "com.twitter"     %% "algebird-util"  % Version.Algebird
+  val bijection_core = "com.twitter"     %% "bijection-core" % Version.Bijection
+
+  val hadoop_core    = "org.apache.hadoop"  % "hadoop-core"  % Version.Hadoop
   
   // ---- Test dependencies ----
 
@@ -127,7 +129,7 @@ object Dependencies {
 
   val scaldingWorkshop = Seq(
     scalaCompiler, scalding_args, scalding_core, scalding_date, 
-    algebird_core, algebird_util) //, hadoop_core)
+    algebird_core, algebird_util, bijection_core) //, hadoop_core)
     // scalaTest, scalaCheck)
 }
 

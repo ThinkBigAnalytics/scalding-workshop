@@ -7,7 +7,7 @@ DISTRO_TGZ = ${RELEASE}.tgz
 
 DISTRO_DIRS  = data images lib scripts
 DISTRO_FILES = LICENSE.txt Makefile api.zip \
-  run.rb runall.sh \
+  run runall.sh \
   README.md README.html Workshop.md Workshop.html
 
 all: clean stage build-release

@@ -3,11 +3,13 @@
 # run.rb - Simple driver for the Scalding workshop.
 # usage: run.rb scaldingscript.scala [options]
 #
-# It verifies that you passed the name of a Scalding script (a Scala source file)
-# as an argument, compiles it, and invokes Scalding in "local" mode.
-# Scalding comes with a more sophisticated driver script called "scald.rb".
-# For example, scald.rb handles invoking Scalding scripts as Hadoop jobs.
-# This script is simpler and avoids some issues using "scald.rb".
+# Run.rb is an "approximate" port of the Scala "run" script, suitable for
+# users with Ruby installed (v0.8.7 or 0.9.X) Run.rb verifies that you
+# passed the name of a Scalding script (a Scala source file) as an argument,
+# compiles it, and invokes Scalding in "local" mode. Scalding comes with a
+# more sophisticated driver script called "scald.rb". For example, scald.rb
+# handles invoking Scalding scripts as Hadoop jobs. This script is simpler
+# and avoids some issues using "scald.rb".
 
 # Increase (or decrease) this heap size value if necessary.
 HEAP = "-Xmx1g"

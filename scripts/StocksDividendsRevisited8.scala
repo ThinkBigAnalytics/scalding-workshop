@@ -23,7 +23,7 @@ import cascading.tuple.Fields
  * it to allow multiple stocks-dividends pairs, for different symbols to 
  * be joined.
  * You invoke the script like this:
- *   run.rb scripts/StocksDividendsRevisited8.scala \
+ *   ./run scripts/StocksDividendsRevisited8.scala \
  *     --stocks-root-path    data/stocks/ \
  *     --dividends-root-path data/dividends/ \
  *     --symbols AAPL,INTC,GE,IBM \

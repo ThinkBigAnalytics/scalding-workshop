@@ -27,7 +27,7 @@ import cascading.tuple.Fields._
  * We'll join four stocks together by date, showing their closing price:
  *   AAPL, INTC, GE, and IBM
  * You invoke the script like this:
- *   run.rb scripts/StockCoGroup5.scala \
+ *   ./run scripts/StockCoGroup5.scala \
  *     --input  data/stocks \
  *     --output output/AAPL-INTC-GE-IBM.txt
  */

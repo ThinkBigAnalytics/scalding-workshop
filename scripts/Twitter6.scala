@@ -22,7 +22,7 @@ import com.twitter.scalding._
  * on the splits, including finding unique values, one way to implement COUNT(*),
  * and the equivalent of a LIMIT clause.
  * You invoke the script like this:
- *   run.rb scripts/Twitter6.scala \
+ *   ./run scripts/Twitter6.scala \
  *     --input  data/twitter/tweets.tsv \
  *     --uniques output/unique-languages.txt \
  *     --count-star output/count-star.txt \

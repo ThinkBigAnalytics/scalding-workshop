@@ -10,7 +10,7 @@ import com.twitter.scalding.mathematics.Matrix
  * and computes the jaccard similarity between any two pairs of vectors
  * 
  * You invoke the script like this:
- *   run.rb scripts/MatrixJaccardSimilarity9.scala \
+ *   ./run scripts/MatrixJaccardSimilarity9.scala \
  *     --input data/matrix/graph.tsv \
  *     --output output/jaccardSim.tsv
  *

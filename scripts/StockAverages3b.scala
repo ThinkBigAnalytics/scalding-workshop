@@ -22,7 +22,7 @@ import com.twitter.scalding._
  * but we'll improve the error handling. See the comment marked "ERROR HANDLING".
  * Note that we use a different input file where we added some malformed lines
  * and we have a new argument for error output:
- *   run.rb scripts/StockAverages3b.scala \
+ *   ./run scripts/StockAverages3b.scala \
  *     --input  data/stocks/APPL-with-errors.csv \
  *     --output output/AAPL-avg.txt \ 
  *     --errors output/AAPL-errors.txt

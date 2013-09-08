@@ -566,6 +566,16 @@ This runs in local mode using the local file system, the MapReduce APIs, but not
 
 The output will be identical to what you saw for the previous Twitter exercise.
 
+# Summingbird
+
+In September, Twitter [unveiled](https://blog.twitter.com/2013/streaming-mapreduce-with-summingbird) a new Scala API called [Summingbird](https://github.com/twitter/summingbird). There is also a [tutorial from LambdaJam 2013](https://github.com/sritchie/summingbird-workshop) by one of the project creators.
+
+Summingbird is designed to support a variety of backends, so that logic can be written once and executed on different systems. The initial release supports Hadoop through Scalding, [Storm](http://storm-project.net/), an event processing system that Twitter and many other organizations use to complement Hadoop's batch-mode capabilities. There is also an in-memory mode that uses [memcached](http://memcached.org/), designed for testing, but potentially also for working with smaller data sets where the scalability of Hadoop isn't needed.
+
+Twitter is encouraging others to contribute backends for additional systems.
+
+Because additional libraries are required for running Summingbird apps, we'll just look at our *Word Count* example ported to Summingbird. See `scripts/SummingbirdWordCount12.scala`.
+
 # Conclusions
 
 ## Comparisons with Other Tools

@@ -6,7 +6,7 @@ import sbt.Keys._
 object BuildSettings {
 
   val Organization  = "com.concurrentthought"
-  val Version       = "0.3.0"
+  val Version       = "0.3.1"
   val Description   = "Scalding Workshop"
   val ScalaVersion  = "2.10.2"
   val ScalacOptions = Seq("-deprecation", "-unchecked", "-encoding", "utf8")
@@ -95,12 +95,13 @@ object Resolvers {
 
 object Dependency {
   object Version {
-    val Scalding   = "0.8.11"
-    val Algebird   = "0.2.0"
-    val Bijection  = "0.5.2"
-    val Hadoop     = "1.1.2"
-    val ScalaTest  = "1.9.1"
-    val ScalaCheck = "1.10.1"
+    val Scalding    = "0.8.11"
+    val Algebird    = "0.2.0"
+    val Bijection   = "0.5.2"
+    val Hadoop      = "1.1.2"
+    val ScalaTest   = "1.9.1"
+    val ScalaCheck  = "1.10.1"
+    val SummingBird = "0.1.0-SNAPSHOT"
   }
 
   // ---- Application dependencies ----
@@ -118,6 +119,9 @@ object Dependency {
 
   val hadoop_core    = "org.apache.hadoop"  % "hadoop-core"  % Version.Hadoop
   
+  val summingbird_core     = "com.twitter" %% "summingbird-core"     % Version.SummingBird
+  val summingbird_scalding = "com.twitter" %% "summingbird-scalding" % Version.SummingBird
+
   // ---- Test dependencies ----
 
   val scalaTest   = "org.scalatest"    %%  "scalatest"   %  Version.ScalaTest  %  "test"
@@ -129,8 +133,9 @@ object Dependencies {
 
   val scaldingWorkshop = Seq(
     scalaCompiler, scalding_args, scalding_core, scalding_date, 
-    algebird_core, algebird_util, bijection_core) //, hadoop_core)
-    // scalaTest, scalaCheck)
+    algebird_core, algebird_util, bijection_core)
+    // not yet available: summingbird_core, summingbird_scalding
+    // hadoop_core, scalaTest, scalaCheck)
 }
 
 object ScaldingWorkshopBuild extends Build {

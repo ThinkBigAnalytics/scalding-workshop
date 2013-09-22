@@ -5,9 +5,9 @@ RELEASE = scalding-workshop-${VERSION}
 DISTRO_ZIP = ${RELEASE}.zip
 DISTRO_TGZ = ${RELEASE}.tgz
 
-DISTRO_DIRS  = data images lib scripts
+DISTRO_DIRS  = data images lib scripts src
 DISTRO_FILES = LICENSE.txt Makefile api.zip \
-  run runall.sh \
+  run run.rb runall.sh run11.sh \
   README.md README.html Workshop.md Workshop.html
 
 all: clean stage build-release
@@ -24,6 +24,8 @@ stage: ${RELEASE}
 	  do echo "Staging file $$f"; \
 	  cp $$f ${RELEASE}; \
 	done
+	@mkdir -p ${RELEASE}/project
+	@cp project/{Build.scala,build.properties,plugins.sbt} ${RELEASE}/project
 
 ${RELEASE}:
 	mkdir -p $@

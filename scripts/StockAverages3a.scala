@@ -43,14 +43,11 @@ class StockAverages3a(args : Args) extends Job(args) {
     .project('ymd, 'price_adj_close)
 
   /*
-   * Unfortunately, we have to pass a single tuple argument to the anonymous function. 
-   * It would be nice if we could use "(ymd: String, close: String)" as the argument
-   * list. Note that you reference the Nth field in a tuple with the "_N" method
-   * (it's not zero-indexed).
+   * A hack to let us pattern matching on the tuple, e.g., "(ymd, close)". 
    */
     .mapTo(('ymd, 'price_adj_close) -> ('year, 'closing_price)) { 
       tup: (String,String) => tup match {
-        case (ymd, close) => //@ (String,String) =>
+        case (ymd, close) => 
         // TODO: Add exception handling logic in case the 
         // double conversion fails! (See StocksAverages3b ...)
         (toYear(ymd), close.toDouble)

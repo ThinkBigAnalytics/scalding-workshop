@@ -55,19 +55,21 @@ class StockAverages3b(args : Args) extends Job(args) {
    * to values ("csv" and "mapped"), which we need for splitting the stream.
    */
    val mapped = csv
-    .map(('ymd, 'price_adj_close) -> ('year, 'closing_price, 'bad)) { 
-      ymd_close: (String, String) =>   // (String, String) === Tuple2[String, String]
-        val (year, bad1) = try {
-          (toYear(ymd_close._1), 0)
-        } catch {
-          case nfe: java.lang.NumberFormatException => (0, 1)
-        }
-        val (close, bad2) = try {
-          (ymd_close._2.toDouble, 0)
-        } catch {
-          case nfe: java.lang.NumberFormatException => (-1.0, 1)
-        }
-        (year, close, bad1+bad2)
+    .mapTo(('ymd, 'price_adj_close) -> ('year, 'closing_price, 'bad)) { 
+      tup: (String,String) => tup match {
+        case (ymd, closeStr) => 
+          val (year, bad1) = try {
+            (toYear(ymd), 0)
+          } catch {
+            case nfe: java.lang.NumberFormatException => (0, 1)
+          }
+          val (close, bad2) = try {
+            (closeStr.toDouble, 0)
+          } catch {
+            case nfe: java.lang.NumberFormatException => (-1.0, 1)
+          }
+          (year, close, bad1+bad2)
+      }
     }
 
   /*

@@ -59,7 +59,7 @@ class StocksDividendsRevisited8(args : Args) extends Job(args) {
   val stocksPipes = symbols.map { symbol => 
           new Csv(stocksRoot+"/"+symbol+".csv", fields = stocksSchema)
           .read
-          .mapTo(stocksSchema -> ('symd, 'ssymbol, 'price_close)) { 
+          .mapTo(stocksSchema -> ('ssymbol, 'symd, 'price_close)) { 
             record: (String,String,String,String,String,String,String) => (symbol, record._1, record._5) 
           } 
       }
@@ -68,7 +68,7 @@ class StocksDividendsRevisited8(args : Args) extends Job(args) {
   val dividendsPipe = symbols.map { symbol => 
           new Csv(dividendsRoot+"/"+symbol+".csv", fields = dividendsSchema)
           .read
-          .mapTo(dividendsSchema -> ('dymd, 'dsymbol, 'dividend)) { 
+          .mapTo(dividendsSchema -> ('dsymbol, 'dymd, 'dividend)) { 
             record: (String,String) => (symbol, record._1, record._2) 
           }
       }

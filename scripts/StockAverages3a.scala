@@ -27,7 +27,7 @@ import com.twitter.scalding._
  *     --output output/AAPL-avg.txt
  */
 
-class StockAverages3(args : Args) extends Job(args) {
+class StockAverages3a(args : Args) extends Job(args) {
 
   val stockSchema = 
     ('ymd, 'price_open, 'price_high, 'price_low, 'price_close, 'volume, 'price_adj_close)
@@ -43,17 +43,18 @@ class StockAverages3(args : Args) extends Job(args) {
     .project('ymd, 'price_adj_close)
 
   /*
-   * Unfortunately, we have to pass a single tuple argument to the anonymous function
-   * in order for Scala to type the function. 
+   * Unfortunately, we have to pass a single tuple argument to the anonymous function. 
    * It would be nice if we could use "(ymd: String, close: String)" as the argument
    * list. Note that you reference the Nth field in a tuple with the "_N" method
-   * (it's not zero-indexed). However, see StockAverages3a.scala...
+   * (it's not zero-indexed).
    */
     .mapTo(('ymd, 'price_adj_close) -> ('year, 'closing_price)) { 
-      ymd_close: (String, String) =>   // (String, String) === Tuple2[String, String]
-      // TODO: Add exception handling logic in case the 
-      // double conversion fails! (See StocksAverages3b ...)
-      (toYear(ymd_close._1), (ymd_close._2).toDouble)
+      tup: (String,String) => tup match {
+        case (ymd, close) => //@ (String,String) =>
+        // TODO: Add exception handling logic in case the 
+        // double conversion fails! (See StocksAverages3b ...)
+        (toYear(ymd), close.toDouble)
+      }
     }
 
   /*

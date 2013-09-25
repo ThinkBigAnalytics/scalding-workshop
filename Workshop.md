@@ -293,6 +293,19 @@ If you have *Pig* installed, you can run this script (from this directory) with 
 
 The `-x local` option means that Pig will treat the paths as references to the local file system, not the Hadoop Distributed File System (HDFS).
 
+## Improving the Syntax
+
+`StockAverages3.scala` uses an anonymous function that takes a tuple
+argument, which results in slightly ugly syntax. We can't use `PartialFunction`, e.g.,
+
+	{ case (ymd, close) => ... }
+
+But we can do a match on the tuple argument instead!
+
+	./run scripts/StockAverages3a.scala \
+		--input  data/stocks/AAPL.csv \
+		--output output/AAPL-year-avg.txt
+
 ### Further Exploration
 
 Try these additional "mini-exercises" to learn more.

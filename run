@@ -2,7 +2,7 @@
 // ------------------------------------------
 // run - Simple scala driver for the Scalding workshop.
 // usage (*nix): run scaldingscript.scala [options]
-// usage (Windowx): scala run scaldingscript.scala [options]
+// usage (Windows): scala run scaldingscript.scala [options]
 //
 // Run verifies that you passed the name of a Scalding script (a Scala source file)
 // as an argument, compiles it, and invokes Scalding in "local" mode.

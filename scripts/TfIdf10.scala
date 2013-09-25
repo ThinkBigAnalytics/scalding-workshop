@@ -7,7 +7,7 @@ import com.twitter.scalding.mathematics.Matrix
  * Adapted from "MatrixTutorial6" in the tutorials that come with Scalding.
  *
  * Loads a document to word matrix where a[i,j] = freq of the word j in the document i 
- * computes the Tf-Idf score of each word w.r.t. to each document and keeps the top nrWords in each document
+ * computes the Tf-Idf score of each word w.r.t. to each document and keeps the top N words in each document
  * (see http://en.wikipedia.org/wiki/Tf*idf for more info)
  * 
  * You invoke the script like this:
@@ -18,6 +18,8 @@ import com.twitter.scalding.mathematics.Matrix
  */
 class TfIdf10(args : Args) extends Job(args) {
   
+  val n = args("nWords").toInt 
+
   import Matrix._
 
   val docSchema = ('docId, 'word, 'count)
@@ -26,19 +28,25 @@ class TfIdf10(args : Args) extends Job(args) {
     .read
     .toMatrix[Long,String,Double](docSchema)
 
-  // compute the overall document frequency of each row
+  // Compute the overall document frequency of each word.
+  // docFreq(i) will be the total count for word i over all docs.
   val docFreq = docWordMatrix.sumRowVectors
 
-  // compute the inverse document frequency vector
-  val invDocFreqVct = docFreq.toMatrix(1).rowL1Normalize.mapValues( x => log2(1/x) )
+  // Compute the inverse document frequency vector.
+  // L1 normalize the docFreq: 1/(|a| + |b| + ...)
+  // Use 1/log(x), rather than 1/x, for better numerical stability. 
+  val invDocFreqVct = 
+    docFreq.toMatrix(1).rowL1Normalize.mapValues( x => log2(1/x) )
 
-  // zip the row vector along the entire document - word matrix
-  val invDocFreqMat = docWordMatrix.zip(invDocFreqVct.getRow(1)).mapValues( pair => pair._2 )
+  // Zip the row vector along the entire document - word matrix.
+  val invDocFreqMat = 
+    docWordMatrix.zip(invDocFreqVct.getRow(1)).mapValues(_._2)
 
-  // multiply the term frequency with the inverse document frequency and keep the top nrWords
-  docWordMatrix.hProd(invDocFreqMat).topRowElems( args("nWords").toInt ).write(Tsv( args("output") ))
+  // Multiply the term frequency with the inverse document frequency
+  // and keep the top N words. "hProd" is the Hadamard product, i.e.,
+  // multiplying elementwise, rather than row vector times column vector.
+  docWordMatrix.hProd(invDocFreqMat).topRowElems(n).write(Tsv(args("output")))
 
   def log2(x : Double) = scala.math.log(x)/scala.math.log(2.0)
-
 }
 

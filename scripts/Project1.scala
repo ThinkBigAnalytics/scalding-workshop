@@ -50,6 +50,6 @@ class Project1(args : Args) extends Job(args) {
    */
   in
     .read
-    .project('line) // Use 'num to project the line #
+    .project('line) // Use 'offset to project the line #
     .write(out)
 }

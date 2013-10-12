@@ -328,8 +328,8 @@ What if some of the input records are bad. This is actually common in real-world
 
 The script is very similar to the previous one, so we'll just call it `StockAverages3b`. (The comments in the script describe the implementation differences, as usual...) Note that we need to specify a different input file, where we've introduced 5 bad records, and an `errors` argument for the errors stream, which will contain 5 errors records after the script has finished: 
 
-	./run scripts/StockAverages3b.scala \
-		--input  data/stocks/APPL-with-errors.csv \
+	./run scripts/StockAverages3b.scala \ 
+		--input  data/stocks/APPL-with-errors.csv \ 
 		--output output/AAPL-year-avg.txt \ 
 		--errors output/AAPL-errors.txt
 

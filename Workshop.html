@@ -169,9 +169,9 @@ pre .tex .formula {
       <h1 id="scaldingworkshop">Scalding Workshop</h1>
 
 <p><strong>Dean Wampler, Concurrent Thought</strong><br/>
-<a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#100;&#x65;&#x61;&#x6e;&#64;&#x64;&#101;&#97;&#x6e;&#x77;&#97;&#109;&#112;&#108;&#101;&#x72;&#x2e;&#x63;&#x6f;&#x6d;&#x3f;&#115;&#117;&#x62;&#x6a;&#101;&#x63;&#116;&#61;&#81;&#117;&#x65;&#x73;&#x74;&#x69;&#x6f;&#110;&#37;&#50;&#x30;&#x61;&#x62;&#x6f;&#117;&#116;&#37;&#50;&#48;&#x79;&#111;&#117;&#x72;&#37;&#x32;&#48;&#83;&#99;&#x61;&#x6c;&#x64;&#105;&#110;&#103;&#x25;&#50;&#x30;&#87;&#x6f;&#114;&#107;&#115;&#x68;&#111;&#112;">&#100;&#x65;&#x61;&#110;&#64;&#x64;&#x65;&#x61;&#110;&#119;&#97;&#109;&#x70;&#108;&#101;&#x72;&#46;&#x63;&#x6f;&#x6d;</a><br/>
+<a href="&#109;&#97;&#x69;&#x6c;&#116;&#x6f;&#58;&#x64;&#101;&#x61;&#110;&#64;&#100;&#x65;&#x61;&#x6e;&#119;&#97;&#109;&#x70;&#x6c;&#x65;&#114;&#46;&#x63;&#111;&#x6d;&#x3f;&#115;&#117;&#x62;&#x6a;&#x65;&#x63;&#116;&#x3d;&#x51;&#x75;&#101;&#115;&#x74;&#105;&#x6f;&#x6e;&#37;&#x32;&#x30;&#97;&#x62;&#x6f;&#x75;&#x74;&#37;&#50;&#48;&#121;&#111;&#117;&#114;&#37;&#50;&#x30;&#83;&#x63;&#97;&#x6c;&#x64;&#105;&#x6e;&#x67;&#37;&#x32;&#x30;&#x57;&#111;&#114;&#107;&#x73;&#x68;&#111;&#x70;">&#x64;&#101;&#x61;&#x6e;&#x40;&#x64;&#x65;&#97;&#110;&#119;&#x61;&#109;&#x70;&#x6c;&#x65;&#x72;&#46;&#99;&#111;&#x6d;</a><br/>
 <a href="https://twitter.com/deanwampler">@deanwampler</a><br/>
-<a href="&#109;&#x61;&#x69;&#x6c;&#x74;&#x6f;&#x3a;&#100;&#101;&#x61;&#x6e;&#x40;&#x64;&#x65;&#x61;&#x6e;&#x77;&#97;&#109;&#x70;&#x6c;&#101;&#x72;&#46;&#x63;&#x6f;&#109;&#63;&#115;&#x75;&#98;&#106;&#x65;&#x63;&#116;&#x3d;&#72;&#x69;&#x72;&#105;&#x6e;&#103;&#37;&#50;&#x30;&#x44;&#x65;&#x61;&#x6e;&#37;&#50;&#48;&#x57;&#x61;&#x6d;&#112;&#108;&#x65;&#x72;">&#x48;&#105;&#x72;&#101; &#77;&#101;&#33;</a></p>
+<a href="&#x6d;&#97;&#105;&#x6c;&#x74;&#x6f;&#58;&#x64;&#x65;&#x61;&#x6e;&#64;&#100;&#x65;&#97;&#x6e;&#x77;&#97;&#109;&#112;&#108;&#x65;&#114;&#46;&#x63;&#111;&#109;&#x3f;&#115;&#117;&#98;&#106;&#x65;&#x63;&#x74;&#61;&#72;&#x69;&#114;&#105;&#x6e;&#103;&#x25;&#50;&#48;&#68;&#101;&#x61;&#x6e;&#37;&#x32;&#x30;&#87;&#97;&#109;&#x70;&#x6c;&#x65;&#114;">&#x48;&#105;&#114;&#x65; &#x4d;&#x65;&#x21;</a></p>
 
 <p>This workshop/tutorial takes you through the basic principles of writing data analysis applications with <a href="https://github.com/twitter/scalding">Scalding</a>, a Scala API that wraps <a href="http://www.cascading.org/">Cascading</a>. I first went through this workshop at <a href="http://thestrangeloop.com">StrangeLoop 2012</a>. It took about 3 hours, but we didn&#8217;t do all the <em>mini-exercises</em>, so it make take you a bit longer if you do them all.</p>
 
@@ -520,8 +520,8 @@ argument, which results in slightly ugly syntax. We can&#8217;t use <code>Partia
 
 <p>The script is very similar to the previous one, so we&#8217;ll just call it <code>StockAverages3b</code>. (The comments in the script describe the implementation differences, as usual&#8230;) Note that we need to specify a different input file, where we&#8217;ve introduced 5 bad records, and an <code>errors</code> argument for the errors stream, which will contain 5 errors records after the script has finished: </p>
 
-<pre><code>./run scripts/StockAverages3b.scala \
-    --input  data/stocks/APPL-with-errors.csv \
+<pre><code>./run scripts/StockAverages3b.scala \ 
+    --input  data/stocks/APPL-with-errors.csv \ 
     --output output/AAPL-year-avg.txt \ 
     --errors output/AAPL-errors.txt
 </code></pre>

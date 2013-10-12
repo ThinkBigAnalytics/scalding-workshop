@@ -10,21 +10,27 @@
 // For example, scald.rb handles invoking Scalding scripts as Hadoop jobs. 
 // This script is simpler and avoids some issues using "scald.rb".
 //
-// TODO: Does not handle invocation from another directory.
 // NOTE: This script requires Scala 2.10 or newer.
+// TODO: 
+//  1. Does not handle invocation from another directory.
+//  2. Test that our file separator logic works correctly on Windows!
 
 // Increase (or decrease) this heap size size value if necessary.
 val heapSize = "-Xmx1g"
 
 val version = "0.3.0"
-val assembly = s"target/ScaldingWorkshop-$version.jar"
-val libs = "target/*"
+val assembly = s"target${separator}ScaldingWorkshop-$version.jar"
+
+val separator = java.io.File.separator match {
+    case "\\" => "\\\\"
+    case sep => sep
+}
+val libs = s"target${separator}*"
 
 args.length match {
     case 0 => println("Must specify a Scalding script!"); sys.exit(1)
     case _ =>
 }
-val separator = sys.props("file.separator")
 val fullPathScriptREstr = s"""(.*${separator})([^${separator}]+).scala$$"""
 val fullPathScriptRE = fullPathScriptREstr.r 
 val scriptREstr = s"""([^${separator}]+)(.scala)?$$"""

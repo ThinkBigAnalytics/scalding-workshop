@@ -77,7 +77,9 @@ See the Appendix below for "optional installs", if you decide to use Scalding af
 
 ## Next Steps
 
-You can now start with the workshop itself. Go to the companion [Workshop page](https://github.com/thinkbiganalytics/scalding-workshop/blob/master/Workshop.html).
+You can now start with the workshop itself. Go to the companion [Workshop page](https://github.com/deanwampler/scalding-workshop/blob/master/Workshop.html).
+
+If you are interested in the [Typesafe Activator](http://typesafe.com/activator) stack, see the [Scalding template](http://typesafe.com/activator/template/activator-scalding).
 
 ## Notes on Releases
 

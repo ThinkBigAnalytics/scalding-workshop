@@ -1,10 +1,9 @@
-// This SBT build file is only used to resolve the dependencies we need.
-
 import sbt._
 import sbt.Keys._
 
 object BuildSettings {
 
+  val Name          = "scalding-workshop"
   val Organization  = "com.concurrentthought"
   val Version       = "0.3.1"
   val Description   = "Scalding Workshop"
@@ -12,6 +11,7 @@ object BuildSettings {
   val ScalacOptions = Seq("-deprecation", "-unchecked", "-encoding", "utf8")
 
   val basicSettings = Defaults.defaultSettings ++ Seq (
+    name          := Name,
     organization  := Organization,
     version       := Version,
     description   := Description,
@@ -28,9 +28,10 @@ object BuildSettings {
   lazy val sbtAssemblySettings = assemblySettings ++ Seq(
 
     // Slightly cleaner jar name
-    jarName in assembly <<= (name, version) { (name, version) => name + "-" + version + ".jar" },
+    jarName in assembly := s"${name.value}-${version.value}.jar"  ,
     
-    // Drop these jars, most of which are dependencies of dependencies...
+    // Drop these jars, most of which are dependencies of dependencies and already exist
+    // in Hadoop deployments or aren't needed for local mode execution.
     excludedJars in assembly <<= (fullClasspath in assembly) map { cp =>
       val excludes = Set(
         "scala-compiler.jar",
@@ -54,8 +55,6 @@ object BuildSettings {
   )
 
   lazy val buildSettings = basicSettings ++ sbtAssemblySettings
-
-  // unmanagedBase <<= baseDirectory { base => base / "lib" }
 }
 
 // Shell prompt which show the current project,
@@ -99,8 +98,8 @@ object Dependency {
     val Algebird    = "0.2.0"
     val Bijection   = "0.5.2"
     val Hadoop      = "1.1.2"
-    val ScalaTest   = "1.9.1"
-    val ScalaCheck  = "1.10.1"
+    val ScalaTest   = "2.0.0"
+    val ScalaCheck  = "1.11.0"
     val SummingBird = "0.1.0-SNAPSHOT"
   }
 

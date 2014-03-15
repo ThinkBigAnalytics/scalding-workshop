@@ -89,7 +89,7 @@ Note that there is a similar tutorial I wrote for Typesafe's [Activator](http://
 
 ### V0.4.0 
 
-Moved to Scala v2.10.3 and Scalding v0.9.0rc4. Refined many of the exercises with an emphasis on using the Scalding's newer "type-safe" API.
+Moved to Scala v2.10.3 and Scalding v0.9.0rc4. Refined some of the exercises and added one that uses Scalding's newer "type-safe" API.
 
 ### V0.3.X 
 

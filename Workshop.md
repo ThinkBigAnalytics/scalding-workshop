@@ -9,13 +9,13 @@
 
 This workshop/tutorial takes you through the basic principles of writing data analysis applications with [Scalding](https://github.com/twitter/scalding), a Scala API that wraps [Cascading](http://www.cascading.org/). Expect this workshop to take 3 hours or more, if you do all parts of the exercises. I certainly encourage you to experiment.
 
-I assume you have already completed the setup instructions in the [README](README.html). These instructions walk you through a series of exercises. The exercises have a corresponding Scalding script (Scala source file). We use a convention of adding a number suffix to the name to indicate the order of the exercises. Note that some of these exercises are adapted from the Tutorial examples that are part of the Scalding Github repo, where noted.
+I assume you have already completed the setup instructions in the [README](README.html). These instructions walk you through a series of exercises. The exercises have a corresponding Scalding script (Scala source file). I used a convention of adding a number suffix to the name to indicate the order of the exercises. Note that some of these exercises are adapted from the Tutorial examples that are part of the Scalding Github repo, where noted.
 
 This document will explain many features of the Scalding and Cascading. The scripts themselves contain additional details. The Scalding and Cascading documentation has more information than we can cover here:
 
 * [Cascading Documentation](http://www.cascading.org/documentation/), especially the [Cascading User Guide](http://www.cascading.org/documentation/) and the [Javadocs](http://docs.cascading.org/cascading/2.0/javadoc/).
 * [Scalding Wiki](https://github.com/twitter/scalding/wiki).
-* Scalding Scaladocs are not online, but they can be built from the [Scalding Repo](https://github.com/twitter/scalding). For convenience, we have included these files in the workshop as `api.zip`. Unzip the file and open the [index](api/index.html).
+* Scalding Scaladocs are not online, but they can be built from the [Scalding Repo](https://github.com/twitter/scalding). For convenience, I have included these files in the workshop as `api.zip`. Unzip the file and open the [index](api/index.html).
 * [Movie Recommendations](http://blog.echen.me/2012/02/09/movie-recommendations-and-more-via-mapreduce-and-scalding/) is a fantastic blog post with detailed, non-trivial examples using Scalding.
 * [Scalding Example Project](https://github.com/snowplow/scalding-example-project) is a full example designed to run on Hadoop, specifically on Amazon's EMR (Elastic MapReduce) platform.
 
@@ -93,7 +93,7 @@ On Windows:
 		cd C:\fun\scalding-workshop
 		scala run scripts/SanityCheck0.scala
 
-From now on, we'll assume you are working in the `scalding-workshop` directory, unless otherwise noted. Also, we'll just show the `bash` versions of the subsequent `run` commands. Finally, because we're lazy, we'll sometimes drop the `.scala` extension from script names when we discuss them in the text.
+From now on, I'll assume you are working in the `scalding-workshop` directory, unless otherwise noted. Also, I'll just show the `bash` versions of the subsequent `run` commands. Finally, because I'm lazy ;), I'll sometimes drop the `.scala` extension from script names when I discuss them in the text.
 
 Run these commands again and verify that they run without error. The output is written to `output/SanityCheck0.txt`. What's in that file?
 
@@ -124,7 +124,7 @@ Scalding also has a `project` method for the same purpose. Let's modify `SanityC
 
 This expression is a sequence of Cascading [Pipes](http://docs.cascading.org/cascading/2.0/javadoc/cascading/pipe/Pipe.html). However, there is no `write` method defined on the `Pipe` class. Scalding uses a feature in Scala called *implicit conversions* to wrap `Pipe` with a Scalding-specific type called `com.twitter.scalding.RichPipe`. It provides most of the methods we'll actually use, like `write`.
 
-> There are also comments in this script and the ones that follow about specific Scalding and Cascading features that we won't cover in these notes.
+> There are also comments in this script and the ones that follow about specific Scalding and Cascading features that I won't cover in these notes.
 
 Run the script thusly:
 
@@ -438,7 +438,7 @@ Recall in the `WordCount2` exercise that we had thousands of blank lines that go
 
 CoGroups in Scalding are used internally to implement joins of two pipe assemblies. Clients can also use them to implement joins of three or more pipe assemblies, so-called *star joins*. You should always use the largest data stream as the first one in the join, because the Cascading implementation is optimized for this scenario. 
 
-However, in this exercise, we'll do a four-way self-join of the data files for the four stocks symbols we provided, AAPL, INTC, GE, and IBM. 
+However, in this exercise, we'll do a four-way self-join of the data files for the four stocks symbols I provided, AAPL, INTC, GE, and IBM. 
 
 For this script, the `--input` flag is used to specify the directory where the stocks files are located.
 
@@ -493,7 +493,6 @@ This exercise shows how to split a data stream and use various features on the s
 
 The output in `output/unique-languages.txt` is the following:
 
-	\N
 	en
 	es
 	id
@@ -502,9 +501,9 @@ The output in `output/unique-languages.txt` is the following:
 	pt
 	ru
 
-There are seven languages and an invalid value that looks vaguely like a null! These "languages" are actually from messages in the stream that aren't tweets, but the results of other user-invoked actions.
+There are seven languages in the tweet records (although they aren't necessary an accurate representation of the text of the tweet). The script filtered out an invalid value that looks vaguely like a null `\\N`! The null "language" occurs for for messages in the stream that aren't tweets, but the results of other user-invoked actions.
 
-The output in `output/count-star.txt` is a single line with the value < 1000; there are 1000 lines, but not all have a non-null value for the language of the tweet. Similarly, `output/count-star-100.txt` should contain the value of 100, reflecting the `limit(100)` step added to its dataflow.
+The output in `output/count-star.txt` is a single line with the value 889; there are 889 lines that have the non-null values for the language. Similarly, `output/count-star-100.txt` should contain the value of 100, reflecting the `limit(100)` step added to its dataflow.
 
 Note that the implementations use `groupAll`, then count the elements in the single group, via the `GroupBuilder` object. (The `count` method requires that we specify a field. We arbitrarily picked `tweet_id`.) 
 
@@ -630,15 +629,29 @@ Run the script this way on a small matrix:
 
 So far, we have been using the original *Fields-Based API*, which emphasizes naming fields and uses a relatively dynamic approach to typing. This is consistent with Cascading's model.
 
-There is newer, more experimental *Type-Safe API* that attempts to more fully exploit the type safety provided by Scala. We won't discuss it here, but refer you to the [Type-Safe API Wiki page](https://github.com/twitter/scalding/wiki/Type-safe-api-reference) for more information.
+There is newer, more experimental *Type-Safe API* that attempts to more fully exploit the type safety provided by Scala. It's not as well documented, but the place to start is the [Type-Safe API Reference page](https://github.com/twitter/scalding/wiki/Type-safe-api-reference).
+
+Here is `Twitter6` ported to this API. The comments in the script explain what's different. The output is the same for `output/unique-languages.txt` and `output/count-star.txt`. However, instead of just counting 100 lines, this time we write the 100 lines (and we also changed the command-line option):
+
+**Nicely Formatted:**
+	
+	./run scripts/Twitter6Typed.scala \ 
+	  --input data/twitter/tweets.tsv \ 
+	  --uniques output/unique-languages.txt \ 
+	  --count-star output/count-star.txt \ 
+	  --first-100 output/first-100.txt
+
+**Copy and Paste Version:**
+
+	./run scripts/Twitter6Typed.scala --input data/twitter/tweets.tsv --uniques output/unique-languages.txt --count-star output/count-star.txt --first-100 output/first-100.txt
 
 # Using Scalding with Hadoop
 
 A great feature of Cascading, which Scalding exploits, is the ability to test locally before running on Hadoop. This improves the iterative development and feedback cycle. 
 
-We've provided a bash shell script, `run11.sh` to run the job on Hadoop, but first, lets discuss Scalding's own approach.
+I've provided a bash shell script, `run11.sh` to run the job on Hadoop, but first, let's discuss Scalding's own approach.
 
-Once you're ready to try it in Hadoop, the "official" Scalding way is to use the `scripts/scald.rb` script in the Scalding distribution. For example, assuming that you cloned the Scalding repo into `$SCALDING_HOME`, here is a command to run `src/main/scala/HadoopTwitter11.scala`, which is actually *identical* to `Twitter6` that we ran previously, except for comments. (We put it in `src/main/scala` so the sbt build adds it to the assembly.):
+Once you're ready to try it in Hadoop, the "official" Scalding way is to use the `scripts/scald.rb` script in the Scalding distribution. For example, assuming that you cloned the Scalding repo into `$SCALDING_HOME`, here is a command to run `src/main/scala/HadoopTwitter11.scala`, which is actually *identical* to `Twitter6` that we ran previously, except for comments. (I put it in `src/main/scala` so the sbt build adds it to the assembly.):
 
 **Nicely Formatted:**
 	
@@ -657,9 +670,9 @@ Use the server address with your *JobTracker* for the `--host` flag on a real Ha
 
 Finally, when using HDFS, the values specified for output using the `--uniques`, `count-star`, and `count-star-limit` flags will be used as *directories*, not *files*, which is why we omitted the `.txt` suffixes used before. This follows conventional Hadoop practice, where the parallel processes might result in multiple, concurrently-written output files.
 
-To simplify matters, such as removing the need for you to install the Scalding distribution, we've provided a bash script, `run11.sh`, to run this exercise. You'll need access to a computer with Hadoop and bash installed. You can install Hadoop on a Mac using HomeBrew, on Linux using the appropriate package installer, and Microsoft has recently released a port of Hadoop for Windows. However, the easiest way to play with Hadoop is to install a VMWare or VirtualBox runner and download a completely configured image file from Cloudera, MapR, or Hortonworks.
+To simplify matters, such as removing the need for you to install the Scalding distribution, I've provided a bash script, `run11.sh`, to run this exercise. You'll need access to a computer with Hadoop and bash installed. You can install Hadoop on a Mac using HomeBrew, on Linux using the appropriate package installer, and Microsoft has recently released a port of Hadoop for Windows. However, the easiest way to play with Hadoop is to install a VMWare or VirtualBox runner and download a completely configured image file from Cloudera, MapR, or Hortonworks.
 
-We'll just demonstrate using `run11.sh` in the Workshop. Using all the default settings, just run:
+I'll just demonstrate using `run11.sh` in the Workshop. Using all the default settings, just run:
 
 	run11.sh
 

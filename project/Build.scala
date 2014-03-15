@@ -5,9 +5,9 @@ object BuildSettings {
 
   val Name          = "scalding-workshop"
   val Organization  = "com.concurrentthought"
-  val Version       = "0.3.1"
+  val Version       = "0.4.0"
   val Description   = "Scalding Workshop"
-  val ScalaVersion  = "2.10.2"
+  val ScalaVersion  = "2.10.3"
   val ScalacOptions = Seq("-deprecation", "-unchecked", "-encoding", "utf8")
 
   val basicSettings = Defaults.defaultSettings ++ Seq (
@@ -42,7 +42,7 @@ object BuildSettings {
         "janino-2.5.16.jar", // Janino includes a broken signature, and is not needed anyway
         "commons-beanutils-core-1.8.0.jar", // Clash with each other and with commons-collections
         "commons-beanutils-1.7.0.jar"
-      ) 
+      )
       cp filter { jar => excludes(jar.data.getName) }
     },
     
@@ -73,7 +73,7 @@ object ShellPrompt {
   val Prompt = {
     (state: State) => {
       val currProject = Project.extract (state).currentProject.id
-      "%s:%s:%s> ".format (
+      "%s (git: %s) %s> ".format (
         currProject, currBranch, BuildSettings.Version
       )
     }
@@ -94,13 +94,15 @@ object Resolvers {
 
 object Dependency {
   object Version {
-    val Scalding    = "0.8.11"
-    val Algebird    = "0.2.0"
-    val Bijection   = "0.5.2"
+    val Scalding    = "0.9.0rc4"
+    val Algebird    = "0.5.0"
+    val Bijection   = "0.6.2"
     val Hadoop      = "1.1.2"
     val ScalaTest   = "2.0.0"
     val ScalaCheck  = "1.11.0"
     val SummingBird = "0.1.0-SNAPSHOT"
+    val Logging     = "1.1.3"
+    val SLF4J       = "1.7.6"
   }
 
   // ---- Application dependencies ----
@@ -121,6 +123,10 @@ object Dependency {
   val summingbird_core     = "com.twitter" %% "summingbird-core"     % Version.SummingBird
   val summingbird_scalding = "com.twitter" %% "summingbird-scalding" % Version.SummingBird
 
+  val logging       = "commons-logging" % "commons-logging" % Version.Logging 
+  val slf4j_logging = "org.slf4j"       % "slf4j-log4j12"   % Version.SLF4J 
+  // val slf4j_simple  = "org.slf4j"       % "slf4j-simple"    % Version.SLF4J 
+
   // ---- Test dependencies ----
 
   val scalaTest   = "org.scalatest"    %%  "scalatest"   %  Version.ScalaTest  %  "test"
@@ -132,7 +138,7 @@ object Dependencies {
 
   val scaldingWorkshop = Seq(
     scalaCompiler, scalding_args, scalding_core, scalding_date, 
-    algebird_core, algebird_util, bijection_core)
+    algebird_core, algebird_util, bijection_core, logging, slf4j_logging)
     // not yet available: summingbird_core, summingbird_scalding
     // hadoop_core, scalaTest, scalaCheck)
 }

@@ -23,7 +23,7 @@ import com.twitter.scalding._
  * know which entry points you missed...).
  * You invoke the script like this:
  *   ./run scripts/StockAverages3a.scala \
- *     --input  data/stocks/APPL.csv \
+ *     --input  data/stocks/AAPL.csv \
  *     --output output/AAPL-avg.txt
  */
 

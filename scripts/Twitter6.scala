@@ -35,7 +35,7 @@ class Twitter6(args : Args) extends Job(args) {
 
   val tweets = Tsv(args("input"), twitterSchema)
       .read
-      .filter('language) { l:String => l != "\\N"}
+      .filter('language) { l:String => l != "\\N" }
 
   /*
    * Split the pipe in a stream were we find the unique languages.

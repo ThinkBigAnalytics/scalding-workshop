@@ -1,181 +1,173 @@
-<!DOCTYPE html>  
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Workshop</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-/*
-This document has been created with Marked.app <http://markedapp.com>, Copyright 2013 Brett Terpstra
-Content is property of the document author
-Please leave this notice in place, along with any additional credits below.
----------------------------------------------------------------
-Title: GitHub
-Author: Brett Terpstra
-Description: Github README style. Includes theme for Pygmentized code blocks.
-*/
-html,body{color:black}*:not('#mkdbuttons'){margin:0;padding:0}#wrapper{font:13.34px helvetica,arial,freesans,clean,sans-serif;-webkit-font-smoothing:subpixel-antialiased;line-height:1.4;padding:3px;background:#fff;border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px}p{margin:1em 0}a{color:#4183c4;text-decoration:none}#wrapper{background-color:#fff;padding:30px;margin:15px;font-size:14px;line-height:1.6}#wrapper>*:first-child{margin-top:0!important}#wrapper>*:last-child{margin-bottom:0!important}@media screen{#wrapper{box-shadow:0 0 0 1px #cacaca,0 0 0 4px #eee}}h1,h2,h3,h4,h5,h6{margin:20px 0 10px;padding:0;font-weight:bold;-webkit-font-smoothing:subpixel-antialiased;cursor:text}h1{font-size:28px;color:#000}h2{font-size:24px;border-bottom:1px solid #ccc;color:#000}h3{font-size:18px;color:#333}h4{font-size:16px;color:#333}h5{font-size:14px;color:#333}h6{color:#777;font-size:14px}p,blockquote,table,pre{margin:15px 0}ul{padding-left:30px}ol{padding-left:30px}ol li ul:first-of-type{margin-top:0}hr{background:transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC) repeat-x 0 0;border:0 none;color:#ccc;height:4px;padding:0}#wrapper>h2:first-child{margin-top:0;padding-top:0}#wrapper>h1:first-child{margin-top:0;padding-top:0}#wrapper>h1:first-child+h2{margin-top:0;padding-top:0}#wrapper>h3:first-child,#wrapper>h4:first-child,#wrapper>h5:first-child,#wrapper>h6:first-child{margin-top:0;padding-top:0}a:first-child h1,a:first-child h2,a:first-child h3,a:first-child h4,a:first-child h5,a:first-child h6{margin-top:0;padding-top:0}h1+p,h2+p,h3+p,h4+p,h5+p,h6+p,ul li>:first-child,ol li>:first-child{margin-top:0}dl{padding:0}dl dt{font-size:14px;font-weight:bold;font-style:italic;padding:0;margin:15px 0 5px}dl dt:first-child{padding:0}dl dt>:first-child{margin-top:0}dl dt>:last-child{margin-bottom:0}dl dd{margin:0 0 15px;padding:0 15px}dl dd>:first-child{margin-top:0}dl dd>:last-child{margin-bottom:0}blockquote{border-left:4px solid #DDD;padding:0 15px;color:#777}blockquote>:first-child{margin-top:0}blockquote>:last-child{margin-bottom:0}table{border-collapse:collapse;border-spacing:0;font-size:100%;font:inherit}table th{font-weight:bold;border:1px solid #ccc;padding:6px 13px}table td{border:1px solid #ccc;padding:6px 13px}table tr{border-top:1px solid #ccc;background-color:#fff}table tr:nth-child(2n){background-color:#f8f8f8}img{max-width:100%}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px;font-family:Consolas,'Liberation Mono',Courier,monospace;font-size:12px;color:#333}pre>code{margin:0;padding:0;white-space:pre;border:0;background:transparent}.highlight pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}pre code,pre tt{background-color:transparent;border:0}.poetry pre{font-family:Georgia,Garamond,serif!important;font-style:italic;font-size:110%!important;line-height:1.6em;display:block;margin-left:1em}.poetry pre code{font-family:Georgia,Garamond,serif!important;word-break:break-all;word-break:break-word;-webkit-hyphens:auto;-moz-hyphens:auto;hyphens:auto;white-space:pre-wrap}sup,sub,a.footnote{font-size:1.4ex;height:0;line-height:1;vertical-align:super;position:relative}sub{vertical-align:sub;top:-1px}@media print{body{background:#fff}img,pre,blockquote,table,figure{page-break-inside:avoid}#wrapper{background:#fff;border:0}code{background-color:#fff;color:#333!important;padding:0 .2em;border:1px solid #dedede}pre{background:#fff}pre code{background-color:white!important;overflow:visible}}@media screen{body.inverted{color:#eee!important;border-color:#555;box-shadow:none}.inverted #wrapper,.inverted hr .inverted p,.inverted td,.inverted li,.inverted h1,.inverted h2,.inverted h3,.inverted h4,.inverted h5,.inverted h6,.inverted th,.inverted .math,.inverted caption,.inverted dd,.inverted dt,.inverted blockquote{color:#eee!important;border-color:#555;box-shadow:none}.inverted td,.inverted th{background:#333}.inverted h2{border-color:#555}.inverted hr{border-color:#777;border-width:1px!important}::selection{background:rgba(157,193,200,0.5)}h1::selection{background-color:rgba(45,156,208,0.3)}h2::selection{background-color:rgba(90,182,224,0.3)}h3::selection,h4::selection,h5::selection,h6::selection,li::selection,ol::selection{background-color:rgba(133,201,232,0.3)}code::selection{background-color:rgba(0,0,0,0.7);color:#eee}code span::selection{background-color:rgba(0,0,0,0.7)!important;color:#eee!important}a::selection{background-color:rgba(255,230,102,0.2)}.inverted a::selection{background-color:rgba(255,230,102,0.6)}td::selection,th::selection,caption::selection{background-color:rgba(180,237,95,0.5)}.inverted{background:#0b2531;background:#252a2a}.inverted #wrapper{background:#252a2a}.inverted a{color:#acd1d5}}.highlight .c{color:#998;font-style:italic}.highlight .err{color:#a61717;background-color:#e3d2d2}.highlight .k,.highlight .o{font-weight:bold}.highlight .cm{color:#998;font-style:italic}.highlight .cp{color:#999;font-weight:bold}.highlight .c1{color:#998;font-style:italic}.highlight .cs{color:#999;font-weight:bold;font-style:italic}.highlight .gd{color:#000;background-color:#fdd}.highlight .gd .x{color:#000;background-color:#faa}.highlight .ge{font-style:italic}.highlight .gr{color:#a00}.highlight .gh{color:#999}.highlight .gi{color:#000;background-color:#dfd}.highlight .gi .x{color:#000;background-color:#afa}.highlight .go{color:#888}.highlight .gp{color:#555}.highlight .gs{font-weight:bold}.highlight .gu{color:#800080;font-weight:bold}.highlight .gt{color:#a00}.highlight .kc,.highlight .kd,.highlight .kn,.highlight .kp,.highlight .kr{font-weight:bold}.highlight .kt{color:#458;font-weight:bold}.highlight .m{color:#099}.highlight .s{color:#d14}.highlight .na{color:#008080}.highlight .nb{color:#0086b3}.highlight .nc{color:#458;font-weight:bold}.highlight .no{color:#008080}.highlight .ni{color:#800080}.highlight .ne,.highlight .nf{color:#900;font-weight:bold}.highlight .nn{color:#555}.highlight .nt{color:#000080}.highlight .nv{color:#008080}.highlight .ow{font-weight:bold}.highlight .w{color:#bbb}.highlight .mf,.highlight .mh,.highlight .mi,.highlight .mo{color:#099}.highlight .sb,.highlight .sc,.highlight .sd,.highlight .s2,.highlight .se,.highlight .sh,.highlight .si,.highlight .sx{color:#d14}.highlight .sr{color:#009926}.highlight .s1{color:#d14}.highlight .ss{color:#990073}.highlight .bp{color:#999}.highlight .vc,.highlight .vg,.highlight .vi{color:#008080}.highlight .il{color:#099}.highlight .gc{color:#999;background-color:#eaf2f5}.type-csharp .highlight .k,.type-csharp .highlight .kt{color:#00F}.type-csharp .highlight .nf{color:#000;font-weight:normal}.type-csharp .highlight .nc{color:#2b91af}.type-csharp .highlight .nn{color:#000}.type-csharp .highlight .s,.type-csharp .highlight .sc{color:#a31515}/*
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #737373;
+    background-color: white;
+    margin: 10px 13px 10px 13px;
+}
+table {
+	margin: 10px 0 15px 0;
+	border-collapse: collapse;
+}
+td,th {	
+	border: 1px solid #ddd;
+	padding: 3px 10px;
+}
+th {
+	padding: 5px 10px;	
+}
 
-github.com style (c) Vasily Polovnyov <vast@whiteants.net>
-
-*/
-
+a {
+    color: #0069d6;
+}
+a:hover {
+    color: #0050a3;
+    text-decoration: none;
+}
+a img {
+    border: none;
+}
+p {
+    margin-bottom: 9px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #404040;
+    line-height: 36px;
+}
+h1 {
+    margin-bottom: 18px;
+    font-size: 30px;
+}
+h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 14px;
+}
+h6 {
+    font-size: 13px;
+}
+hr {
+    margin: 0 0 19px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+blockquote {
+    padding: 13px 13px 21px 15px;
+    margin-bottom: 18px;
+    font-family:georgia,serif;
+    font-style: italic;
+}
+blockquote:before {
+    content:"\201C";
+    font-size:40px;
+    margin-left:-10px;
+    font-family:georgia,serif;
+    color:#eee;
+}
+blockquote p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+code, pre {
+    font-family: Monaco, Andale Mono, Courier New, monospace;
+}
+code {
+    background-color: #fee9cc;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 1px 3px;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+pre {
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 11px;
+    border: 1px solid #d9d9d9;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
 pre code {
-  display: block; padding: 0.5em;
-  color: #000;
-  background: #f8f8ff
+    background-color: #fff;
+    color:#737373;
+    font-size: 11px;
+    padding: 0;
 }
-
-pre .comment,
-pre .template_comment,
-pre .diff .header,
-pre .javadoc {
-  color: #998;
-  font-style: italic
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
 }
-
-pre .keyword,
-pre .css .rule .keyword,
-pre .winutils,
-pre .javascript .title,
-pre .lisp .title,
-pre .subst {
-  color: #000;
-  font-weight: bold
+* {
+	-webkit-print-color-adjust: exact;
 }
-
-pre .ruby .keyword {
-  font-weight: normal
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:10px auto;
+    }
 }
-
-pre .number,
-pre .hexcolor {
-  color: #40a070
-}
-
-pre .string,
-pre .tag .value,
-pre .phpdoc,
-pre .tex .formula {
-  color: #d14
-}
-
-pre .title,
-pre .id {
-  color: #900;
-  font-weight: bold
-}
-
-pre .javascript .title,
-pre .lisp .title,
-pre .subst {
-  font-weight: normal
-}
-
-pre .class .title,
-pre .haskell .label,
-pre .tex .command {
-  color: #458;
-  font-weight: bold
-}
-
-pre .class .params {
-	color: #000;
-}
-
-pre .tag,
-pre .tag .title,
-pre .rules .property,
-pre .django .tag .keyword {
-  color: #000080;
-  font-weight: normal
-}
-
-pre .attribute,
-pre .variable,
-pre .instancevar,
-pre .lisp .body {
-  color: #008080
-}
-
-pre .regexp {
-  color: #009926
-}
-
-pre .class {
-  color: #458;
-  font-weight: bold
-}
-
-pre .symbol,
-pre .ruby .symbol .string,
-pre .ruby .symbol .keyword,
-pre .ruby .symbol .keymethods,
-pre .lisp .keyword,
-pre .tex .special,
-pre .input_number {
-  color: #0086b3
-}
-
-pre .ruby .identifier .keyword,
-pre .ruby .identifier .keymethods {
-  color: #0086b3;
-}
-
-pre .ruby .constant {
-  color: #008080;
-}
-
-pre .builtin,
-pre .built_in,
-pre .lisp .title {
-  color: #0086b3
-}
-
-pre .preprocessor,
-pre .pi,
-pre .doctype,
-pre .shebang,
-pre .cdata {
-  color: #999;
-  font-weight: bold
-}
-
-pre .deletion {
-  background: #fdd
-}
-
-pre .addition {
-  background: #dfd
-}
-
-pre .diff .change {
-  background: #0086b3
-}
-
-pre .chunk {
-  color: #aaa
-}
-
-pre .tex .formula {
-  opacity: 0.5;
+@media print {
+	body,code,pre code,h1,h2,h3,h4,h5,h6 {
+		color: black;
+	}
+	table, pre {
+		page-break-inside: avoid;
+	}
 }
 </style>
-
+<title>Scalding Workshop</title>
+<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax:{inlineMath:[['$$$','$$$']]}});</script><script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </head>
-<body class="normal">
-  <div id="wrapper">
-      <h1 id="scaldingworkshop">Scalding Workshop</h1>
+<body>
+<h1>Scalding Workshop</h1>
 
-<p><strong>Dean Wampler, Concurrent Thought</strong><br/>
-<a href="&#109;&#97;&#x69;&#x6c;&#116;&#x6f;&#58;&#x64;&#101;&#x61;&#110;&#64;&#100;&#x65;&#x61;&#x6e;&#119;&#97;&#109;&#x70;&#x6c;&#x65;&#114;&#46;&#x63;&#111;&#x6d;&#x3f;&#115;&#117;&#x62;&#x6a;&#x65;&#x63;&#116;&#x3d;&#x51;&#x75;&#101;&#115;&#x74;&#105;&#x6f;&#x6e;&#37;&#x32;&#x30;&#97;&#x62;&#x6f;&#x75;&#x74;&#37;&#50;&#48;&#121;&#111;&#117;&#114;&#37;&#50;&#x30;&#83;&#x63;&#97;&#x6c;&#x64;&#105;&#x6e;&#x67;&#37;&#x32;&#x30;&#x57;&#111;&#114;&#107;&#x73;&#x68;&#111;&#x70;">&#x64;&#101;&#x61;&#x6e;&#x40;&#x64;&#x65;&#97;&#110;&#119;&#x61;&#109;&#x70;&#x6c;&#x65;&#x72;&#46;&#99;&#111;&#x6d;</a><br/>
+<p><strong>Dean Wampler, Typesafe</strong><br/>
+<a href="mailto:dean@concurrentthought.com?subject=Question%20about%20your%20Scalding%20Workshop">dean@concurrentthought.com</a><br/>
 <a href="https://twitter.com/deanwampler">@deanwampler</a><br/>
-<a href="&#x6d;&#97;&#105;&#x6c;&#x74;&#x6f;&#58;&#x64;&#x65;&#x61;&#x6e;&#64;&#100;&#x65;&#97;&#x6e;&#x77;&#97;&#109;&#112;&#108;&#x65;&#114;&#46;&#x63;&#111;&#109;&#x3f;&#115;&#117;&#98;&#106;&#x65;&#x63;&#x74;&#61;&#72;&#x69;&#114;&#105;&#x6e;&#103;&#x25;&#50;&#48;&#68;&#101;&#x61;&#x6e;&#37;&#x32;&#x30;&#87;&#97;&#109;&#x70;&#x6c;&#x65;&#114;">&#x48;&#105;&#114;&#x65; &#x4d;&#x65;&#x21;</a></p>
+<a href="http://typesafe.com">Typesafe</a></p>
 
-<p>This workshop/tutorial takes you through the basic principles of writing data analysis applications with <a href="https://github.com/twitter/scalding">Scalding</a>, a Scala API that wraps <a href="http://www.cascading.org/">Cascading</a>. I first went through this workshop at <a href="http://thestrangeloop.com">StrangeLoop 2012</a>. It took about 3 hours, but we didn&#8217;t do all the <em>mini-exercises</em>, so it make take you a bit longer if you do them all.</p>
+<p><img src="images/scalding-logo-small.png" alt="Scalding logo" /></p>
 
-<p>These instructions walk you through a series of exercises. The exercises have a corresponding Scalding script (Scala source file). We use a convention of adding a number suffix to the name to indicate the order of the exercises. Note that some of these exercises are adapted from the Tutorial examples that are part of the Scalding Github repo, where noted.</p>
+<p>This workshop/tutorial takes you through the basic principles of writing data analysis applications with <a href="https://github.com/twitter/scalding">Scalding</a>, a Scala API that wraps <a href="http://www.cascading.org/">Cascading</a>. Expect this workshop to take 3 hours or more, if you do all parts of the exercises. I certainly encourage you to experiment.</p>
+
+<p>I assume you have already completed the setup instructions in the <a href="README.html">README</a>. These instructions walk you through a series of exercises. The exercises have a corresponding Scalding script (Scala source file). We use a convention of adding a number suffix to the name to indicate the order of the exercises. Note that some of these exercises are adapted from the Tutorial examples that are part of the Scalding Github repo, where noted.</p>
 
 <p>This document will explain many features of the Scalding and Cascading. The scripts themselves contain additional details. The Scalding and Cascading documentation has more information than we can cover here:</p>
 
@@ -184,32 +176,33 @@ pre .tex .formula {
 <li><a href="https://github.com/twitter/scalding/wiki">Scalding Wiki</a>.</li>
 <li>Scalding Scaladocs are not online, but they can be built from the <a href="https://github.com/twitter/scalding">Scalding Repo</a>. For convenience, we have included these files in the workshop as <code>api.zip</code>. Unzip the file and open the <a href="api/index.html">index</a>.</li>
 <li><a href="http://blog.echen.me/2012/02/09/movie-recommendations-and-more-via-mapreduce-and-scalding/">Movie Recommendations</a> is a fantastic blog post with detailed, non-trivial examples using Scalding.</li>
-<li><a href="https://github.com/snowplow/scalding-example-project">Scalding Example Project</a> is a full example designed to run on Hadoop, specifically on Amazon&#8217;s EMR (Elastic MapReduce) platform.</li>
+<li><a href="https://github.com/snowplow/scalding-example-project">Scalding Example Project</a> is a full example designed to run on Hadoop, specifically on Amazon's EMR (Elastic MapReduce) platform.</li>
 </ul>
 
-<h2 id="helpabrotherout">Help a Brother Out!</h2>
+
+<h2>Help a Brother Out!</h2>
 
 <p>Feedback, patches, suggested additions are welcome! <a href="https://github.com/deanwampler/scalding-workshop">Fork me</a>.</p>
 
-<h1 id="basiccascadingconcepts">Basic Cascading Concepts</h1>
+<h1>Basic Cascading Concepts</h1>
 
-<p>Let&#8217;s start with a very brief synopsis of key Cascading concepts useful for understanding Scalding. Not all Cascading features are wrapped with Scalding APIs. In some cases, equivalent Scala idioms are used, even though the implementations may delegate to Cascading equivalents. </p>
+<p>Let's start with a very brief synopsis of key Cascading concepts useful for understanding Scalding. Not all Cascading features are wrapped with Scalding APIs. In some cases, equivalent Scala idioms are used, even though the implementations may delegate to Cascading equivalents.</p>
 
 <p>See the Cascading User Guide for more details.</p>
 
-<h2 id="tuple">Tuple</h2>
+<h2>Tuple</h2>
 
 <p>A common data structure in many programming languages, a tuple is a grouping of a fixed number of fields, where each element has a specific type, the types of the different fields can be different and the fields can have names. It is analogous to a SQL record, a <code>struct</code> in C, and an object in object-oriented languages.</p>
 
-<h2 id="tap">Tap</h2>
+<h2>Tap</h2>
 
-<p>A <strong>Tap</strong> is a data <em>source</em> (for reading) or <em>sink</em> (for writing), corresponding to a file on the local file system, <em>Hadoop Distributed File System</em> (HDFS), or Amazon S3. You instantiate an <code>Hfs</code> instance for Hadoop or S3 file systems, and a <code>FileTap</code> instance for local file system. There are also more specialized versions for particular scenarios, like specifying a &#8220;template&#8221; for file or directory naming conventions.</p>
+<p>A <strong>Tap</strong> is a data <em>source</em> (for reading) or <em>sink</em> (for writing), corresponding to a file on the local file system, <em>Hadoop Distributed File System</em> (HDFS), or Amazon S3. You instantiate an <code>Hfs</code> instance for Hadoop or S3 file systems, and a <code>FileTap</code> instance for local file system. There are also more specialized versions for particular scenarios, like specifying a "template" for file or directory naming conventions.</p>
 
-<h2 id="scheme">Scheme</h2>
+<h2>Scheme</h2>
 
 <p>The <strong>Scheme</strong> encapsulates the file format. There are several supported natively by Cascading. The corresponding Java class names are used in the following subsections.</p>
 
-<h3 id="textline">TextLine</h3>
+<h3>TextLine</h3>
 
 <p>When read, each line of text in the file is returned, with no attempt to tokenize it into fields. The position, byte offset or line number, in the file for the line is also returned. In the Hadoop model of key-value data pairs, the offset is the key and the line is the value.</p>
 
@@ -217,41 +210,41 @@ pre .tex .formula {
 
 <p>Available for both local file systems and Hadoop.</p>
 
-<h3 id="textdelimited">TextDelimited</h3>
+<h3>TextDelimited</h3>
 
 <p>Handles data where each line is a tuple with fields separated by delimiters, such as tabs and commas. Quoted strings with nested delimiters and files with column headers can be handled. Fields can be cast to primitive types.</p>
 
 <p>Available for both local file systems and Hadoop.</p>
 
-<h3 id="sequencefile">SequenceFile</h3>
+<h3>SequenceFile</h3>
 
 <p>A binary, Hadoop-only data format.</p>
 
-<h3 id="writablesequencefile">WritableSequenceFile</h3>
+<h3>WritableSequenceFile</h3>
 
 <p>A more efficient implementation of SequenceFile.</p>
 
-<h2 id="pipe">Pipe</h2>
+<h2>Pipe</h2>
 
 <p><strong>Pipes</strong> are units of processing through which tuples are streamed. They are composed into <strong>Assemblies</strong>. Pipes are provided to merge and join streams, split them into separate streams, group them, filter them, etc.</p>
 
-<h2 id="flow">Flow</h2>
+<h2>Flow</h2>
 
 <p>A <strong>Flow</strong> is created whenever a Tap is connected to a Pipe. Flows can also be composed.</p>
 
-<h2 id="cascade">Cascade</h2>
+<h2>Cascade</h2>
 
-<p>A <strong>Cascade</strong> joins flows and supports a model where a flow is only executed if the target output doesn&#8217;t exist is older than the input data, analogous to build tools like <code>make</code>.</p>
+<p>A <strong>Cascade</strong> joins flows and supports a model where a flow is only executed if the target output doesn't exist is older than the input data, analogous to build tools like <code>make</code>.</p>
 
-<h1 id="theworkshop">The Workshop</h1>
+<h1>The Workshop</h1>
 
 <p>Each section introduces one or more features for data manipulation, most of which are analogous to features found in SQL, Pig (the Hadoop <em>data flow</em> tool), and other systems.</p>
 
-<h2 id="sanitycheck">Sanity Check</h2>
+<h2>Sanity Check</h2>
 
 <p>First, the <a href="README.html">README</a> tells you to run a <code>SanityCheck0.scala</code> Scalding script as a sanity check to verify that your environment is ready to go.</p>
 
-<p>Using <code>bash</code>: </p>
+<p>Using <code>bash</code>:</p>
 
 <pre><code>    cd $HOME/fun/scalding-workshop
     ./run scripts/SanityCheck0.scala
@@ -263,26 +256,31 @@ pre .tex .formula {
     scala run scripts/SanityCheck0.scala
 </code></pre>
 
-<p>From now on, we&#8217;ll assume you are working in the <code>scalding-workshop</code> directory, unless otherwise noted. Also, we&#8217;ll just show the <code>bash</code> versions of the subsequent <code>run</code> commands. Finally, because we&#8217;re lazy, we&#8217;ll sometimes drop the <code>.scala</code> extension from script names when we discuss them in the text.</p>
+<p>From now on, we'll assume you are working in the <code>scalding-workshop</code> directory, unless otherwise noted. Also, we'll just show the <code>bash</code> versions of the subsequent <code>run</code> commands. Finally, because we're lazy, we'll sometimes drop the <code>.scala</code> extension from script names when we discuss them in the text.</p>
 
-<p>Run these commands again and verify that they run without error. The output is written to <code>output/SanityCheck0.txt</code>. What&#8217;s in that file?</p>
+<p>Run these commands again and verify that they run without error. The output is written to <code>output/SanityCheck0.txt</code>. What's in that file?</p>
 
 <p>It contains the contents of <code>SanityCheck0.scala</code>, but each line is now numbered.</p>
 
-<blockquote>
-<p>By default, when you create a new field in a <strong>pipeline</strong>, Cascading adds the field to the existing fields. All the fields together constitute a <strong>tuple</strong>.</p>
-</blockquote>
+<p>The essence of this script is the following three lines:</p>
 
-<p>Loading the file added the line number as an additional field.</p>
+<pre><code>val in  = TextLine("scripts/SanityCheck0.scala")
+val out = TextLine("output/SanityCheck0.txt")
+in.read.write(out)
+</code></pre>
 
-<h2 id="projectingfields">Projecting Fields</h2>
+<p>It reads each line and writes it back out. The <code>TextLine</code> format has an implicit "schema" for each line, the line number, called the <code>'offset</code>, which it adds, and the line itself, called <code>'line</code>. This naming convention that uses Scala <em>symbols</em> is a Scalding convention. So, the reason we have the line numbers in the output file is because they were added by <code>TextLine</code>.</p>
 
-<p>When you write a SQL <code>SELECT</code> statement like the following, you are <em>projecting</em> out the fields/columns or calculated values that you want, and discarding the rest of the fields. </p>
+<blockquote><p>By default, when you create a new field in a <strong>pipeline</strong>, Cascading adds the field to the existing fields. All the fields together constitute a <strong>tuple</strong>.</p></blockquote>
+
+<h2>Projecting Fields</h2>
+
+<p>When you write a SQL <code>SELECT</code> statement like the following, you are <em>projecting</em> out the fields/columns or calculated values that you want, and discarding the rest of the fields.</p>
 
 <pre><code>SELECT name, age FROM employees;
 </code></pre>
 
-<p>Scalding also has a <code>project</code> method for the same purpose. Let&#8217;s modify <code>SanityCheck0</code> to project out just the line we read from the file, discarding the line number. <code>Scripts/Project1.scala</code> has this change near the end of the file:</p>
+<p>Scalding also has a <code>project</code> method for the same purpose. Let's modify <code>SanityCheck0</code> to project out just the line we read from the file, discarding the line number. <code>Scripts/Project1.scala</code> has this change near the end of the file:</p>
 
 <pre><code>in
   .read
@@ -290,39 +288,43 @@ pre .tex .formula {
   .write(out)
 </code></pre>
 
-<p>This expression is a sequence of Cascading <a href="http://docs.cascading.org/cascading/2.0/javadoc/cascading/pipe/Pipe.html">Pipes</a>. However, there is not <code>write</code> method defined on the <code>Pipe</code> class. Scalding uses Scala&#8217;s <em>implicit conversion</em> feature to wrap <code>Pipe</code> with a Scalding-specific <code>com.twitter.scalding.RichPipe</code> type that provides most of the methods we&#8217;ll actually use.</p>
+<p>This expression is a sequence of Cascading <a href="http://docs.cascading.org/cascading/2.0/javadoc/cascading/pipe/Pipe.html">Pipes</a>. However, there is no <code>write</code> method defined on the <code>Pipe</code> class. Scalding uses a feature in Scala called <em>implicit conversions</em> to wrap <code>Pipe</code> with a Scalding-specific type called <code>com.twitter.scalding.RichPipe</code>. It provides most of the methods we'll actually use, like <code>write</code>.</p>
 
-<blockquote>
-<p>There are also comments in this and other scripts about specific Scalding and Cascading features that we won&#8217;t cover in these notes.</p>
-</blockquote>
+<blockquote><p>There are also comments in this script and the ones that follow about specific Scalding and Cascading features that we won't cover in these notes.</p></blockquote>
 
 <p>Run the script thusly:</p>
 
 <pre><code>    ./run scripts/Project1.scala
 </code></pre>
 
-<p>Now, if you look at the output in <code>output/Project1.txt</code>, you&#8217;ll see just the original lines from <code>scripts/Project1.scala</code>. That is, running a <code>diff</code> command on the input and output files should show no differences.</p>
+<p>Now, if you look at the output in <code>output/Project1.txt</code>, you'll see just the original lines from <code>scripts/Project1.scala</code>. That is, running a <code>diff</code> command on the input and output files should show no differences.</p>
 
-<h2 id="flatmapandgroupby-implementingwordcount">FlatMap and GroupBy - Implementing Word Count</h2>
+<h2>FlatMap and GroupBy - Implementing Word Count</h2>
 
 <p>This exercise introduces several new concepts and implements the famous <em>hello world!</em> of Hadoop programming: <em>word count</em>. In word count, a corpus of documents is read, the content is tokenized into words, and the total count for each word over the entire corpus is computed.</p>
 
-<p>First, we&#8217;ll use two new invocation command options:</p>
+<p>First, we'll use two new invocation command options:</p>
 
 <ul>
 <li><code>--input file</code> specifies the input file.</li>
 <li><code>--output file</code> specifies the output file.</li>
 </ul>
 
-<blockquote>
-<p>Unlike Hadoop&#8217;s HDFS API, Hive, and Pig, when you run using <code>--local</code> mode, you can&#8217;t specify a directory for the input, where all files will be read, or for the output, where one or more files will be written. You have to specify input and output files.</p>
-</blockquote>
 
-<p>Run the script like this, where have wrapped lines and used <code>\\</code> in to indicate the line breaks:</p>
+<blockquote><p>We are running in "local" mode, using the <code>--local</code> command option. In this case, we have to specify input and output files. If we were running in a Hadoop cluster, we would specify directories instead and Hadoop <em>tasks</em> (separate JVM processes) would be started to read each file, etc. This is the normal way of working with the Hadoop MapReduce API, and other tools like Hive and Pig, too.</p></blockquote>
 
-<pre><code>./run scripts/WordCount2.scala \
-    --input  data/shakespeare/plays.txt \
-    --output output/shakespeare-wc.txt
+<p>Run the script with the following command. From now on, when the commands are too long to fit easily on one line, I'll show you the command twice. First, I'll show a nicely-formatted command line that's easy to read, with line-continuation marks "\" separating the lines. Then, I'll show the command all on one line, which is easier to copy and paste:</p>
+
+<p><strong>Nicely Formatted:</strong></p>
+
+<pre><code>./run scripts/WordCount2.scala \ 
+  --input data/shakespeare/plays.txt \ 
+  --output output/shakespeare-wc.txt
+</code></pre>
+
+<p><strong>Copy and Paste Version:</strong></p>
+
+<pre><code>./run scripts/WordCount2.scala --input data/shakespeare/plays.txt --output output/shakespeare-wc.txt
 </code></pre>
 
 <p>The output should be identical to the contents of <code>data/shakespeare-wc/simple/wc.txt</code>. Using a <code>diff</code> command, should show no differences:</p>
@@ -330,21 +332,11 @@ pre .tex .formula {
 <pre><code>diff data/shakespeare-wc/simple/wc.txt output/shakespeare-wc.txt
 </code></pre>
 
-<p>The script uses two new data transformation features to compute the word count.</p>
+<p>(Or you may see a different count for the first line, the amount of whitespace seen...)</p>
 
-<h3 id="furtherexploration">Further Exploration</h3>
+<p>The script uses two new data transformation features to compute the word count, <code>flatMap</code> and <code>groupBy</code>.</p>
 
-<p>Try these additional &#8220;mini-exercises&#8221; to explore what Scalding and Cascading are doing.</p>
-
-<h4 id="improvethetokenization">Improve the Tokenization</h4>
-
-<p>Look at the output and you&#8217;ll notice that the tokenization is rather poor. How can you improve the value defined in <code>tokenizerRegex</code>? Can you pass in the regular expression as an argument to the program?</p>
-
-<h4 id="projectthenumfield">Project the &#8217;num Field</h4>
-
-<p>Instead of projecting out <code>'line</code>, project out <code>'num</code>, the line number. (The output is boring, but now you know the name of this field!)</p>
-
-<h3 id="flatmap">flatMap</h3>
+<h3>flatMap</h3>
 
 <p>When you apply a <code>map</code> operation to a collection, each element is passed to a function that returns a new element, perhaps of a completely different type. For example, mapping a collection of integers to a collection of their string representations. A crucial feature of <code>map</code> is that the process is <em>one-to-one</em>. Each input element has a corresponding output element and the sizes of the input and output collections are the same.</p>
 
@@ -357,59 +349,76 @@ pre .tex .formula {
 }
 </code></pre>
 
-<p>where <code>tokenizerRegex</code> is <code>&quot;\\s+&quot;</code>.</p>
+<p>where <code>tokenizerRegex</code> is <code>"\\s+"</code>.</p>
 
 <p>A bit of Scala syntax; there are <em>two</em> argument lists passed to <code>flatMap</code>. The first, <code>('line -&gt; 'word)</code> specifies the field(s) in the tuple to pass to the mapping function, shown on the left-hand side of the arrow-like <code>-&gt;</code>, and it names the output field(s) the function will return, the single <code>'word</code> in this case.</p>
 
-<p>The second function argument list is <code>{ line : String =&gt; line.toLowerCase.split(tokenizerRegex)}</code>. Scala lets you substitute curly braces <code>{...}</code> for parentheses <code>(...)</code> for function argument lists, which is most useful when the content of the &#8220;block-like&#8221; structure is a single <em>function literal</em> (a.k.a. <em>anonymous function</em>). </p>
+<p>The second function argument list is <code>{ line : String =&gt; line.toLowerCase.split(tokenizerRegex)}</code>. Scala lets you substitute curly braces <code>{...}</code> for parentheses <code>(...)</code> for function argument lists, which is most useful when the content of the "block-like" structure is a single <em>function literal</em> (a.k.a. <em>anonymous function</em>).</p>
 
 <p>The <code>line : String</code> is the argument list passed to the anonymous function, a single parameter named <code>line</code> of type <code>String</code>. On the right-hand side of the arrow-like <code>=&gt;</code> is the body of the anonymous function. In this case it converts <code>line</code> to lower case and splits it on whitespace into an array of words.</p>
 
-<h3 id="groupby">groupBy</h3>
+<h3>groupBy</h3>
 
-<p>Once we have a stream of individual words, we want to count the occurrences of each word. To do that, we need to group together all occurrences of the same words. The <code>groupBy</code> operation is used by <code>WordCount2</code> to do this. </p>
+<p>Once we have a stream of individual words, we want to count the occurrences of each word. To do that, we need to group together all occurrences of the same words. The <code>groupBy</code> operation is used by <code>WordCount2</code> to do this.</p>
 
 <pre><code>.groupBy('word){group =&gt; group.size('count)}
 </code></pre>
 
-<p>The calling syntax is similar to <code>flatMap</code>. The first argument list specifies one or more fields to group over, forming the &#8220;key&#8221;. The second argument is a function literal. It takes a single argument of type <code>com.twitter.scalding.GroupBuilder</code> that gives us a hook to the constructed group of words so we can compute what we need from it. In this case, all we care about is the size of the group, which we&#8217;ll name <code>'count</code>.</p>
+<p>The calling syntax is similar to <code>flatMap</code>. The first argument list specifies one or more fields to group over, forming the "key". The second argument is a function literal. It takes a single argument of type <code>com.twitter.scalding.GroupBuilder</code> that gives us a hook to the constructed group of words so we can compute what we need from it. In this case, all we care about is the size of the group, which we name <code>'count</code>.</p>
 
-<h3 id="furtherexploration">Further Exploration</h3>
+<h3>Further Exploration</h3>
 
-<p>Try these additional &#8220;mini-exercises&#8221; to explore what Scalding and Cascading are doing.</p>
+<p>Try these additional "mini-exercises" to explore what Scalding and Cascading are doing.</p>
 
-<h4 id="removethegroupby">Remove the groupBy</h4>
+<h4>Improve the Tokenization</h4>
 
-<p>Comment out the <code>groupBy</code> line so that the raw results of <code>flatMap</code> are written to the output instead of the word count output. Note the fields that are written. </p>
+<p>Look at the output and you'll notice that the tokenization is rather poor. How can you improve the value defined in <code>tokenizerRegex</code>? Can you pass in the regular expression as an argument to the program?</p>
 
-<p>You&#8217;ll see the line number, the whole line, and an individual word from the line. Note that the line number and line are repeated for each word in the line.</p>
+<h4>Project the 'num Field</h4>
 
-<h4 id="groupagainbycount">Group Again by Count</h4>
+<p>Instead of projecting out <code>'line</code>, project out <code>'num</code>, the line number. (The output is boring, but now you know the name of this field!)</p>
+
+<p>Try these additional "mini-exercises" to explore what Scalding and Cascading are doing.</p>
+
+<h4>Remove the groupBy</h4>
+
+<p>Comment out the <code>groupBy</code> line so that the raw results of <code>flatMap</code> are written to the output instead of the word count output. Note the fields that are written.</p>
+
+<p>You'll see the line number, the whole line, and an individual word from the line. Note that the line number and line are repeated for each word in the line.</p>
+
+<h4>Group Again by Count</h4>
 
 <p>Now restore the <code>groupBy</code> line, and after it, add this line:</p>
 
-<pre><code>.groupBy('count){ group =&gt; group.mkString('word -&gt; 'words, &quot;\t&quot;) }
+<pre><code>.groupBy('count){ group =&gt; group.mkString('word -&gt; 'words, "\t") }
 </code></pre>
 
-<p>The output lines will be extremely long at the beginning of the file, but very short at the end. This second <code>groupBy</code> regroups the <code>'word</code> and <code>'count</code> output from the previous pipe. It groups by count so we now have all the words with one occurrence on a line, followed by all the words with two occurrences, etc. At the end of the output, which words have the most occurrences? What are those &#8220;words&#8221;?</p>
+<p>The output lines will be extremely long at the beginning of the file, but very short at the end. This second <code>groupBy</code> regroups the <code>'word</code> and <code>'count</code> output from the previous pipe. It groups by count so we now have all the words with one occurrence on a line, followed by all the words with two occurrences, etc. At the end of the output, which words have the most occurrences? What are those "words"?</p>
 
-<h4 id="improvethewordtokenization">Improve the Word Tokenization</h4>
+<h4>Improve the Word Tokenization</h4>
 
-<p>You probably noticed that simply splitting on whitespace is not very good, as punctuation is not removed. There are several ways it can be improved. First, replacing the definition of <code>tokenizerRegex</code>, which is <code>&quot;\\s+&quot;</code>, with <code>&quot;\\W+&quot;</code> will treat all runs of non-alphanumeric characters as word separators. This improves the result considerably (although it&#8217;s still not perfect&#8230;).</p>
+<p>You probably noticed that simply splitting on whitespace is not very good, as punctuation is not removed. There are several ways it can be improved. First, replacing the definition of <code>tokenizerRegex</code>, which is <code>"\\s+"</code>, with <code>"\\W+"</code> will treat all runs of non-alphanumeric characters as word separators. This improves the result considerably (although it's still not perfect...).</p>
 
 <p>For a more complete tokenizer, refactor <code>line.toLowerCase.split(tokenizerRegex)</code> into a <code>tokenize</code> function. Then implement <code>tokenize</code> to remove punctuation, etc. An example implementation can be found in the <a href="https://github.com/twitter/scalding">Scalding README</a>.</p>
 
-<h4 id="eliminateblanklines">Eliminate Blank Lines</h4>
+<h4>Eliminate Blank Lines</h4>
 
-<p>The very first line in the output is an empty word and a count of approximately 49,000! These are blank lines in the text. The implementation removes all other whitespace, but as written, it still returns an empty word for blank lines. Adding a filter clause will remove these lines. We&#8217;ll see how below, but you can search for that section now if you want to try it.</p>
+<p>The very first line in the output is an empty word and a count of approximately 49,000! These are blank lines in the text. The implementation removes all other whitespace, but as written, it still returns an empty word for blank lines. Adding a filter clause will remove these lines. We'll see how below, but you can search for that section now if you want to try it.</p>
 
-<h2 id="inputparsing">Input Parsing</h2>
+<h2>Input Parsing</h2>
 
-<p>Let&#8217;s do a similar <code>groupBy</code> operation, this time to compute the average of Apple&#8217;s (AAPL) closing stock price year over year (so you&#8217;ll know what entry points you missed&#8230;). Also, in this exercise we&#8217;ll solve a common problem; the input data is in an unsupported format.</p>
+<p>Let's do a similar <code>groupBy</code> operation, this time to compute the average of Apple's (AAPL) closing stock price year over year (so you'll know what entry points you missed...). Also, in this exercise we'll solve a common problem; the input data is in an unsupported format.</p>
 
-<pre><code>./run scripts/StockAverages3.scala \
-    --input  data/stocks/AAPL.csv \
-    --output output/AAPL-year-avg.txt
+<p><strong>Nicely Formatted:</strong></p>
+
+<pre><code>./run scripts/StockAverages3.scala \ 
+  --input data/stocks/AAPL.csv \ 
+  --output output/AAPL-year-avg.txt
+</code></pre>
+
+<p><strong>Copy and Paste Version:</strong></p>
+
+<pre><code>./run scripts/StockAverages3.scala  --input data/stocks/AAPL.csv --output output/AAPL-year-avg.txt
 </code></pre>
 
 <p>You should get the following output (the input data ends in early 2010):</p>
@@ -443,21 +452,31 @@ pre .tex .formula {
 2010    25      204.7216        7.454055905344417
 </code></pre>
 
-<p>Note that as I write this (Septembe 2012), AAPL is currently trading at ~$700/share! <a href="#fn:1" id="fnref:1" title="see footnote" class="footnote">[1]</a></p>
+<p>Note that as I write this (September 2012), AAPL is currently trading at ~$700/share! <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
 
-<h3 id="musicalinterlude:comparisonwithhiveandpig">Musical Interlude: Comparison with Hive and Pig</h3>
+<h3>Musical Interlude: Comparison with Hive and Pig</h3>
 
-<p>By the way, here&#8217;s the same query written using <em>Hive</em>, assuming there exists a <code>stocks</code> table and we have to select for the stock symbol and exchange:</p>
+<p>By the way, here's the same query written using <em>Hive</em>, where we first define an "external table" that uses the same file:</p>
 
-<pre><code>SELECT year(s.ymd), avg(s.price_close) 
+<pre><code>CREATE EXTERNAL TABLE IF NOT EXISTS stocks(
+  ymd             STRING,
+  price_open      FLOAT,
+  price_high      FLOAT,
+  price_low       FLOAT,
+  price_close     FLOAT,
+  volume          INT,
+  price_adj_close FLOAT
+) LOCATION 'path/to/data/AAPL.csv';
+
+SELECT year(s.ymd), avg(s.price_close) 
 FROM stocks s 
 WHERE s.symbol = 'AAPL' AND s.exchange = 'NASDAQ'
 GROUP BY year(s.ymd);
 </code></pre>
 
-<p>It&#8217;s a little more compact, in part because we can handle all issues of record parsing, etc. when we set up Hive tables, etc. However, Scalding gives us more flexibility when our SQL dialect and built-in functions aren&#8217;t flexible enough for our needs.</p>
+<p>The query is a little more compact, in part because we can handle all issues of record parsing, etc. when we set up Hive tables, etc. However, Scalding gives us more flexibility when our SQL dialect and built-in functions aren't flexible enough for our needs.</p>
 
-<p>Here&#8217;s what the corresponding <em>Pig</em> script looks like (see also <code>scripts/StockAverages3.pig</code>):</p>
+<p>Here's what the corresponding <em>Pig</em> script looks like (see <code>scripts/StockAverages3.pig</code>):</p>
 
 <pre><code>aapl = load 'data/stocks/AAPL.csv' using PigStorage(',') as (
   ymd:             chararray,
@@ -483,115 +502,143 @@ store year_avg into 'output/AAPL-year-avg-pig';
 
 <p>The <code>-x local</code> option means that Pig will treat the paths as references to the local file system, not the Hadoop Distributed File System (HDFS).</p>
 
-<h2 id="improvingthesyntax">Improving the Syntax</h2>
+<h2>Improving the Syntax</h2>
 
 <p><code>StockAverages3.scala</code> uses an anonymous function that takes a tuple
-argument, which results in slightly ugly syntax. We can&#8217;t use <code>PartialFunction</code>, e.g.,</p>
+argument, which results in slightly ugly syntax. We can't use <code>PartialFunction</code>, e.g.,</p>
 
 <pre><code>{ case (ymd, close) =&gt; ... }
 </code></pre>
 
 <p>But we can do a match on the tuple argument instead!</p>
 
-<pre><code>./run scripts/StockAverages3a.scala \
-    --input  data/stocks/AAPL.csv \
-    --output output/AAPL-year-avg.txt
+<p><strong>Nicely Formatted:</strong></p>
+
+<pre><code>./run scripts/StockAverages3a.scala \ 
+  --input data/stocks/AAPL.csv \ 
+  --output output/AAPL-year-avg.txt
 </code></pre>
 
-<h3 id="furtherexploration">Further Exploration</h3>
+<p><strong>Copy and Paste Version:</strong></p>
 
-<p>Try these additional &#8220;mini-exercises&#8221; to learn more.</p>
+<pre><code>./run scripts/StockAverages3a.scala --input data/stocks/AAPL.csv --output output/AAPL-year-avg.txt
+</code></pre>
 
-<h4 id="projectotheraverages">Project Other Averages</h4>
+<h3>Further Exploration</h3>
+
+<p>Try these additional "mini-exercises" to learn more.</p>
+
+<h4>Project Other Averages</h4>
 
 <p>Try projecting averages for one or more other fields.</p>
 
-<h4 id="pig">Pig</h4>
+<h4>Pig</h4>
 
-<p>If you have Pig installed, try the Pig script. Compare the performance of the Pig vs. Scalding script, but keep in mind that because we&#8217;re running in local mode, the performance comparison won&#8217;t mean as much as when you run in a Hadoop cluster.</p>
+<p>If you have Pig installed, try the Pig script. Compare the performance of the Pig vs. Scalding script, but keep in mind that because we're running in local mode, the performance comparison won't mean as much as when you run in a Hadoop cluster.</p>
 
-<h4 id="hive">Hive</h4>
+<h4>Hive</h4>
 
-<p>If you have Hive installed, try the Hive query shown above. You&#8217;ll need to create a table that uses the data files first. Compare the performance of the Hive vs. Scalding script, keeping in mind the caveats mentioned for Pig.</p>
+<p>If you have Hive installed, try the Hive query shown above. You'll need to create a table that uses the data files first. Compare the performance of the Hive vs. Scalding script, keeping in mind the caveats mentioned for Pig.</p>
 
-<h2 id="errorhandling">Error Handling</h2>
+<h2>Error Handling</h2>
 
-<p>What if some of the input records are bad. This is actually common in real-world data analytics. Let&#8217;s adapt <code>StockAverages3</code> to handle the case where invalid entries for the date or closing price are encountered. That is, they don&#8217;t successfuly parse the year as an integer or the closing price as a double. We&#8217;ll split the stream into &#8220;good&#8221; and &#8220;bad&#8221; data, writing the bad data to a separate &#8220;errors&#8221; output for subsequent inspection, clean-up, or whatever.</p>
+<p>What if some of the input records are bad. This is actually common in real-world data analytics. Let's adapt <code>StockAverages3</code> to handle the case where invalid entries for the date or closing price are encountered. That is, they don't successfuly parse the year as an integer or the closing price as a double. We'll split the stream into "good" and "bad" data, writing the bad data to a separate "errors" output for subsequent inspection, clean-up, or whatever.</p>
 
-<p>The script is very similar to the previous one, so we&#8217;ll just call it <code>StockAverages3b</code>. (The comments in the script describe the implementation differences, as usual&#8230;) Note that we need to specify a different input file, where we&#8217;ve introduced 5 bad records, and an <code>errors</code> argument for the errors stream, which will contain 5 errors records after the script has finished: </p>
+<p>The script is very similar to the previous one, so we'll just call it <code>StockAverages3b</code>. (The comments in the script describe the implementation differences, as usual...) Note that we need to specify a different input file, where we've introduced 5 bad records, and an <code>errors</code> argument for the errors stream, which will contain 5 errors records after the script has finished:</p>
+
+<p><strong>Nicely Formatted:</strong></p>
 
 <pre><code>./run scripts/StockAverages3b.scala \ 
-    --input  data/stocks/APPL-with-errors.csv \ 
-    --output output/AAPL-year-avg.txt \ 
-    --errors output/AAPL-errors.txt
+  --input data/stocks/AAPL-with-errors.csv \ 
+  --output output/AAPL-year-avg.txt \ 
+  --errors output/AAPL-errors.txt
 </code></pre>
 
-<h3 id="furtherexploration">Further Exploration</h3>
+<p><strong>Copy and Paste Version:</strong></p>
 
-<p>Try these additional &#8220;mini-exercises&#8221; to learn more.</p>
+<pre><code>./run scripts/StockAverages3b.scala --input data/stocks/AAPL-with-errors.csv --output output/AAPL-year-avg.txt --errors output/AAPL-errors.txt
+</code></pre>
 
-<h4 id="whathappensifyouusethebadinputwithstocksaverages3">What Happens if You Use the Bad Input with StocksAverages3?</h4>
+<h3>Further Exploration</h3>
+
+<p>Try these additional "mini-exercises" to learn more.</p>
+
+<h4>What Happens if You Use the Bad Input with StocksAverages3?</h4>
 
 <p>Run the previous command replacing <code>StockAverages3b</code> with <code>StockAverages3</code>. (Omit the <code>--errors</code> argument or leave it, in which case it will be ignored by <code>StockAverages3</code>.) Notice the exceptions that are thrown when you hit the first bad input record.</p>
 
-<h4 id="improvethebadrecordinformation">Improve the Bad Record Information</h4>
+<h4>Improve the Bad Record Information</h4>
 
-<p>When you look at the content of <code>output/AAPL-errors.txt</code>, it isn&#8217;t very helpful for debugging the problem because it only shows a bad year and/or closing price value, not the full record that was bad. At least having the full dates would help track down the bad records.</p>
+<p>When you look at the content of <code>output/AAPL-errors.txt</code>, it isn't very helpful for debugging the problem because it only shows a bad year and/or closing price value, not the full record that was bad. At least having the full dates would help track down the bad records.</p>
 
-<p>We&#8217;re using <code>mapTo</code> to discard the fields we no longer need, rather than <code>map</code>, which would append the new fields to the existing fields.</p>
+<p>We're using <code>mapTo</code> to discard the fields we no longer need, rather than <code>map</code>, which would append the new fields to the existing fields.</p>
 
-<p>Fortunately, all you need to do is modify the script to use <code>map</code> instead, because the subsequent <code>groupBy</code> will discard the unwanted fields anyway. (In fact, the <code>project</code> we do early on isn&#8217;t really necessary, although it probably improves performance by reducing network I/O to shuffle larger records around the cluster&#8230;) We don&#8217;t use <code>groupBy</code> on the error stream, so it keeps the data we want in that output.</p>
+<p>Fortunately, all you need to do is modify the script to use <code>map</code> instead, because the subsequent <code>groupBy</code> will discard the unwanted fields anyway. (In fact, the <code>project</code> we do early on isn't really necessary, although it probably improves performance by reducing network I/O to shuffle larger records around the cluster...) We don't use <code>groupBy</code> on the error stream, so it keeps the data we want in that output.</p>
 
 <p>Change <code>mapTo</code> to <code>map</code>, rerun the script, and look at the new content of <code>output/AAPL-errors.txt</code>. Did <code>output/AAPL-year-avg.txt</code> change?</p>
 
-<p>A final note, if we didn&#8217;t do a grouping operation of some kind, you could follow the <code>map</code> step with a <code>project</code> on the <code>good</code> pipe to keep just the final <code>year</code> and <code>close</code> fields, etc. Using <code>mapTo</code> is more efficient than separate <code>map</code> and <code>project</code> (or <code>discard</code>) steps.</p>
+<p>A final note, if we didn't do a grouping operation of some kind, you could follow the <code>map</code> step with a <code>project</code> on the <code>good</code> pipe to keep just the final <code>year</code> and <code>close</code> fields, etc. Using <code>mapTo</code> is more efficient than separate <code>map</code> and <code>project</code> (or <code>discard</code>) steps.</p>
 
-<h2 id="joins">Joins</h2>
+<h2>Joins</h2>
 
-<p>Let&#8217;s join stocks and dividend data. To join two data sources, you set up to pipe assemblies and use one of the join operations.</p>
+<p>Let's join stocks and dividend data. To join two data sources, you set up to pipe assemblies and use one of the join operations.</p>
 
-<p><code>scripts/StocksDividendsJoin4</code> performs an <em>inner join</em> of stock and dividend records. Let&#8217;s invoke for Apple data (yes, although Apple only recently announced that it would pay a dividend, Apple paid dividends back in the late 80s and early 90s.):</p>
+<p><code>scripts/StocksDividendsJoin4</code> performs an <em>inner join</em> of stock and dividend records. Let's invoke for Apple data (yes, although Apple only recently announced that it would pay a dividend, Apple paid dividends back in the late 80s and early 90s.):</p>
 
-<pre><code>./run scripts/StocksDividendsJoin4.scala \
-  --stocks data/stocks/AAPL.csv \
-  --dividends data/dividends/AAPL.csv \
-  --output output/AAPL-stocks-dividends-join.txt
+<p><strong>Nicely Formatted:</strong></p>
+
+<pre><code>./run scripts/StocksDividendsJoin4.scala \ 
+--stocks data/stocks/AAPL.csv \ 
+--dividends data/dividends/AAPL.csv \ 
+--output output/AAPL-stocks-dividends-join.txt
+</code></pre>
+
+<p><strong>Copy and Paste Version:</strong></p>
+
+<pre><code>./run scripts/StocksDividendsJoin4.scala --stocks data/stocks/AAPL.csv --dividends data/dividends/AAPL.csv --output output/AAPL-stocks-dividends-join.txt
 </code></pre>
 
 <p>Note that we need to two input sources, so we use flags <code>--stocks</code> and <code>--dividends</code> for them, instead of <code>--input</code>.</p>
 
-<h3 id="furtherexploration">Further Exploration</h3>
+<h3>Further Exploration</h3>
 
-<p>Try these additional &#8220;mini-exercises&#8221; to learn more.</p>
+<p>Try these additional "mini-exercises" to learn more.</p>
 
-<h4 id="leftouterjoin">Left Outer Join</h4>
+<h4>Left Outer Join</h4>
 
 <p>Change <code>joinWithSmaller</code> to <code>leftJoinWithSmaller</code> to perform a left-outer join. (Also change the output file name to something else). You have to scroll a ways into file to find dividends. See also the next mini-exercise.</p>
 
-<h4 id="filteringbyyear">Filtering by Year</h4>
+<h4>Filtering by Year</h4>
 
 <p>Sometimes you want to filter records, say to limit the output. Add the following filter clause to limit the records to 1988:</p>
 
-<pre><code>.filter('symd){ ymd: String =&gt; ymd.startsWith(&quot;1988&quot;)}
+<pre><code>.filter('symd){ ymd: String =&gt; ymd.startsWith("1988")}
 </code></pre>
 
 <p>Try moving it to different positions in the pipe assembly and see if the execution times change. However, the data set is small enough that you might not notice a difference.</p>
 
-<h4 id="filteringblanklinesfromwordcount2">Filtering Blank Lines from WordCount2</h4>
+<h4>Filtering Blank Lines from WordCount2</h4>
 
 <p>Recall in the <code>WordCount2</code> exercise that we had thousands of blank lines that got counted. Add a <code>filter</code> before the <code>groupBy</code> that keeps only those words whose lengths are greater than zero.</p>
 
-<h2 id="cogroups">CoGroups</h2>
+<h2>CoGroups</h2>
 
-<p>CoGroups in Scalding are used internally to implement joins of two pipe assemblies. Clients can also use them to implement joins of three or more pipe assemblies, so-called <em>star joins</em>. You should always use the largest data stream as the first one in the join, because the Cascading implementation is optimized for this scenario. </p>
+<p>CoGroups in Scalding are used internally to implement joins of two pipe assemblies. Clients can also use them to implement joins of three or more pipe assemblies, so-called <em>star joins</em>. You should always use the largest data stream as the first one in the join, because the Cascading implementation is optimized for this scenario.</p>
 
-<p>However, in this exercise, we&#8217;ll do a four-way self-join of the data files for the four stocks symbols we provided, AAPL, INTC, GE, and IBM. </p>
+<p>However, in this exercise, we'll do a four-way self-join of the data files for the four stocks symbols we provided, AAPL, INTC, GE, and IBM.</p>
 
 <p>For this script, the <code>--input</code> flag is used to specify the directory where the stocks files are located.</p>
 
-<pre><code>./run scripts/StockCoGroup5.scala \
-  --input  data/stocks \
+<p><strong>Nicely Formatted:</strong></p>
+
+<pre><code>./run scripts/StockCoGroup5.scala \ 
+  --input data/stocks \ 
   --output output/AAPL-INTC-GE-IBM.txt
+</code></pre>
+
+<p><strong>Copy and Paste Version:</strong></p>
+
+<pre><code>./run scripts/StockCoGroup5.scala --input data/stocks --output output/AAPL-INTC-GE-IBM.txt
 </code></pre>
 
 <p>When you look at the implementation, it is not obvious how to use the CoGroup feature. You could do pair-wise joins, which would be conceptually easier perhaps, but offer poor performance in a large MapReduce job, as each pair would require a separate MapReduce Job. The CoGroup feature tries to do as many joins at one as possible.</p>
@@ -612,21 +659,28 @@ argument, which results in slightly ugly syntax. We can&#8217;t use <code>Partia
 
 <p>Note that because <code>a.ymd</code> appears in all <code>ON</code> clauses, Hive will perform this four-way join in a single MapReduce job.</p>
 
-<h3 id="furtherexploration">Further Exploration</h3>
+<h3>Further Exploration</h3>
 
-<h4 id="starjoinsonepairatatime">Star Joins, One Pair at a Time</h4>
+<h4>Star Joins, One Pair at a Time</h4>
 
 <p>Try implementing the same four-way join doing a sequence of pair-wise joins. Compare the complexity of the code and the performance of the join with the CoGroup implementation. The performance would be much slower in MapReduce, where each pair-wise join would require a separate MapReduce job.</p>
 
-<h2 id="splittingapipe">Splitting a Pipe</h2>
+<h2>Splitting a Pipe</h2>
 
 <p>This exercise shows how to split a data stream and use various features on the splits, including finding unique values.</p>
 
-<pre><code>./run scripts/Twitter6.scala \
-  --input  data/twitter/tweets.tsv \
-  --uniques output/unique-languages.txt \
-  --count-star output/count-star.txt \
+<p><strong>Nicely Formatted:</strong></p>
+
+<pre><code>./run scripts/Twitter6.scala \ 
+  --input data/twitter/tweets.tsv \ 
+  --uniques output/unique-languages.txt \ 
+  --count-star output/count-star.txt \ 
   --count-star-100 output/count-star-100.txt
+</code></pre>
+
+<p><strong>Copy and Paste Version:</strong></p>
+
+<pre><code>./run scripts/Twitter6.scala --input data/twitter/tweets.tsv --uniques output/unique-languages.txt --count-star output/count-star.txt --count-star-100 output/count-star-100.txt
 </code></pre>
 
 <p>The output in <code>output/unique-languages.txt</code> is the following:</p>
@@ -641,11 +695,11 @@ pt
 ru
 </code></pre>
 
-<p>There are seven languages and an invalid value that looks vaguely like a null! These &#8220;languages&#8221; are actually from messages in the stream that aren&#8217;t tweets, but the results of other user-invoked actions.</p>
+<p>There are seven languages and an invalid value that looks vaguely like a null! These "languages" are actually from messages in the stream that aren't tweets, but the results of other user-invoked actions.</p>
 
 <p>The output in <code>output/count-star.txt</code> is a single line with the value &lt; 1000; there are 1000 lines, but not all have a non-null value for the language of the tweet. Similarly, <code>output/count-star-100.txt</code> should contain the value of 100, reflecting the <code>limit(100)</code> step added to its dataflow.</p>
 
-<p>Note that the implementations use <code>groupAll</code>, then count the elements in the single group, via the <code>GroupBuilder</code> object. (The <code>count</code> method requires that we specify a field. We arbitrarily picked <code>tweet_id</code>.) </p>
+<p>Note that the implementations use <code>groupAll</code>, then count the elements in the single group, via the <code>GroupBuilder</code> object. (The <code>count</code> method requires that we specify a field. We arbitrarily picked <code>tweet_id</code>.)</p>
 
 <p>By the way, this pattern is <em>exactly</em> how Pig implements <code>COUNT(*)</code>. For example:</p>
 
@@ -653,115 +707,142 @@ ru
 count = foreach grouped generate COUNT(tweets);
 </code></pre>
 
-<p>Now you&#8217;re a Pig programmer. You&#8217;re welcome&#8230;</p>
+<p>Now you're a Pig programmer. You're welcome...</p>
 
 <p>Here, <code>tweets</code> would be the equivalent of a Pipe and <code>grouped</code> is the name of a new Pipe created by grouping all records together into one new record. The <code>foreach ... generate</code> statement iterates through this single record and projects the <code>COUNT</code> of the group contents (named <code>tweets</code> after the original relation).</p>
 
-<p>Note, the <code>limit(...)</code> feature appeared to have a bug that caused a <em>divide by zero</em> error in earlier versions of Scalding that only appeared when running in local mode, but not when running Hadoop jobs. (Or, it might have been a Cascading bug&#8230;)</p>
+<p>Note, the <code>limit(...)</code> feature appeared to have a bug that caused a <em>divide by zero</em> error in earlier versions of Scalding that only appeared when running in local mode, but not when running Hadoop jobs. (Or, it might have been a Cascading bug...)</p>
 
-<h3 id="furtherexploration">Further Exploration</h3>
+<h3>Further Exploration</h3>
 
-<h4 id="debugsetting">Debug Setting</h4>
+<h4>Debug Setting</h4>
 
-<p>Add the <code>debug</code> pipe to the pipe assembly. How does it change the console output? This is a very useful feature when you&#8217;re learning or debugging problems.</p>
+<p>Add the <code>debug</code> pipe to the pipe assembly. How does it change the console output? This is a very useful feature when you're learning or debugging problems.</p>
 
-<h4 id="filterforbadlanguages">Filter for Bad Languages</h4>
+<h4>Filter for Bad Languages</h4>
 
-<p>Add a <code>filter</code> method call that removes these &#8220;bad&#8221; records. <strong>Hint:</strong> You&#8217;ll want to remove all tuples where the language value is <code>&quot;&quot;&quot;\N&quot;&quot;&quot;</code>. Without the triple quotes, you would have to write <code>&quot;\\N&quot;</code>.</p>
+<p>Add a <code>filter</code> method call that removes these "bad" records. <strong>Hint:</strong> You'll want to remove all tuples where the language value is <code>"""\N"""</code>. Without the triple quotes, you would have to write <code>"\\N"</code>.</p>
 
-<h2 id="computengrams">Compute NGrams</h2>
+<h2>Compute NGrams</h2>
 
-<p>Let&#8217;s return to the Shakespeare data to compute <em>context ngrams</em>, a common natural language processing technique, where we provide a prefix of words and find occurrences of the prefix followed by an additional word. The ngrams are returned in order of frequency, descending. </p>
+<p>Let's return to the Shakespeare data to compute <em>context ngrams</em>, a common natural language processing technique, where we provide a prefix of words and find occurrences of the prefix followed by an additional word. The ngrams are returned in order of frequency, descending.</p>
 
-<pre><code>./run scripts/ContextNGrams7.scala \
-  --input  data/shakespeare/plays.txt \
-  --output output/context-ngrams.txt \
-  --ngram-prefix &quot;I love&quot; \
+<p><strong>Nicely Formatted:</strong></p>
+
+<pre><code>./run scripts/ContextNGrams7.scala \ 
+  --input data/shakespeare/plays.txt \ 
+  --output output/context-ngrams.txt \ 
+  --ngram-prefix "I love" \ 
   --count 10
+</code></pre>
+
+<p><strong>Copy and Paste Version:</strong></p>
+
+<pre><code>./run scripts/ContextNGrams7.scala --input data/shakespeare/plays.txt --output output/context-ngrams.txt --ngram-prefix "I love" --count 10
 </code></pre>
 
 <p>The output is the list containing each ngram along with a count of its occurrences. Note that the list is actually written to the console, as well as to the output location. We added a <code>debug</code> step to the dataflow that dumps the tuples to the console.</p>
 
-<p>The data set isn&#8217;t large enough to find a lot of examples for many possible ngrams.</p>
+<p>The data set isn't large enough to find a lot of examples for many possible ngrams.</p>
 
-<h3 id="furtherexploration">Further Exploration</h3>
+<h3>Further Exploration</h3>
 
-<h4 id="experimentwithdifferentprefixes">Experiment with Different Prefixes</h4>
+<h4>Experiment with Different Prefixes</h4>
 
-<p>Try other prefixes of different lengths. You don&#8217;t have to specify a two-word prefix!</p>
+<p>Try other prefixes of different lengths. You don't have to specify a two-word prefix!</p>
 
-<h4 id="tryusingothertextfiles">Try Using Other Text Files</h4>
+<h4>Try Using Other Text Files</h4>
 
 <p>Run the script on other large text files you have.</p>
 
-<h4 id="ngramdetector">NGram Detector</h4>
+<h4>NGram Detector</h4>
 
-<p>Context ngrams are a special case of ngrams, where you just find the most common n-length phrases. Put another way, &#8220;regular&#8221; ngrams are like context ngrams with no prefix. Write a script to compute the most common ngrams. </p>
+<p>Context ngrams are a special case of ngrams, where you just find the most common n-length phrases. Put another way, "regular" ngrams are like context ngrams with no prefix. Write a script to compute the most common ngrams.</p>
 
-<h2 id="joiningpipes">Joining Pipes</h2>
+<h2>Joining Pipes</h2>
 
-<p>Let&#8217;s revisit the exercise to join stock and dividend records and generalize it to read in multiple sets of data, for different companies, and process them as one stream. A complication is that the data files don&#8217;t contain the stock (&#8220;instrument&#8221;) symbol, so we&#8217;ll see another way to add data to tuples.</p>
+<p>Let's revisit the exercise to join stock and dividend records and generalize it to read in multiple sets of data, for different companies, and process them as one stream. A complication is that the data files don't contain the stock ("instrument") symbol, so we'll see another way to add data to tuples.</p>
 
-<pre><code>./run scripts/StocksDividendsRevisited8.scala \
-  --stocks-root-path    data/stocks/ \
-  --dividends-root-path data/dividends/ \
-  --symbols AAPL,INTC,GE,IBM \
+<p><strong>Nicely Formatted:</strong></p>
+
+<pre><code>./run scripts/StocksDividendsRevisited8.scala \ 
+  --stocks-root-path data/stocks/ \ 
+  --dividends-root-path data/dividends/ \ 
+  --symbols AAPL,INTC,GE,IBM \ 
   --output output/stocks-dividends-join.txt
 </code></pre>
 
-<h1 id="matrixapi">Matrix API</h1>
+<p><strong>Copy and Paste Version:</strong></p>
+
+<pre><code>./run scripts/StocksDividendsRevisited8.scala --stocks-root-path data/stocks/ --dividends-root-path data/dividends/ --symbols AAPL,INTC,GE,IBM --output output/stocks-dividends-join.txt
+</code></pre>
+
+<h1>Matrix API</h1>
 
 <p>The Matrix API is relatively new and facilities many important machine learning algorithms.</p>
 
-<h2 id="jaccardsimilarityandadjacencymatrices">Jaccard Similarity and Adjacency Matrices</h2>
+<h2>Jaccard Similarity and Adjacency Matrices</h2>
 
-<p><em>Adjacency matrices</em> are used to record the similarities between two things. For example, the &#8220;things&#8221; might be users who have rated movies and the <em>adjacency</em> might be how many movies they have reviewed in common. Higher adjacency numbers indicate more likely similarity of interests. Note that this simple representation says nothing about whether or not they both rated the movies in a similar way.</p>
+<p><em>Adjacency matrices</em> are used to record the similarities between two things. For example, the "things" might be users who have rated movies and the <em>adjacency</em> might be how many movies they have reviewed in common. Higher adjacency numbers indicate more likely similarity of interests. Note that this simple representation says nothing about whether or not they both rated the movies in a similar way.</p>
 
 <p>Once you have adjacency data, you need a <em>similarity measure</em> to determine how similar to things (e.g., people) really are. One is <em>Jaccard Similarity</em>:</p>
 
-<figure>
-<img src="images/JaccardSimilarity.png" alt="" /></figure>
-
-
+<p><img src="images/JaccardSimilarity.png" alt="" /></p>
 
 <p>This is set notation; the size of the intersection of two sets over the size of the union. It can be generalized and is similar to the cosine of two vectors normalized by length. Note that the distance would be 1 - similarity.</p>
 
 <p>Run the script this way on a small matrix:</p>
 
-<pre><code>./run scripts/MatrixJaccardSimilarity9.scala \
-  --input data/matrix/graph.tsv \
+<p><strong>Nicely Formatted:</strong></p>
+
+<pre><code>./run scripts/MatrixJaccardSimilarity9.scala \ 
+  --input data/matrix/graph.tsv \ 
   --output output/jaccardSim.tsv
 </code></pre>
 
-<h2 id="termfrequency-inversedocumentfrequencytfidf">Term Frequency-Inverse Document Frequency (TF*IDF)</h2>
+<p><strong>Copy and Paste Version:</strong></p>
 
-<p>TF*IDF is a widely used <em>Natural Language Processing</em> tool to analyze text. It&#8217;s useful for indexing documents, e.g., for web search engines. Naively, you might calculate the <em>frequency</em> of words in a corpus of documents and assume that if a word appears more frequently in one document, then that document is probably a &#8220;definitive&#8221; place for that word, such as the way you search for web pages on a particular topic. Similarly, the most frequent words indicate the primary topics for a document.</p>
+<pre><code>./run scripts/MatrixJaccardSimilarity9.scala --input data/matrix/graph.tsv --output output/jaccardSim.tsv
+</code></pre>
 
-<p>There&#8217;s a problem, though. Very common words, e.g., articles like &#8220;the&#8221;, &#8220;a&#8221;, etc. will appear very frequently, undermining results. So we want to remove them so how. Fortunately, they tend to appear frequently in <em>every</em> document, so you can reduce the ranking of a particular word if you <em>divide</em> its frequency in a given document by its frequency in <em>all</em> documents. That&#8217;s the essence of TF*IDF.</p>
+<h2>Term Frequency-Inverse Document Frequency (TF*IDF)</h2>
+
+<p>TF<em>IDF is a widely used </em>Natural Language Processing<em> tool to analyze text. It's useful for indexing documents, e.g., for web search engines. Naively, you might calculate the </em>frequency* of words in a corpus of documents and assume that if a word appears more frequently in one document, then that document is probably a "definitive" place for that word, such as the way you search for web pages on a particular topic. Similarly, the most frequent words indicate the primary topics for a document.</p>
+
+<p>There's a problem, though. Very common words, e.g., articles like "the", "a", etc. will appear very frequently, undermining results. So we want to remove them so how. Fortunately, they tend to appear frequently in <em>every</em> document, so you can reduce the ranking of a particular word if you <em>divide</em> its frequency in a given document by its frequency in <em>all</em> documents. That's the essence of TF*IDF.</p>
 
 <p>For more information, see the <a href="http://en.wikipedia.org/wiki/Tf*idf">Wikipedia</a> page.</p>
 
 <p>Run the script this way on a small matrix:</p>
 
+<p><strong>Nicely Formatted:</strong></p>
+
 <pre><code>./run scripts/TfIdf10.scala \ 
   --input data/matrix/docBOW.tsv \ 
-  --output output/featSelectedMatrix.tsv \
+  --output output/featSelectedMatrix.tsv \ 
   --nWords 300
 </code></pre>
 
-<h1 id="type-safeapi">Type-Safe API</h1>
+<p><strong>Copy and Paste Version:</strong></p>
 
-<p>So far, we have been using the original <em>Fields-Based API</em>, which emphasizes naming fields and uses a relatively dynamic approach to typing. This is consistent with Cascading&#8217;s model.</p>
+<pre><code>./run scripts/TfIdf10.scala --input data/matrix/docBOW.tsv --output output/featSelectedMatrix.tsv --nWords 300
+</code></pre>
 
-<p>There is newer, more experimental <em>Type-Safe API</em> that attempts to more fully exploit the type safety provided by Scala. We won&#8217;t discuss it here, but refer you to the <a href="https://github.com/twitter/scalding/wiki/Type-safe-api-reference">Type-Safe API Wiki page</a> for more information.</p>
+<h1>Type-Safe API</h1>
 
-<h1 id="usingscaldingwithhadoop">Using Scalding with Hadoop</h1>
+<p>So far, we have been using the original <em>Fields-Based API</em>, which emphasizes naming fields and uses a relatively dynamic approach to typing. This is consistent with Cascading's model.</p>
 
-<p>A great feature of Cascading, which Scalding exploits, is the ability to test locally before running on Hadoop. This improves the iterative development and feedback cycle. </p>
+<p>There is newer, more experimental <em>Type-Safe API</em> that attempts to more fully exploit the type safety provided by Scala. We won't discuss it here, but refer you to the <a href="https://github.com/twitter/scalding/wiki/Type-safe-api-reference">Type-Safe API Wiki page</a> for more information.</p>
 
-<p>We&#8217;ve provided a bash shell script, <code>run11.sh</code> to run the job on Hadoop, but first, lets discuss Scalding&#8217;s own approach.</p>
+<h1>Using Scalding with Hadoop</h1>
 
-<p>Once you&#8217;re ready to try it in Hadoop, the &#8220;official&#8221; Scalding way is to use the <code>scripts/scald.rb</code> script in the Scalding distribution. For example, assuming that you cloned the Scalding repo into <code>$SCALDING_HOME</code>, here is a command to run <code>src/main/scala/HadoopTwitter11.scala</code>, which is actually <em>identical</em> to <code>Twitter6</code> that we ran previously, except for comments. (We put it in <code>src/main/scala</code> so the sbt build adds it to the assembly.):</p>
+<p>A great feature of Cascading, which Scalding exploits, is the ability to test locally before running on Hadoop. This improves the iterative development and feedback cycle.</p>
+
+<p>We've provided a bash shell script, <code>run11.sh</code> to run the job on Hadoop, but first, lets discuss Scalding's own approach.</p>
+
+<p>Once you're ready to try it in Hadoop, the "official" Scalding way is to use the <code>scripts/scald.rb</code> script in the Scalding distribution. For example, assuming that you cloned the Scalding repo into <code>$SCALDING_HOME</code>, here is a command to run <code>src/main/scala/HadoopTwitter11.scala</code>, which is actually <em>identical</em> to <code>Twitter6</code> that we ran previously, except for comments. (We put it in <code>src/main/scala</code> so the sbt build adds it to the assembly.):</p>
+
+<p><strong>Nicely Formatted:</strong></p>
 
 <pre><code>../scalding/scripts/scald.rb -local --host localhost \
   src/main/scala/HadoopTwitter11.scala \
@@ -771,13 +852,18 @@ count = foreach grouped generate COUNT(tweets);
   --count-star-100  output/count-star-100
 </code></pre>
 
-<p>Use the server address with your <em>JobTracker</em> for the <code>--host</code> flag on a real Hadoop cluster. Also, replace <code>--local</code> with <code>--hdfs</code> so that HDFS is actually used. For this to work, you&#8217;ll need to copy the <code>data/twitter</code> directory to your HDFS home directory (i.e., <code>/user/$USER</code>) and also create an <code>output</code> directory there.</p>
+<p><strong>Copy and Paste Version:</strong></p>
+
+<pre><code>../scalding/scripts/scald.rb -local --host localhost src/main/scala/HadoopTwitter11.scala --input data/twitter/tweets.tsv --uniques output/unique-languages --count-star output/count-star --count-star-100 output/count-star-100
+</code></pre>
+
+<p>Use the server address with your <em>JobTracker</em> for the <code>--host</code> flag on a real Hadoop cluster. Also, replace <code>--local</code> with <code>--hdfs</code> so that HDFS is actually used. For this to work, you'll need to copy the <code>data/twitter</code> directory to your HDFS home directory (i.e., <code>/user/$USER</code>) and also create an <code>output</code> directory there.</p>
 
 <p>Finally, when using HDFS, the values specified for output using the <code>--uniques</code>, <code>count-star</code>, and <code>count-star-limit</code> flags will be used as <em>directories</em>, not <em>files</em>, which is why we omitted the <code>.txt</code> suffixes used before. This follows conventional Hadoop practice, where the parallel processes might result in multiple, concurrently-written output files.</p>
 
-<p>To simplify matters, such as removing the need for you to install the Scalding distribution, we&#8217;ve provided a bash script, <code>run11.sh</code>, to run this exercise. You&#8217;ll need access to a computer with Hadoop and bash installed. You can install Hadoop on a Mac using HomeBrew, on Linux using the appropriate package installer, and Microsoft has recently released a port of Hadoop for Windows. However, the easiest way to play with Hadoop is to install a VMWare or VirtualBox runner and download a completely configured image file from Cloudera, MapR, or Hortonworks.</p>
+<p>To simplify matters, such as removing the need for you to install the Scalding distribution, we've provided a bash script, <code>run11.sh</code>, to run this exercise. You'll need access to a computer with Hadoop and bash installed. You can install Hadoop on a Mac using HomeBrew, on Linux using the appropriate package installer, and Microsoft has recently released a port of Hadoop for Windows. However, the easiest way to play with Hadoop is to install a VMWare or VirtualBox runner and download a completely configured image file from Cloudera, MapR, or Hortonworks.</p>
 
-<p>We&#8217;ll just demonstrate using <code>run11.sh</code> in the Workshop. Using all the default settings, just run:</p>
+<p>We'll just demonstrate using <code>run11.sh</code> in the Workshop. Using all the default settings, just run:</p>
 
 <pre><code>run11.sh
 </code></pre>
@@ -789,71 +875,64 @@ count = foreach grouped generate COUNT(tweets);
 
 <p>The output will be identical to what you saw for the previous Twitter exercise.</p>
 
-<h1 id="summingbird">Summingbird</h1>
+<h1>Summingbird</h1>
 
 <p>In September, Twitter <a href="https://blog.twitter.com/2013/streaming-mapreduce-with-summingbird">unveiled</a> a new Scala API called <a href="https://github.com/twitter/summingbird">Summingbird</a>. There is also a <a href="https://github.com/sritchie/summingbird-workshop">tutorial from LambdaJam 2013</a> by one of the project creators.</p>
 
-<p>Summingbird is designed to support a variety of backends, so that logic can be written once and executed on different systems. The initial release supports Hadoop through Scalding, <a href="http://storm-project.net/">Storm</a>, an event processing system that Twitter and many other organizations use to complement Hadoop&#8217;s batch-mode capabilities. There is also an in-memory mode that uses <a href="http://memcached.org/">memcached</a>, designed for testing, but potentially also for working with smaller data sets where the scalability of Hadoop isn&#8217;t needed.</p>
+<p>Summingbird is designed to support a variety of backends, so that logic can be written once and executed on different systems. The initial release supports Hadoop through Scalding, <a href="http://storm-project.net/">Storm</a>, an event processing system that Twitter and many other organizations use to complement Hadoop's batch-mode capabilities. There is also an in-memory mode that uses <a href="http://memcached.org/">memcached</a>, designed for testing, but potentially also for working with smaller data sets where the scalability of Hadoop isn't needed.</p>
 
 <p>Twitter is encouraging others to contribute backends for additional systems.</p>
 
-<p>Because additional libraries are required for running Summingbird apps, we&#8217;ll just look at our <em>Word Count</em> example ported to Summingbird. See <code>scripts/SummingbirdWordCount12.scala</code>.</p>
+<p>Because additional libraries are required for running Summingbird apps, we'll just look at our <em>Word Count</em> example ported to Summingbird. See <code>scripts/SummingbirdWordCount12.scala</code>.</p>
 
-<h1 id="conclusions">Conclusions</h1>
+<h1>Conclusions</h1>
 
-<h2 id="comparisonswithothertools">Comparisons with Other Tools</h2>
+<h2>Comparisons with Other Tools</h2>
 
-<p>It&#8217;s interesting to contrast Scalding with other tools.</p>
+<p>It's interesting to contrast Scalding with other tools.</p>
 
-<h3 id="cascading">Cascading</h3>
+<h3>Cascading</h3>
 
 <p>Because Scala is a <em>functional programming</em> language with excellent support for DSL (domain-specific language) creation, using Scalding is much more concise than the Java-based Cascading itself, because Scalding programs are more concise and intuitive, fully exploiting FP idioms for data manipulation. For more on this comparison, see <a href="http://polyglotprogramming.com/papers/ScaldingForHadoop.pdf">this talk</a> that Dean Wampler gave recently at the Chicago Hadoop Users Group and Big Data Techcon Boston, 2013.</p>
 
-<h3 id="cascalog">Cascalog</h3>
+<h3>Cascalog</h3>
 
 <p>This Clojure dialect written by Nathan Marz also benefits from the functional nature and concision of Clojure. Nathan has also built in the logic-based query model of Datalog.</p>
 
-<h3 id="pig">Pig</h3>
+<h3>Pig</h3>
 
 <p>Pig has very similar capabilities, with notable advantages and disadvantages.</p>
 
-<h4 id="advantages">Advantages</h4>
+<h4>Advantages</h4>
 
 <ul>
 <li><em>A custom language</em> - A purpose-built language for a particular domain can optimize expressiveness for common scenarios.</li>
-<li><em>Type Safety</em> - Although Scala is strongly-typed, Cascading isn&#8217;t, at least in the sense that you don&#8217;t normally define the types of fields, except where necessary (e.g., to call math routines with numbers). Pig (like Hive) encourages specifying the type of every field.</li>
-<li><em>Lazy evaluation</em> - you define the work flow, then Pig compiles, optimizes, and runs it when output is required. Scalding, following Scala, uses eager evaluation; each expression is executed as soon as it&#8217;s parsed.</li>
-<li><em>Describe</em> - The describe feature is very helpful when learning how each Pig statement defines a new schema. There is an API call, <code>fields</code> on Pipes to get the field names, but it&#8217;s less convenient to use, especially in interactive scenarios.</li>
+<li><em>Type Safety</em> - Although Scala is strongly-typed, Cascading isn't, at least in the sense that you don't normally define the types of fields, except where necessary (e.g., to call math routines with numbers). Pig (like Hive) encourages specifying the type of every field.</li>
+<li><em>Lazy evaluation</em> - you define the work flow, then Pig compiles, optimizes, and runs it when output is required. Scalding, following Scala, uses eager evaluation; each expression is executed as soon as it's parsed.</li>
+<li><em>Describe</em> - The describe feature is very helpful when learning how each Pig statement defines a new schema. There is an API call, <code>fields</code> on Pipes to get the field names, but it's less convenient to use, especially in interactive scenarios.</li>
 </ul>
 
-<h4 id="disadvantages">Disadvantages</h4>
+
+<h4>Disadvantages</h4>
 
 <ul>
 <li><em>Not Turing complete</em> - You have to write extensions in other languages. By using Scala, Scalding lets you write everything in one language.</li>
 <li><em>Slower</em> - At least for local jobs, Scalding (and Cascading) avoid Hadoop APIs completely and therefore run noticeably faster.</li>
 </ul>
 
-<h3 id="hive">Hive</h3>
 
-<p>Hive is ideal when your problem fits the SQL model for queries. It&#8217;s less useful for complex transformations. Also, like Pig, extensions must be written in another language.</p>
+<h3>Hive</h3>
+
+<p>Hive is ideal when your problem fits the SQL model for queries. It's less useful for complex transformations. Also, like Pig, extensions must be written in another language.</p>
 
 <p>When I work in Hadoop, my two tools for almost all work are Hive and Scalding. To learn more about Hive, see <a href="http://shop.oreilly.com/product/0636920023555.do">Programming Hive</a>.</p>
-
-<script>var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function c(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function j(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function g(t,s){var r="";for(var q=0;q<t.childNodes.length;q++){if(t.childNodes[q].nodeType==3){var p=t.childNodes[q].nodeValue;if(s){p=p.replace(/\n/g,"")}r+=p}else{if(t.childNodes[q].nodeName=="BR"){r+="\n"}else{r+=g(t.childNodes[q])}}}if(/MSIE [678]/.test(navigator.userAgent)){r=r.replace(/\r/g,"\n")}return r}function a(s){var q=s.className.split(/\s+/);q=q.concat(s.parentNode.className.split(/\s+/));for(var p=0;p<q.length;p++){var r=q[p].replace(/^language-/,"");if(d[r]||r=="no-highlight"){return r}}}function b(p){var q=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{q.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);q.push({event:"stop",offset:t,node:s.childNodes[r]})}}}return t})(p,0);return q}function l(y,z,x){var r=0;var w="";var t=[];function u(){if(y.length&&z.length){if(y[0].offset!=z[0].offset){return(y[0].offset<z[0].offset)?y:z}else{return z[0].event=="start"?y:z}}else{return y.length?y:z}}function s(C){var D="<"+C.nodeName.toLowerCase();for(var A=0;A<C.attributes.length;A++){var B=C.attributes[A];D+=" "+B.nodeName.toLowerCase();if(B.nodeValue!=undefined&&B.nodeValue!=false&&B.nodeValue!=null){D+='="'+m(B.nodeValue)+'"'}}return D+">"}while(y.length||z.length){var v=u().splice(0,1)[0];w+=m(x.substr(r,v.offset-r));r=v.offset;if(v.event=="start"){w+=s(v.node);t.push(v.node)}else{if(v.event=="stop"){var q=t.length;do{q--;var p=t[q];w+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);t.splice(q,1);while(q<t.length){w+=s(t[q]);q++}}}}w+=x.substr(r);return w}function i(){function p(u,t,v){if(u.compiled){return}if(!v){u.bR=c(t,u.b?u.b:"\\B|\\b");if(!u.e&&!u.eW){u.e="\\B|\\b"}if(u.e){u.eR=c(t,u.e)}}if(u.i){u.iR=c(t,u.i)}if(u.r==undefined){u.r=1}if(u.k){u.lR=c(t,u.l||hljs.IR,true)}for(var s in u.k){if(!u.k.hasOwnProperty(s)){continue}if(u.k[s] instanceof Object){u.kG=u.k}else{u.kG={keyword:u.k}}break}if(!u.c){u.c=[]}u.compiled=true;for(var r=0;r<u.c.length;r++){p(u.c[r],t,false)}if(u.starts){p(u.starts,t,false)}}for(var q in d){if(!d.hasOwnProperty(q)){continue}p(d[q].dM,d[q],true)}}function e(J,D){if(!i.called){i();i.called=true}function z(r,M){for(var L=0;L<M.c.length;L++){if(M.c[L].bR.test(r)){return M.c[L]}}}function w(L,r){if(C[L].e&&C[L].eR.test(r)){return 1}if(C[L].eW){var M=w(L-1,r);return M?M+1:0}return 0}function x(r,L){return L.iR&&L.iR.test(r)}function A(O,N){var M=[];for(var L=0;L<O.c.length;L++){M.push(O.c[L].b)}var r=C.length-1;do{if(C[r].e){M.push(C[r].e)}r--}while(C[r+1].eW);if(O.i){M.push(O.i)}return c(N,"("+M.join("|")+")",true)}function s(M,L){var N=C[C.length-1];if(!N.t){N.t=A(N,H)}N.t.lastIndex=L;var r=N.t.exec(M);if(r){return[M.substr(L,r.index-L),r[0],false]}else{return[M.substr(L),"",true]}}function p(O,r){var L=H.cI?r[0].toLowerCase():r[0];for(var N in O.kG){if(!O.kG.hasOwnProperty(N)){continue}var M=O.kG[N].hasOwnProperty(L);if(M){return[N,M]}}return false}function F(M,O){if(!O.k){return m(M)}var N="";var P=0;O.lR.lastIndex=0;var L=O.lR.exec(M);while(L){N+=m(M.substr(P,L.index-P));var r=p(O,L);if(r){t+=r[1];N+='<span class="'+r[0]+'">'+m(L[0])+"</span>"}else{N+=m(L[0])}P=O.lR.lastIndex;L=O.lR.exec(M)}N+=m(M.substr(P,M.length-P));return N}function K(r,M){if(M.sL&&d[M.sL]){var L=e(M.sL,r);t+=L.keyword_count;return L.value}else{return F(r,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){q+=L;M.buffer=""}else{if(M.eB){q+=m(r)+L;M.buffer=""}else{q+=L;M.buffer=r}}C.push(M);B+=M.r}function E(O,L,Q){var R=C[C.length-1];if(Q){q+=K(R.buffer+O,R);return false}var M=z(L,R);if(M){q+=K(R.buffer+O,R);I(M,L);return M.rB}var r=w(C.length-1,L);if(r){var N=R.cN?"</span>":"";if(R.rE){q+=K(R.buffer+O,R)+N}else{if(R.eE){q+=K(R.buffer+O,R)+N+m(L)}else{q+=K(R.buffer+O+L,R)+N}}while(r>1){N=C[C.length-2].cN?"</span>":"";q+=N;r--;C.length--}var P=C[C.length-1];C.length--;C[C.length-1].buffer="";if(P.starts){I(P.starts,"")}return R.rE}if(x(L,R)){throw"Illegal"}}var H=d[J];var C=[H.dM];var B=0;var t=0;var q="";try{var v=0;H.dM.buffer="";do{var y=s(D,v);var u=E(y[0],y[1],y[2]);v+=y[0].length;if(!u){v+=y[1].length}}while(!y[2]);if(C.length>1){throw"Illegal"}return{r:B,keyword_count:t,value:q}}catch(G){if(G=="Illegal"){return{r:0,keyword_count:0,value:m(D)}}else{throw G}}}function f(t){var r={keyword_count:0,r:0,value:m(t)};var q=r;for(var p in d){if(!d.hasOwnProperty(p)){continue}var s=e(p,t);s.language=p;if(s.keyword_count+s.r>q.keyword_count+q.r){q=s}if(s.keyword_count+s.r>r.keyword_count+r.r){q=r;r=s}}if(q.language){r.second_best=q}return r}function h(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function o(u,x,q){var y=g(u,q);var s=a(u);if(s=="no-highlight"){return}if(s){var w=e(s,y)}else{var w=f(y);s=w.language}var p=b(u);if(p.length){var r=document.createElement("pre");r.innerHTML=w.value;w.value=l(p,b(r),y)}w.value=h(w.value,x,q);var t=u.className;if(!t.match("(\\s|^)(language-)?"+s+"(\\s|$)")){t=t?(t+" "+s):s}if(/MSIE [678]/.test(navigator.userAgent)&&u.tagName=="CODE"&&u.parentNode.tagName=="PRE"){var r=u.parentNode;var v=document.createElement("div");v.innerHTML="<pre><code>"+w.value+"</code></pre>";u=v.firstChild.firstChild;v.firstChild.cN=r.cN;r.parentNode.replaceChild(v.firstChild,r)}else{u.innerHTML=w.value}u.className=t;u.result={language:s,kw:w.keyword_count,re:w.r};if(w.second_best){u.second_best={language:w.second_best.language,kw:w.second_best.keyword_count,re:w.second_best.r}}}function k(){if(k.called){return}k.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=j(r[p]);if(q){o(q,hljs.tabReplace)}}}function n(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",k,false);window.addEventListener("load",k,false)}else{if(window.attachEvent){window.attachEvent("onload",k)}else{window.onload=k}}}var d={};this.LANGUAGES=d;this.highlight=e;this.highlightAuto=f;this.fixMarkup=h;this.highlightBlock=o;this.initHighlighting=k;this.initHighlightingOnLoad=n;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0x[A-Za-z0-9]+|\\d+(\\.\\d+)?)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.inherit=function(p,s){var r={};for(var q in p){r[q]=p[q]}if(s){for(var q in s){r[q]=s[q]}}return r}}();hljs.LANGUAGES.bash=function(){var d={"true":1,"false":1};var b={cN:"variable",b:"\\$([a-zA-Z0-9_]+)\\b"};var a={cN:"variable",b:"\\$\\{(([^}])|(\\\\}))+\\}",c:[hljs.CNM]};var c={cN:"string",b:'"',e:'"',i:"\\n",c:[hljs.BE,b,a],r:0};var e={cN:"test_condition",b:"",e:"",c:[c,b,a,hljs.CNM],k:{literal:d},r:0};return{dM:{k:{keyword:{"if":1,then:1,"else":1,fi:1,"for":1,"break":1,"continue":1,"while":1,"in":1,"do":1,done:1,echo:1,exit:1,"return":1,set:1,declare:1},literal:d},c:[{cN:"shebang",b:"(#!\\/bin\\/bash)|(#!\\/bin\\/sh)",r:10},hljs.HCM,hljs.CNM,c,b,a,hljs.inherit(e,{b:"\\[ ",e:" \\]",r:0}),hljs.inherit(e,{b:"\\[\\[ ",e:" \\]\\]"})]}}}();hljs.LANGUAGES.cs={dM:{k:{"abstract":1,as:1,base:1,bool:1,"break":1,"byte":1,"case":1,"catch":1,"char":1,checked:1,"class":1,"const":1,"continue":1,decimal:1,"default":1,delegate:1,"do":1,"do":1,"double":1,"else":1,"enum":1,event:1,explicit:1,extern:1,"false":1,"finally":1,fixed:1,"float":1,"for":1,foreach:1,"goto":1,"if":1,implicit:1,"in":1,"int":1,"interface":1,internal:1,is:1,lock:1,"long":1,namespace:1,"new":1,"null":1,object:1,operator:1,out:1,override:1,params:1,"private":1,"protected":1,"public":1,readonly:1,ref:1,"return":1,sbyte:1,sealed:1,"short":1,sizeof:1,stackalloc:1,"static":1,string:1,struct:1,"switch":1,"this":1,"throw":1,"true":1,"try":1,"typeof":1,uint:1,ulong:1,unchecked:1,unsafe:1,ushort:1,using:1,virtual:1,"volatile":1,"void":1,"while":1,ascending:1,descending:1,from:1,get:1,group:1,into:1,join:1,let:1,orderby:1,partial:1,select:1,set:1,value:1,"var":1,where:1,yield:1},c:[{cN:"comment",b:"///",e:"$",rB:true,c:[{cN:"xmlDocTag",b:"///|<!--|-->"},{cN:"xmlDocTag",b:"</?",e:">"}]},hljs.CLCM,hljs.CBLCLM,{cN:"string",b:'@"',e:'"',c:[{b:'""'}]},hljs.ASM,hljs.QSM,hljs.CNM]}};hljs.LANGUAGES.ruby=function(){var g="[a-zA-Z_][a-zA-Z0-9_]*(\\!|\\?)?";var a="[a-zA-Z_]\\w*[!?=]?|[-+~]\\@|<<|>>|=~|===?|<=>|[<>]=?|\\*\\*|[-/+%^&*~`|]|\\[\\]=?";var n={keyword:{and:1,"false":1,then:1,defined:1,module:1,"in":1,"return":1,redo:1,"if":1,BEGIN:1,retry:1,end:1,"for":1,"true":1,self:1,when:1,next:1,until:1,"do":1,begin:1,unless:1,END:1,rescue:1,nil:1,"else":1,"break":1,undef:1,not:1,"super":1,"class":1,"case":1,require:1,yield:1,alias:1,"while":1,ensure:1,elsif:1,or:1,def:1},keymethods:{__id__:1,__send__:1,abort:1,abs:1,"all?":1,allocate:1,ancestors:1,"any?":1,arity:1,assoc:1,at:1,at_exit:1,autoload:1,"autoload?":1,"between?":1,binding:1,binmode:1,"block_given?":1,call:1,callcc:1,caller:1,capitalize:1,"capitalize!":1,casecmp:1,"catch":1,ceil:1,center:1,chomp:1,"chomp!":1,chop:1,"chop!":1,chr:1,"class":1,class_eval:1,"class_variable_defined?":1,class_variables:1,clear:1,clone:1,close:1,close_read:1,close_write:1,"closed?":1,coerce:1,collect:1,"collect!":1,compact:1,"compact!":1,concat:1,"const_defined?":1,const_get:1,const_missing:1,const_set:1,constants:1,count:1,crypt:1,"default":1,default_proc:1,"delete":1,"delete!":1,delete_at:1,delete_if:1,detect:1,display:1,div:1,divmod:1,downcase:1,"downcase!":1,downto:1,dump:1,dup:1,each:1,each_byte:1,each_index:1,each_key:1,each_line:1,each_pair:1,each_value:1,each_with_index:1,"empty?":1,entries:1,eof:1,"eof?":1,"eql?":1,"equal?":1,"eval":1,exec:1,exit:1,"exit!":1,extend:1,fail:1,fcntl:1,fetch:1,fileno:1,fill:1,find:1,find_all:1,first:1,flatten:1,"flatten!":1,floor:1,flush:1,for_fd:1,foreach:1,fork:1,format:1,freeze:1,"frozen?":1,fsync:1,getc:1,gets:1,global_variables:1,grep:1,gsub:1,"gsub!":1,"has_key?":1,"has_value?":1,hash:1,hex:1,id:1,include:1,"include?":1,included_modules:1,index:1,indexes:1,indices:1,induced_from:1,inject:1,insert:1,inspect:1,instance_eval:1,instance_method:1,instance_methods:1,"instance_of?":1,"instance_variable_defined?":1,instance_variable_get:1,instance_variable_set:1,instance_variables:1,"integer?":1,intern:1,invert:1,ioctl:1,"is_a?":1,isatty:1,"iterator?":1,join:1,"key?":1,keys:1,"kind_of?":1,lambda:1,last:1,length:1,lineno:1,ljust:1,load:1,local_variables:1,loop:1,lstrip:1,"lstrip!":1,map:1,"map!":1,match:1,max:1,"member?":1,merge:1,"merge!":1,method:1,"method_defined?":1,method_missing:1,methods:1,min:1,module_eval:1,modulo:1,name:1,nesting:1,"new":1,next:1,"next!":1,"nil?":1,nitems:1,"nonzero?":1,object_id:1,oct:1,open:1,pack:1,partition:1,pid:1,pipe:1,pop:1,popen:1,pos:1,prec:1,prec_f:1,prec_i:1,print:1,printf:1,private_class_method:1,private_instance_methods:1,"private_method_defined?":1,private_methods:1,proc:1,protected_instance_methods:1,"protected_method_defined?":1,protected_methods:1,public_class_method:1,public_instance_methods:1,"public_method_defined?":1,public_methods:1,push:1,putc:1,puts:1,quo:1,raise:1,rand:1,rassoc:1,read:1,read_nonblock:1,readchar:1,readline:1,readlines:1,readpartial:1,rehash:1,reject:1,"reject!":1,remainder:1,reopen:1,replace:1,require:1,"respond_to?":1,reverse:1,"reverse!":1,reverse_each:1,rewind:1,rindex:1,rjust:1,round:1,rstrip:1,"rstrip!":1,scan:1,seek:1,select:1,send:1,set_trace_func:1,shift:1,singleton_method_added:1,singleton_methods:1,size:1,sleep:1,slice:1,"slice!":1,sort:1,"sort!":1,sort_by:1,split:1,sprintf:1,squeeze:1,"squeeze!":1,srand:1,stat:1,step:1,store:1,strip:1,"strip!":1,sub:1,"sub!":1,succ:1,"succ!":1,sum:1,superclass:1,swapcase:1,"swapcase!":1,sync:1,syscall:1,sysopen:1,sysread:1,sysseek:1,system:1,syswrite:1,taint:1,"tainted?":1,tell:1,test:1,"throw":1,times:1,to_a:1,to_ary:1,to_f:1,to_hash:1,to_i:1,to_int:1,to_io:1,to_proc:1,to_s:1,to_str:1,to_sym:1,tr:1,"tr!":1,tr_s:1,"tr_s!":1,trace_var:1,transpose:1,trap:1,truncate:1,"tty?":1,type:1,ungetc:1,uniq:1,"uniq!":1,unpack:1,unshift:1,untaint:1,untrace_var:1,upcase:1,"upcase!":1,update:1,upto:1,"value?":1,values:1,values_at:1,warn:1,write:1,write_nonblock:1,"zero?":1,zip:1}};var h={cN:"yardoctag",b:"@[A-Za-z]+"};var d={cN:"comment",b:"#",e:"$",c:[h]};var c={cN:"comment",b:"^\\=begin",e:"^\\=end",c:[h],r:10};var b={cN:"comment",b:"^__END__",e:"\\n$"};var u={cN:"subst",b:"#\\{",e:"}",l:g,k:n};var p=[hljs.BE,u];var s={cN:"string",b:"'",e:"'",c:p,r:0};var r={cN:"string",b:'"',e:'"',c:p,r:0};var q={cN:"string",b:"%[qw]?\\(",e:"\\)",c:p,r:10};var o={cN:"string",b:"%[qw]?\\[",e:"\\]",c:p,r:10};var m={cN:"string",b:"%[qw]?{",e:"}",c:p,r:10};var l={cN:"string",b:"%[qw]?<",e:">",c:p,r:10};var k={cN:"string",b:"%[qw]?/",e:"/",c:p,r:10};var j={cN:"string",b:"%[qw]?%",e:"%",c:p,r:10};var i={cN:"string",b:"%[qw]?-",e:"-",c:p,r:10};var t={cN:"string",b:"%[qw]?\\|",e:"\\|",c:p,r:10};var e={cN:"function",b:"\\bdef\\s+",e:" |$|;",l:g,k:n,c:[{cN:"title",b:a,l:g,k:n},{cN:"params",b:"\\(",e:"\\)",l:g,k:n},d,c,b]};var f={cN:"identifier",b:g,l:g,k:n,r:0};var v=[d,c,b,s,r,q,o,m,l,k,j,i,t,{cN:"class",b:"\\b(class|module)\\b",e:"$|;",k:{"class":1,module:1},c:[{cN:"title",b:"[A-Za-z_]\\w*(::\\w+)*(\\?|\\!)?",r:0},{cN:"inheritance",b:"<\\s*",c:[{cN:"parent",b:"("+hljs.IR+"::)?"+hljs.IR}]},d,c,b]},e,{cN:"constant",b:"(::)?([A-Z]\\w*(::)?)+",r:0},{cN:"symbol",b:":",c:[s,r,q,o,m,l,k,j,i,t,f],r:0},{cN:"number",b:"(\\b0[0-7_]+)|(\\b0x[0-9a-fA-F_]+)|(\\b[1-9][0-9_]*(\\.[0-9_]+)?)|[0_]\\b",r:0},{cN:"number",b:"\\?\\w"},{cN:"variable",b:"(\\$\\W)|((\\$|\\@\\@?)(\\w+))"},f,{b:"("+hljs.RSR+")\\s*",c:[d,c,b,{cN:"regexp",b:"/",e:"/[a-z]*",i:"\\n",c:[hljs.BE]}],r:0}];u.c=v;e.c[1].c=v;return{dM:{l:g,k:n,c:v}}}();hljs.LANGUAGES.diff={cI:true,dM:{c:[{cN:"chunk",b:"^\\@\\@ +\\-\\d+,\\d+ +\\+\\d+,\\d+ +\\@\\@$",r:10},{cN:"chunk",b:"^\\*\\*\\* +\\d+,\\d+ +\\*\\*\\*\\*$",r:10},{cN:"chunk",b:"^\\-\\-\\- +\\d+,\\d+ +\\-\\-\\-\\-$",r:10},{cN:"header",b:"Index: ",e:"$"},{cN:"header",b:"=====",e:"=====$"},{cN:"header",b:"^\\-\\-\\-",e:"$"},{cN:"header",b:"^\\*{3} ",e:"$"},{cN:"header",b:"^\\+\\+\\+",e:"$"},{cN:"header",b:"\\*{5}",e:"\\*{5}$"},{cN:"addition",b:"^\\+",e:"$"},{cN:"deletion",b:"^\\-",e:"$"},{cN:"change",b:"^\\!",e:"$"}]}};hljs.LANGUAGES.javascript={dM:{k:{keyword:{"in":1,"if":1,"for":1,"while":1,"finally":1,"var":1,"new":1,"function":1,"do":1,"return":1,"void":1,"else":1,"break":1,"catch":1,"instanceof":1,"with":1,"throw":1,"case":1,"default":1,"try":1,"this":1,"switch":1,"continue":1,"typeof":1,"delete":1},literal:{"true":1,"false":1,"null":1}},c:[hljs.ASM,hljs.QSM,hljs.CLCM,hljs.CBLCLM,hljs.CNM,{b:"("+hljs.RSR+"|case|return|throw)\\s*",k:{"return":1,"throw":1,"case":1},c:[hljs.CLCM,hljs.CBLCLM,{cN:"regexp",b:"/",e:"/[gim]*",c:[{b:"\\\\/"}]}],r:0},{cN:"function",b:"\\bfunction\\b",e:"{",k:{"function":1},c:[{cN:"title",b:"[A-Za-z$_][0-9A-Za-z$_]*"},{cN:"params",b:"\\(",e:"\\)",c:[hljs.ASM,hljs.QSM,hljs.CLCM,hljs.CBLCLM]}]}]}};hljs.LANGUAGES.css=function(){var a={cN:"function",b:hljs.IR+"\\(",e:"\\)",c:[{eW:true,eE:true,c:[hljs.NM,hljs.ASM,hljs.QSM]}]};return{cI:true,dM:{i:"[=/|']",c:[hljs.CBLCLM,{cN:"id",b:"\\#[A-Za-z0-9_-]+"},{cN:"class",b:"\\.[A-Za-z0-9_-]+",r:0},{cN:"attr_selector",b:"\\[",e:"\\]",i:"$"},{cN:"pseudo",b:":(:)?[a-zA-Z0-9\\_\\-\\+\\(\\)\\\"\\']+"},{cN:"at_rule",b:"@(font-face|page)",l:"[a-z-]+",k:{"font-face":1,page:1}},{cN:"at_rule",b:"@",e:"[{;]",eE:true,k:{"import":1,page:1,media:1,charset:1},c:[a,hljs.ASM,hljs.QSM,hljs.NM]},{cN:"tag",b:hljs.IR,r:0},{cN:"rules",b:"{",e:"}",i:"[^\\s]",r:0,c:[hljs.CBLCLM,{cN:"rule",b:"[^\\s]",rB:true,e:";",eW:true,c:[{cN:"attribute",b:"[A-Z\\_\\.\\-]+",e:":",eE:true,i:"[^\\s]",starts:{cN:"value",eW:true,eE:true,c:[a,hljs.NM,hljs.QSM,hljs.ASM,hljs.CBLCLM,{cN:"hexcolor",b:"\\#[0-9A-F]+"},{cN:"important",b:"!important"}]}}]}]}]}}}();hljs.LANGUAGES.xml=function(){var b="[A-Za-z0-9\\._:-]+";var a={eW:true,c:[{cN:"attribute",b:b,r:0},{b:'="',rB:true,e:'"',c:[{cN:"value",b:'"',eW:true}]},{b:"='",rB:true,e:"'",c:[{cN:"value",b:"'",eW:true}]},{b:"=",c:[{cN:"value",b:"[^\\s/>]+"}]}]};return{cI:true,dM:{c:[{cN:"pi",b:"<\\?",e:"\\?>",r:10},{cN:"doctype",b:"<!DOCTYPE",e:">",r:10,c:[{b:"\\[",e:"\\]"}]},{cN:"comment",b:"<!--",e:"-->",r:10},{cN:"cdata",b:"<\\!\\[CDATA\\[",e:"\\]\\]>",r:10},{cN:"tag",b:"<style",e:">",k:{title:{style:1}},c:[a],starts:{cN:"css",e:"</style>",rE:true,sL:"css"}},{cN:"tag",b:"<script",e:">",k:{title:{script:1}},c:[a],starts:{cN:"javascript",e:"<\/script>",rE:true,sL:"javascript"}},{cN:"vbscript",b:"<%",e:"%>",sL:"vbscript"},{cN:"tag",b:"</?",e:"/?>",c:[{cN:"title",b:"[^ />]+"},a]}]}}}();hljs.LANGUAGES.java={dM:{k:{"false":1,"synchronized":1,"int":1,"abstract":1,"float":1,"private":1,"char":1,"interface":1,"boolean":1,"static":1,"null":1,"if":1,"const":1,"for":1,"true":1,"while":1,"long":1,"throw":1,strictfp:1,"finally":1,"protected":1,"extends":1,"import":1,"native":1,"final":1,"implements":1,"return":1,"void":1,"enum":1,"else":1,"break":1,"transient":1,"new":1,"catch":1,"instanceof":1,"byte":1,"super":1,"class":1,"volatile":1,"case":1,assert:1,"short":1,"package":1,"default":1,"double":1,"public":1,"try":1,"this":1,"switch":1,"continue":1,"throws":1},c:[{cN:"javadoc",b:"/\\*\\*",e:"\\*/",c:[{cN:"javadoctag",b:"@[A-Za-z]+"}],r:10},hljs.CLCM,hljs.CBLCLM,hljs.ASM,hljs.QSM,{cN:"class",b:"(class |interface )",e:"{",k:{"class":1,"interface":1},i:":",c:[{b:"(implements|extends)",k:{"extends":1,"implements":1},r:10},{cN:"title",b:hljs.UIR}]},hljs.CNM,{cN:"annotation",b:"@[A-Za-z]+"}]}};hljs.LANGUAGES.php={cI:true,dM:{k:{and:1,include_once:1,list:1,"abstract":1,global:1,"private":1,echo:1,"interface":1,as:1,"static":1,endswitch:1,array:1,"null":1,"if":1,endwhile:1,or:1,"const":1,"for":1,endforeach:1,self:1,"var":1,"while":1,isset:1,"public":1,"protected":1,exit:1,foreach:1,"throw":1,elseif:1,"extends":1,include:1,__FILE__:1,empty:1,require_once:1,"function":1,"do":1,xor:1,"return":1,"implements":1,parent:1,clone:1,use:1,__CLASS__:1,__LINE__:1,"else":1,"break":1,print:1,"eval":1,"new":1,"catch":1,__METHOD__:1,"class":1,"case":1,exception:1,php_user_filter:1,"default":1,die:1,require:1,__FUNCTION__:1,enddeclare:1,"final":1,"try":1,"this":1,"switch":1,"continue":1,endfor:1,endif:1,declare:1,unset:1,"true":1,"false":1,namespace:1},c:[hljs.CLCM,hljs.HCM,{cN:"comment",b:"/\\*",e:"\\*/",c:[{cN:"phpdoc",b:"\\s@[A-Za-z]+",r:10}]},hljs.CNM,hljs.inherit(hljs.ASM,{i:null}),hljs.inherit(hljs.QSM,{i:null}),{cN:"variable",b:"\\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*"},{cN:"preprocessor",b:"<\\?php",r:10},{cN:"preprocessor",b:"\\?>"}]}};hljs.LANGUAGES.python=function(){var c={cN:"string",b:"(u|b)?r?'''",e:"'''",r:10};var b={cN:"string",b:'(u|b)?r?"""',e:'"""',r:10};var a={cN:"string",b:"(u|r|ur|b|br)'",e:"'",c:[hljs.BE],r:10};var f={cN:"string",b:'(u|r|ur|b|br)"',e:'"',c:[hljs.BE],r:10};var d={cN:"title",b:hljs.UIR};var e={cN:"params",b:"\\(",e:"\\)",c:[c,b,a,f,hljs.ASM,hljs.QSM]};return{dM:{k:{keyword:{and:1,elif:1,is:1,global:1,as:1,"in":1,"if":1,from:1,raise:1,"for":1,except:1,"finally":1,print:1,"import":1,pass:1,"return":1,exec:1,"else":1,"break":1,not:1,"with":1,"class":1,assert:1,yield:1,"try":1,"while":1,"continue":1,del:1,or:1,def:1,lambda:1,nonlocal:10},built_in:{None:1,True:1,False:1,Ellipsis:1,NotImplemented:1}},i:"(</|->|\\?)",c:[hljs.HCM,c,b,a,f,hljs.ASM,hljs.QSM,{cN:"function",b:"\\bdef ",e:":",i:"$",k:{def:1},c:[d,e],r:10},{cN:"class",b:"\\bclass ",e:":",i:"[${]",k:{"class":1},c:[d,e],r:10},hljs.CNM,{cN:"decorator",b:"@",e:"$"}]}}}();hljs.LANGUAGES.sql={cI:true,dM:{i:"[^\\s]",c:[{cN:"operator",b:"(begin|start|commit|rollback|savepoint|lock|alter|create|drop|rename|call|delete|do|handler|insert|load|replace|select|truncate|update|set|show|pragma)\\b",e:";|$",k:{keyword:{all:1,partial:1,global:1,month:1,current_timestamp:1,using:1,go:1,revoke:1,smallint:1,indicator:1,"end-exec":1,disconnect:1,zone:1,"with":1,character:1,assertion:1,to:1,add:1,current_user:1,usage:1,input:1,local:1,alter:1,match:1,collate:1,real:1,then:1,rollback:1,get:1,read:1,timestamp:1,session_user:1,not:1,integer:1,bit:1,unique:1,day:1,minute:1,desc:1,insert:1,execute:1,like:1,ilike:2,level:1,decimal:1,drop:1,"continue":1,isolation:1,found:1,where:1,constraints:1,domain:1,right:1,national:1,some:1,module:1,transaction:1,relative:1,second:1,connect:1,escape:1,close:1,system_user:1,"for":1,deferred:1,section:1,cast:1,current:1,sqlstate:1,allocate:1,intersect:1,deallocate:1,numeric:1,"public":1,preserve:1,full:1,"goto":1,initially:1,asc:1,no:1,key:1,output:1,collation:1,group:1,by:1,union:1,session:1,both:1,last:1,language:1,constraint:1,column:1,of:1,space:1,foreign:1,deferrable:1,prior:1,connection:1,unknown:1,action:1,commit:1,view:1,or:1,first:1,into:1,"float":1,year:1,primary:1,cascaded:1,except:1,restrict:1,set:1,references:1,names:1,table:1,outer:1,open:1,select:1,size:1,are:1,rows:1,from:1,prepare:1,distinct:1,leading:1,create:1,only:1,next:1,inner:1,authorization:1,schema:1,corresponding:1,option:1,declare:1,precision:1,immediate:1,"else":1,timezone_minute:1,external:1,varying:1,translation:1,"true":1,"case":1,exception:1,join:1,hour:1,"default":1,"double":1,scroll:1,value:1,cursor:1,descriptor:1,values:1,dec:1,fetch:1,procedure:1,"delete":1,and:1,"false":1,"int":1,is:1,describe:1,"char":1,as:1,at:1,"in":1,varchar:1,"null":1,trailing:1,any:1,absolute:1,current_time:1,end:1,grant:1,privileges:1,when:1,cross:1,check:1,write:1,current_date:1,pad:1,begin:1,temporary:1,exec:1,time:1,update:1,catalog:1,user:1,sql:1,date:1,on:1,identity:1,timezone_hour:1,natural:1,whenever:1,interval:1,work:1,order:1,cascade:1,diagnostics:1,nchar:1,having:1,left:1,call:1,"do":1,handler:1,load:1,replace:1,truncate:1,start:1,lock:1,show:1,pragma:1},aggregate:{count:1,sum:1,min:1,max:1,avg:1}},c:[{cN:"string",b:"'",e:"'",c:[hljs.BE,{b:"''"}],r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE,{b:'""'}],r:0},{cN:"string",b:"`",e:"`",c:[hljs.BE]},hljs.CNM,{b:"\\n"}]},hljs.CBLCLM,{cN:"comment",b:"--",e:"$"}]}};hljs.LANGUAGES.ini={cI:true,dM:{i:"[^\\s]",c:[{cN:"comment",b:";",e:"$"},{cN:"title",b:"^\\[",e:"\\]"},{cN:"setting",b:"^[a-z0-9_\\[\\]]+[ \\t]*=[ \\t]*",e:"$",c:[{cN:"value",eW:true,k:{on:1,off:1,"true":1,"false":1,yes:1,no:1},c:[hljs.QSM,hljs.NM]}]}]}};hljs.LANGUAGES.perl=function(){var c={getpwent:1,getservent:1,quotemeta:1,msgrcv:1,scalar:1,kill:1,dbmclose:1,undef:1,lc:1,ma:1,syswrite:1,tr:1,send:1,umask:1,sysopen:1,shmwrite:1,vec:1,qx:1,utime:1,local:1,oct:1,semctl:1,localtime:1,readpipe:1,"do":1,"return":1,format:1,read:1,sprintf:1,dbmopen:1,pop:1,getpgrp:1,not:1,getpwnam:1,rewinddir:1,qq:1,fileno:1,qw:1,endprotoent:1,wait:1,sethostent:1,bless:1,s:1,opendir:1,"continue":1,each:1,sleep:1,endgrent:1,shutdown:1,dump:1,chomp:1,connect:1,getsockname:1,die:1,socketpair:1,close:1,flock:1,exists:1,index:1,shmget:1,sub:1,"for":1,endpwent:1,redo:1,lstat:1,msgctl:1,setpgrp:1,abs:1,exit:1,select:1,print:1,ref:1,gethostbyaddr:1,unshift:1,fcntl:1,syscall:1,"goto":1,getnetbyaddr:1,join:1,gmtime:1,symlink:1,semget:1,splice:1,x:1,getpeername:1,recv:1,log:1,setsockopt:1,cos:1,last:1,reverse:1,gethostbyname:1,getgrnam:1,study:1,formline:1,endhostent:1,times:1,chop:1,length:1,gethostent:1,getnetent:1,pack:1,getprotoent:1,getservbyname:1,rand:1,mkdir:1,pos:1,chmod:1,y:1,substr:1,endnetent:1,printf:1,next:1,open:1,msgsnd:1,readdir:1,use:1,unlink:1,getsockopt:1,getpriority:1,rindex:1,wantarray:1,hex:1,system:1,getservbyport:1,endservent:1,"int":1,chr:1,untie:1,rmdir:1,prototype:1,tell:1,listen:1,fork:1,shmread:1,ucfirst:1,setprotoent:1,"else":1,sysseek:1,link:1,getgrgid:1,shmctl:1,waitpid:1,unpack:1,getnetbyname:1,reset:1,chdir:1,grep:1,split:1,require:1,caller:1,lcfirst:1,until:1,warn:1,"while":1,values:1,shift:1,telldir:1,getpwuid:1,my:1,getprotobynumber:1,"delete":1,and:1,sort:1,uc:1,defined:1,srand:1,accept:1,"package":1,seekdir:1,getprotobyname:1,semop:1,our:1,rename:1,seek:1,"if":1,q:1,chroot:1,sysread:1,setpwent:1,no:1,crypt:1,getc:1,chown:1,sqrt:1,write:1,setnetent:1,setpriority:1,foreach:1,tie:1,sin:1,msgget:1,map:1,stat:1,getlogin:1,unless:1,elsif:1,truncate:1,exec:1,keys:1,glob:1,tied:1,closedir:1,ioctl:1,socket:1,readlink:1,"eval":1,xor:1,readline:1,binmode:1,setservent:1,eof:1,ord:1,bind:1,alarm:1,pipe:1,atan2:1,getgrent:1,exp:1,time:1,push:1,setgrent:1,gt:1,lt:1,or:1,ne:1,m:1};var d={cN:"subst",b:"[$@]\\{",e:"}",k:c,r:10};var b={cN:"variable",b:"\\$\\d"};var a={cN:"variable",b:"[\\$\\%\\@\\*](\\^\\w\\b|#\\w+(\\:\\:\\w+)*|[^\\s\\w{]|{\\w+}|\\w+(\\:\\:\\w*)*)"};var g=[hljs.BE,d,b,a];var f={b:"->",c:[{b:hljs.IR},{b:"{",e:"}"}]};var e=[b,a,hljs.HCM,{cN:"comment",b:"^(__END__|__DATA__)",e:"\\n$",r:5},f,{cN:"string",b:"q[qwxr]?\\s*\\(",e:"\\)",c:g,r:5},{cN:"string",b:"q[qwxr]?\\s*\\[",e:"\\]",c:g,r:5},{cN:"string",b:"q[qwxr]?\\s*\\{",e:"\\}",c:g,r:5},{cN:"string",b:"q[qwxr]?\\s*\\|",e:"\\|",c:g,r:5},{cN:"string",b:"q[qwxr]?\\s*\\<",e:"\\>",c:g,r:5},{cN:"string",b:"qw\\s+q",e:"q",c:g,r:5},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"string",b:'"',e:'"',c:g,r:0},{cN:"string",b:"`",e:"`",c:[hljs.BE]},{cN:"string",b:"{\\w+}",r:0},{cN:"string",b:"-?\\w+\\s*\\=\\>",r:0},{cN:"number",b:"(\\b0[0-7_]+)|(\\b0x[0-9a-fA-F_]+)|(\\b[1-9][0-9_]*(\\.[0-9_]+)?)|[0_]\\b",r:0},{cN:"regexp",b:"(s|tr|y)/(\\\\.|[^/])*/(\\\\.|[^/])*/[a-z]*",r:10},{cN:"regexp",b:"(m|qr)?/",e:"/[a-z]*",c:[hljs.BE],r:0},{cN:"sub",b:"\\bsub\\b",e:"(\\s*\\(.*?\\))?[;{]",k:{sub:1},r:5},{cN:"operator",b:"-\\w\\b",r:0},{cN:"pod",b:"\\=\\w",e:"\\=cut"}];d.c=e;f.c[1].c=e;return{dM:{k:c,c:e}}}();hljs.LANGUAGES.cpp=function(){var b={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};var a={cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:b,r:10};a.c=[a];return{dM:{k:b,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'",e:"[^\\\\]'",i:"[^\\\\][^']"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},a]}}}();</script>
-
-<script>hljs.initHighlightingOnLoad();</script>
-
 <div class="footnotes">
-<hr />
+<hr/>
 <ol>
-
 <li id="fn:1">
-<p>But when I refined these notes in November 2012, the stock had corrected to ~$500/share!  <a href="#fnref:1" title="return to article" class="reversefootnote">&#160;&#8617;</a></p>
-</li>
-
+<p>But when I&rsquo;ve periodically refined these notes since then, the price fluctuated between $400 and $550 per share. <a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
 </ol>
 </div>
 
-    </div>
 </body>
 </html>

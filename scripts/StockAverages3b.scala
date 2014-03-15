@@ -23,7 +23,7 @@ import com.twitter.scalding._
  * Note that we use a different input file where we added some malformed lines
  * and we have a new argument for error output:
  *   ./run scripts/StockAverages3b.scala \
- *     --input  data/stocks/APPL-with-errors.csv \
+ *     --input  data/stocks/AAPL-with-errors.csv \
  *     --output output/AAPL-avg.txt \ 
  *     --errors output/AAPL-errors.txt
  */

@@ -1,13 +1,15 @@
 # Scalding Workshop
 
-**Dean Wampler, Concurrent Thought**<br/>
-[dean@deanwampler.com](mailto:dean@deanwampler.com?subject=Question%20about%20your%20Scalding%20Workshop)<br/>
+**Dean Wampler, Typesafe**<br/>
+[dean@concurrentthought.com](mailto:dean@concurrentthought.com?subject=Question%20about%20your%20Scalding%20Workshop)<br/>
 [@deanwampler](https://twitter.com/deanwampler)<br/>
-[Hire Me!](mailto:dean@deanwampler.com?subject=Hiring%20Dean%20Wampler)
+[Typesafe](http://typesafe.com)
 
-This workshop/tutorial takes you through the basic principles of writing data analysis applications with [Scalding](https://github.com/twitter/scalding), a Scala API that wraps [Cascading](http://www.cascading.org/). I first went through this workshop at [StrangeLoop 2012](http://thestrangeloop.com). It took about 3 hours, but we didn't do all the *mini-exercises*, so it make take you a bit longer if you do them all.
+![Scalding logo](images/scalding-logo-small.png)
 
-These instructions walk you through a series of exercises. The exercises have a corresponding Scalding script (Scala source file). We use a convention of adding a number suffix to the name to indicate the order of the exercises. Note that some of these exercises are adapted from the Tutorial examples that are part of the Scalding Github repo, where noted.
+This workshop/tutorial takes you through the basic principles of writing data analysis applications with [Scalding](https://github.com/twitter/scalding), a Scala API that wraps [Cascading](http://www.cascading.org/). Expect this workshop to take 3 hours or more, if you do all parts of the exercises. I certainly encourage you to experiment.
+
+I assume you have already completed the setup instructions in the [README](README.html). These instructions walk you through a series of exercises. The exercises have a corresponding Scalding script (Scala source file). We use a convention of adding a number suffix to the name to indicate the order of the exercises. Note that some of these exercises are adapted from the Tutorial examples that are part of the Scalding Github repo, where noted.
 
 This document will explain many features of the Scalding and Cascading. The scripts themselves contain additional details. The Scalding and Cascading documentation has more information than we can cover here:
 
@@ -97,9 +99,15 @@ Run these commands again and verify that they run without error. The output is w
 
 It contains the contents of `SanityCheck0.scala`, but each line is now numbered.
 
-> By default, when you create a new field in a **pipeline**, Cascading adds the field to the existing fields. All the fields together constitute a **tuple**.
+The essence of this script is the following three lines:
 
-Loading the file added the line number as an additional field.
+	val in  = TextLine("scripts/SanityCheck0.scala")
+	val out = TextLine("output/SanityCheck0.txt")
+	in.read.write(out)
+
+It reads each line and writes it back out. The `TextLine` format has an implicit "schema" for each line, the line number, called the `'offset`, which it adds, and the line itself, called `'line`. This naming convention that uses Scala *symbols* is a Scalding convention. So, the reason we have the line numbers in the output file is because they were added by `TextLine`.
+
+> By default, when you create a new field in a **pipeline**, Cascading adds the field to the existing fields. All the fields together constitute a **tuple**.
 
 ## Projecting Fields
 
@@ -114,9 +122,9 @@ Scalding also has a `project` method for the same purpose. Let's modify `SanityC
 	  .project('line)
 	  .write(out)
 
-This expression is a sequence of Cascading [Pipes](http://docs.cascading.org/cascading/2.0/javadoc/cascading/pipe/Pipe.html). However, there is not `write` method defined on the `Pipe` class. Scalding uses Scala's *implicit conversion* feature to wrap `Pipe` with a Scalding-specific `com.twitter.scalding.RichPipe` type that provides most of the methods we'll actually use.
+This expression is a sequence of Cascading [Pipes](http://docs.cascading.org/cascading/2.0/javadoc/cascading/pipe/Pipe.html). However, there is no `write` method defined on the `Pipe` class. Scalding uses a feature in Scala called *implicit conversions* to wrap `Pipe` with a Scalding-specific type called `com.twitter.scalding.RichPipe`. It provides most of the methods we'll actually use, like `write`.
 
-> There are also comments in this and other scripts about specific Scalding and Cascading features that we won't cover in these notes.
+> There are also comments in this script and the ones that follow about specific Scalding and Cascading features that we won't cover in these notes.
 
 Run the script thusly:
 
@@ -134,31 +142,27 @@ First, we'll use two new invocation command options:
 * `--input file` specifies the input file.
 * `--output file` specifies the output file.
 
-> Unlike Hadoop's HDFS API, Hive, and Pig, when you run using `--local` mode, you can't specify a directory for the input, where all files will be read, or for the output, where one or more files will be written. You have to specify input and output files.
+> We are running in "local" mode, using the `--local` command option. In this case, we have to specify input and output files. If we were running in a Hadoop cluster, we would specify directories instead and Hadoop *tasks* (separate JVM processes) would be started to read each file, etc. This is the normal way of working with the Hadoop MapReduce API, and other tools like Hive and Pig, too.
 
-Run the script like this, where have wrapped lines and used `\\` in to indicate the line breaks:
+Run the script with the following command. From now on, when the commands are too long to fit easily on one line, I'll show you the command twice. First, I'll show a nicely-formatted command line that's easy to read, with line-continuation marks "\" separating the lines. Then, I'll show the command all on one line, which is easier to copy and paste:
+
+**Nicely Formatted:**
 	
-	./run scripts/WordCount2.scala \
-		--input  data/shakespeare/plays.txt \
-		--output output/shakespeare-wc.txt
+	./run scripts/WordCount2.scala \ 
+	  --input data/shakespeare/plays.txt \ 
+	  --output output/shakespeare-wc.txt
+
+**Copy and Paste Version:**
+	
+	./run scripts/WordCount2.scala --input data/shakespeare/plays.txt --output output/shakespeare-wc.txt
 
 The output should be identical to the contents of `data/shakespeare-wc/simple/wc.txt`. Using a `diff` command, should show no differences:
 
 	diff data/shakespeare-wc/simple/wc.txt output/shakespeare-wc.txt
 
-The script uses two new data transformation features to compute the word count.
+(Or you may see a different count for the first line, the amount of whitespace seen...)
 
-### Further Exploration
-
-Try these additional "mini-exercises" to explore what Scalding and Cascading are doing.
-
-#### Improve the Tokenization
-
-Look at the output and you'll notice that the tokenization is rather poor. How can you improve the value defined in `tokenizerRegex`? Can you pass in the regular expression as an argument to the program?
-
-#### Project the 'num Field 
-
-Instead of projecting out `'line`, project out `'num`, the line number. (The output is boring, but now you know the name of this field!)
+The script uses two new data transformation features to compute the word count, `flatMap` and `groupBy`.
 
 ### flatMap
 
@@ -186,9 +190,19 @@ Once we have a stream of individual words, we want to count the occurrences of e
 
 	.groupBy('word){group => group.size('count)}
 
-The calling syntax is similar to `flatMap`. The first argument list specifies one or more fields to group over, forming the "key". The second argument is a function literal. It takes a single argument of type `com.twitter.scalding.GroupBuilder` that gives us a hook to the constructed group of words so we can compute what we need from it. In this case, all we care about is the size of the group, which we'll name `'count`.
+The calling syntax is similar to `flatMap`. The first argument list specifies one or more fields to group over, forming the "key". The second argument is a function literal. It takes a single argument of type `com.twitter.scalding.GroupBuilder` that gives us a hook to the constructed group of words so we can compute what we need from it. In this case, all we care about is the size of the group, which we name `'count`.
 
 ### Further Exploration
+
+Try these additional "mini-exercises" to explore what Scalding and Cascading are doing.
+
+#### Improve the Tokenization
+
+Look at the output and you'll notice that the tokenization is rather poor. How can you improve the value defined in `tokenizerRegex`? Can you pass in the regular expression as an argument to the program?
+
+#### Project the 'num Field 
+
+Instead of projecting out `'line`, project out `'num`, the line number. (The output is boring, but now you know the name of this field!)
 
 Try these additional "mini-exercises" to explore what Scalding and Cascading are doing.
 
@@ -220,9 +234,15 @@ The very first line in the output is an empty word and a count of approximately 
 
 Let's do a similar `groupBy` operation, this time to compute the average of Apple's (AAPL) closing stock price year over year (so you'll know what entry points you missed...). Also, in this exercise we'll solve a common problem; the input data is in an unsupported format.
 
-	./run scripts/StockAverages3.scala \
-		--input  data/stocks/AAPL.csv \
-		--output output/AAPL-year-avg.txt
+**Nicely Formatted:**
+	
+	./run scripts/StockAverages3.scala \ 
+	  --input data/stocks/AAPL.csv \ 
+	  --output output/AAPL-year-avg.txt
+
+**Copy and Paste Version:**
+
+	./run scripts/StockAverages3.scala 	--input data/stocks/AAPL.csv --output output/AAPL-year-avg.txt
 
 You should get the following output (the input data ends in early 2010):
 
@@ -254,22 +274,32 @@ You should get the following output (the input data ends in early 2010):
 	2009    252     146.81412698412706      39.731840611338804
 	2010    25      204.7216        7.454055905344417
 
-Note that as I write this (Septembe 2012), AAPL is currently trading at ~$700/share! [^sucks]
+Note that as I write this (September 2012), AAPL is currently trading at ~$700/share! [^sucks]
 
-[^sucks]:But when I refined these notes in November 2012, the stock had corrected to ~$500/share! 
+[^sucks]:But when I've periodically refined these notes since then, the price fluctuated between $400 and $550 per share. 
 
 ### Musical Interlude: Comparison with Hive and Pig
 
-By the way, here's the same query written using *Hive*, assuming there exists a `stocks` table and we have to select for the stock symbol and exchange:
+By the way, here's the same query written using *Hive*, where we first define an "external table" that uses the same file:
 
+	CREATE EXTERNAL TABLE IF NOT EXISTS stocks(
+	  ymd             STRING,
+	  price_open      FLOAT,
+	  price_high      FLOAT,
+	  price_low       FLOAT,
+	  price_close     FLOAT,
+	  volume          INT,
+	  price_adj_close FLOAT
+	) LOCATION 'path/to/data/AAPL.csv';
+	
 	SELECT year(s.ymd), avg(s.price_close) 
 	FROM stocks s 
 	WHERE s.symbol = 'AAPL' AND s.exchange = 'NASDAQ'
 	GROUP BY year(s.ymd);
 
-It's a little more compact, in part because we can handle all issues of record parsing, etc. when we set up Hive tables, etc. However, Scalding gives us more flexibility when our SQL dialect and built-in functions aren't flexible enough for our needs.
+The query is a little more compact, in part because we can handle all issues of record parsing, etc. when we set up Hive tables, etc. However, Scalding gives us more flexibility when our SQL dialect and built-in functions aren't flexible enough for our needs.
 
-Here's what the corresponding *Pig* script looks like (see also `scripts/StockAverages3.pig`):
+Here's what the corresponding *Pig* script looks like (see `scripts/StockAverages3.pig`):
 
 	aapl = load 'data/stocks/AAPL.csv' using PigStorage(',') as (
 	  ymd:             chararray,
@@ -302,9 +332,15 @@ argument, which results in slightly ugly syntax. We can't use `PartialFunction`,
 
 But we can do a match on the tuple argument instead!
 
-	./run scripts/StockAverages3a.scala \
-		--input  data/stocks/AAPL.csv \
-		--output output/AAPL-year-avg.txt
+**Nicely Formatted:**
+	
+	./run scripts/StockAverages3a.scala \ 
+	  --input data/stocks/AAPL.csv \ 
+	  --output output/AAPL-year-avg.txt
+
+**Copy and Paste Version:**
+
+	./run scripts/StockAverages3a.scala --input data/stocks/AAPL.csv --output output/AAPL-year-avg.txt
 
 ### Further Exploration
 
@@ -328,10 +364,16 @@ What if some of the input records are bad. This is actually common in real-world
 
 The script is very similar to the previous one, so we'll just call it `StockAverages3b`. (The comments in the script describe the implementation differences, as usual...) Note that we need to specify a different input file, where we've introduced 5 bad records, and an `errors` argument for the errors stream, which will contain 5 errors records after the script has finished: 
 
+**Nicely Formatted:**
+	
 	./run scripts/StockAverages3b.scala \ 
-		--input  data/stocks/APPL-with-errors.csv \ 
-		--output output/AAPL-year-avg.txt \ 
-		--errors output/AAPL-errors.txt
+	  --input data/stocks/AAPL-with-errors.csv \ 
+	  --output output/AAPL-year-avg.txt \ 
+	  --errors output/AAPL-errors.txt
+
+**Copy and Paste Version:**
+
+	./run scripts/StockAverages3b.scala --input data/stocks/AAPL-with-errors.csv --output output/AAPL-year-avg.txt --errors output/AAPL-errors.txt
 
 ### Further Exploration
 
@@ -359,10 +401,16 @@ Let's join stocks and dividend data. To join two data sources, you set up to pip
 
 `scripts/StocksDividendsJoin4` performs an *inner join* of stock and dividend records. Let's invoke for Apple data (yes, although Apple only recently announced that it would pay a dividend, Apple paid dividends back in the late 80s and early 90s.):
 
-	./run scripts/StocksDividendsJoin4.scala \
-	  --stocks data/stocks/AAPL.csv \
-	  --dividends data/dividends/AAPL.csv \
-	  --output output/AAPL-stocks-dividends-join.txt
+**Nicely Formatted:**
+	
+	./run scripts/StocksDividendsJoin4.scala \ 
+	--stocks data/stocks/AAPL.csv \ 
+	--dividends data/dividends/AAPL.csv \ 
+	--output output/AAPL-stocks-dividends-join.txt
+
+**Copy and Paste Version:**
+
+	./run scripts/StocksDividendsJoin4.scala --stocks data/stocks/AAPL.csv --dividends data/dividends/AAPL.csv --output output/AAPL-stocks-dividends-join.txt
 
 Note that we need to two input sources, so we use flags `--stocks` and `--dividends` for them, instead of `--input`.
 
@@ -394,9 +442,15 @@ However, in this exercise, we'll do a four-way self-join of the data files for t
 
 For this script, the `--input` flag is used to specify the directory where the stocks files are located.
 
-	./run scripts/StockCoGroup5.scala \
-	  --input  data/stocks \
+**Nicely Formatted:**
+	
+	./run scripts/StockCoGroup5.scala \ 
+	  --input data/stocks \ 
 	  --output output/AAPL-INTC-GE-IBM.txt
+
+**Copy and Paste Version:**
+
+	./run scripts/StockCoGroup5.scala --input data/stocks --output output/AAPL-INTC-GE-IBM.txt
 
 When you look at the implementation, it is not obvious how to use the CoGroup feature. You could do pair-wise joins, which would be conceptually easier perhaps, but offer poor performance in a large MapReduce job, as each pair would require a separate MapReduce Job. The CoGroup feature tries to do as many joins at one as possible.
 
@@ -425,11 +479,17 @@ Try implementing the same four-way join doing a sequence of pair-wise joins. Com
 
 This exercise shows how to split a data stream and use various features on the splits, including finding unique values.
 
-	./run scripts/Twitter6.scala \
-	  --input  data/twitter/tweets.tsv \
-	  --uniques output/unique-languages.txt \
-	  --count-star output/count-star.txt \
+**Nicely Formatted:**
+	
+	./run scripts/Twitter6.scala \ 
+	  --input data/twitter/tweets.tsv \ 
+	  --uniques output/unique-languages.txt \ 
+	  --count-star output/count-star.txt \ 
 	  --count-star-100 output/count-star-100.txt
+
+**Copy and Paste Version:**
+
+	./run scripts/Twitter6.scala --input data/twitter/tweets.tsv --uniques output/unique-languages.txt --count-star output/count-star.txt --count-star-100 output/count-star-100.txt
 
 The output in `output/unique-languages.txt` is the following:
 
@@ -473,11 +533,17 @@ Add a `filter` method call that removes these "bad" records. **Hint:** You'll wa
 
 Let's return to the Shakespeare data to compute *context ngrams*, a common natural language processing technique, where we provide a prefix of words and find occurrences of the prefix followed by an additional word. The ngrams are returned in order of frequency, descending. 
 
-	./run scripts/ContextNGrams7.scala \
-	  --input  data/shakespeare/plays.txt \
-	  --output output/context-ngrams.txt \
-	  --ngram-prefix "I love" \
+**Nicely Formatted:**
+	
+	./run scripts/ContextNGrams7.scala \ 
+	  --input data/shakespeare/plays.txt \ 
+	  --output output/context-ngrams.txt \ 
+	  --ngram-prefix "I love" \ 
 	  --count 10
+
+**Copy and Paste Version:**
+
+	./run scripts/ContextNGrams7.scala --input data/shakespeare/plays.txt --output output/context-ngrams.txt --ngram-prefix "I love" --count 10
 
 The output is the list containing each ngram along with a count of its occurrences. Note that the list is actually written to the console, as well as to the output location. We added a `debug` step to the dataflow that dumps the tuples to the console.
  
@@ -501,11 +567,17 @@ Context ngrams are a special case of ngrams, where you just find the most common
 
 Let's revisit the exercise to join stock and dividend records and generalize it to read in multiple sets of data, for different companies, and process them as one stream. A complication is that the data files don't contain the stock ("instrument") symbol, so we'll see another way to add data to tuples.
 
-	./run scripts/StocksDividendsRevisited8.scala \
-	  --stocks-root-path    data/stocks/ \
-	  --dividends-root-path data/dividends/ \
-	  --symbols AAPL,INTC,GE,IBM \
+**Nicely Formatted:**
+	
+	./run scripts/StocksDividendsRevisited8.scala \ 
+	  --stocks-root-path data/stocks/ \ 
+	  --dividends-root-path data/dividends/ \ 
+	  --symbols AAPL,INTC,GE,IBM \ 
 	  --output output/stocks-dividends-join.txt
+
+**Copy and Paste Version:**
+
+	./run scripts/StocksDividendsRevisited8.scala --stocks-root-path data/stocks/ --dividends-root-path data/dividends/ --symbols AAPL,INTC,GE,IBM --output output/stocks-dividends-join.txt
 
 # Matrix API
 
@@ -523,9 +595,15 @@ This is set notation; the size of the intersection of two sets over the size of 
 
 Run the script this way on a small matrix:
 
-	./run scripts/MatrixJaccardSimilarity9.scala \
-	  --input data/matrix/graph.tsv \
+**Nicely Formatted:**
+	
+	./run scripts/MatrixJaccardSimilarity9.scala \ 
+	  --input data/matrix/graph.tsv \ 
 	  --output output/jaccardSim.tsv
+
+**Copy and Paste Version:**
+
+	./run scripts/MatrixJaccardSimilarity9.scala --input data/matrix/graph.tsv --output output/jaccardSim.tsv
 
 ## Term Frequency-Inverse Document Frequency (TF*IDF)
 
@@ -537,10 +615,16 @@ For more information, see the [Wikipedia](http://en.wikipedia.org/wiki/Tf*idf) p
 
 Run the script this way on a small matrix:
 
+**Nicely Formatted:**
+	
 	./run scripts/TfIdf10.scala \ 
 	  --input data/matrix/docBOW.tsv \ 
-	  --output output/featSelectedMatrix.tsv \
+	  --output output/featSelectedMatrix.tsv \ 
 	  --nWords 300
+
+**Copy and Paste Version:**
+
+	./run scripts/TfIdf10.scala --input data/matrix/docBOW.tsv --output output/featSelectedMatrix.tsv --nWords 300
 
 # Type-Safe API
 
@@ -556,12 +640,18 @@ We've provided a bash shell script, `run11.sh` to run the job on Hadoop, but fir
 
 Once you're ready to try it in Hadoop, the "official" Scalding way is to use the `scripts/scald.rb` script in the Scalding distribution. For example, assuming that you cloned the Scalding repo into `$SCALDING_HOME`, here is a command to run `src/main/scala/HadoopTwitter11.scala`, which is actually *identical* to `Twitter6` that we ran previously, except for comments. (We put it in `src/main/scala` so the sbt build adds it to the assembly.):
 
+**Nicely Formatted:**
+	
 	../scalding/scripts/scald.rb -local --host localhost \
 	  src/main/scala/HadoopTwitter11.scala \
 	  --input           data/twitter/tweets.tsv \
 	  --uniques         output/unique-languages \
 	  --count-star      output/count-star \
 	  --count-star-100  output/count-star-100
+
+**Copy and Paste Version:**
+
+	../scalding/scripts/scald.rb -local --host localhost src/main/scala/HadoopTwitter11.scala --input data/twitter/tweets.tsv --uniques output/unique-languages --count-star output/count-star --count-star-100 output/count-star-100
 
 Use the server address with your *JobTracker* for the `--host` flag on a real Hadoop cluster. Also, replace `--local` with `--hdfs` so that HDFS is actually used. For this to work, you'll need to copy the `data/twitter` directory to your HDFS home directory (i.e., `/user/$USER`) and also create an `output` directory there.
 

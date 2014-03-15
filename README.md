@@ -1,9 +1,11 @@
 # Scalding Workshop/Tutorial README
 
-**Dean Wampler, Concurrent Thought**<br/>
+**Dean Wampler, Typesafe**<br/>
 [dean@concurrentthought.com](mailto:dean@concurrentthought.com?subject=Question%20about%20your%20Scalding%20Workshop)<br/>
 [@deanwampler](https://twitter.com/deanwampler)<br/>
-[Hire Me!](mailto:dean@concurrentthought.com?subject=Hiring%20Dean%20Wampler)
+[Typesafe](http://typesafe.com)
+
+![Scalding logo](images/scalding-logo-small.png)
 
 ## About this Workshop/Tutorial
 
@@ -37,53 +39,59 @@ On Windows:
 
 If it's not already installed, install Java from [java.com](http://www.java.com/en/download/help/download_options.xml).
 
-### Scala v2.10.2
+### Scala v2.10.2 or v2.10.3
 
-We'll use a build of Scalding for Scala v2.10.2. Install it from [here](http://www.scala-lang.org/downloads).
+We'll use a build of Scalding for Scala v2.10.2. Install Scala following the instructions [here](http://www.scala-lang.org/downloads).
 
 ### SBT 
 
-See the [website for sbt](http://www.scala-sbt.org/) for installation instructions. Actually, what you install is a driver Java programm. The actual version of sbt used will be bootstrapped for the project...
+See the [website for sbt](http://www.scala-sbt.org/) for installation instructions. Actually, what you install is a driver Java program. The actual version of `sbt` used will be bootstrapped for the project...
 
 ## Setting Up The Project and a Sanity Check
 
 Once you've completed these steps, we need to "bootstrap" the project with `sbt` and then run a "sanity check" script, our exercise 0.
 
-The first of the following three commands changes to the root directory of the workshop. The second command runs `sbt` to create an "assembly" (an all-inclusive jar file with all the dependent jars we need included - well, most of them...). Finally, the third and last command runs the sanity check script. We'll run it using a Scala script called `run` in the root directory of the project, which we'll use for all the exercises.
+The first of the following three commands changes to the root directory of the workshop. (We'll spend the whole session working in this directory.) The second command runs `sbt` to create an "assembly" (an all-inclusive jar file with all the dependent jars we need included - well, most of them...). Finally, the third and last command runs the sanity check script. We'll run it using a Scala script called `run` in the root directory of the project, which we'll use for all the exercises.
 
-Using `bash` (assumming you installed in `$HOME/fun`): 
+Using `bash` (assuming you installed the workshop in `$HOME/fun`): 
 
     cd $HOME/fun/scalding-workshop
     sbt assembly
     ./run scripts/SanityCheck0.scala
 
-On Windows (assumming you installed in `C:\fun`):
+On Windows (assuming you installed the workshop in `C:\fun`):
 
     cd C:\fun\scalding-workshop
     sbt assembly
     scala run scripts/SanityCheck0.scala
 
-The commands should run without error. The `sbt assembly` command first runs an `update` task, which downloads all the dependencies, using the specification in `project/Build.scala`. You'll see lots of messages as it tries different repositories. Note that these dependencies will be downloaded to your `$HOME/.ivy2` directory (on *nix systems). **This may take a while to run!!**
+The commands should run without error. If you get an error like `sbt not found` or `scala not found`, make sure these tools are on your command "path". 
 
-Next, the `assembly` task builds an all-inclusive jar file that includes all the dependencies, including Scalding and Hadoop. This jar file makes it easier to run Scalding scripts on Hadoop, because it simplifies working with dependency jars and the `CLASSPATH`. The output of `assembly` is `target/ScaldingWorkshop-X.Y.Z.jar`, where `X.Y.Z` will be the current version number for the workshop.
+The `sbt assembly` command first runs an `update` task, which downloads all the dependencies, using the specification in `project/Build.scala`. You'll see lots of messages as it tries different repositories. Note that these dependencies will be downloaded to your `$HOME/.ivy2` directory (on *nix systems). **This may take a while to run!!**
 
-For completeness, note also that the version of sbt itself is specified in `project/build.properties`. There is also a `project/plugins.sbt` file that specifies some sbt plugins we use. 
+Next, the `assembly` task builds an all-inclusive "jar" (_Java ARchive_) file that includes all the dependencies, including Scalding and Hadoop. This jar file makes it easier to run Scalding scripts on Hadoop, because it simplifies working with dependency jars and the `CLASSPATH`. The output of `assembly` is `target/ScaldingWorkshop-X.Y.Z.jar`, where `X.Y.Z` will be the current version number for the workshop.
+
+For completeness, note also that the version of `sbt` itself is specified in `project/build.properties`. There is also a `project/plugins.sbt` file that specifies some `sbt` plugins we use. 
 
 Finally, the `run` Scala script takes a moment to compile the Scalding script and then run it. The output is written to `output/SanityCheck0.txt`. (What's in that file?)
 
-If you have Ruby installed on your system, there is a port of `run` in Ruby called `run.rb`. To use it, just replace the `run` command above in the bash case or for windows, use `ruby run.rb` instead of `scala run`.
+If you have Ruby installed on your system, there is a port of `run` in Ruby called `run.rb`. To use it, just replace the `run` command above with `run.rb`, for the *nix `bash` shell, or for Windows, use `ruby run.rb` instead of `scala run`.
  
-See the Appendix below for "optional installs", if you decide to use Scalding after the tutorial.
+See the Appendix below for "optional installs", if you decide to use Scalding after the tutorial you'll want to install some of these packages.
 
 ## Next Steps
 
 You can now start with the workshop itself. Go to the companion [Workshop page](https://github.com/deanwampler/scalding-workshop/blob/master/Workshop.html).
 
-If you are interested in the [Typesafe Activator](http://typesafe.com/activator) stack, see the [Scalding template](http://typesafe.com/activator/template/activator-scalding).
+Note that there is a similar tutorial I wrote for Typesafe's [Activator](http://typesafe.com/activator) ecosystem of examples. See the [Scalding template](http://typesafe.com/activator/template/activator-scalding).
 
 ## Notes on Releases
 
-### V0.3.0 
+### V0.4.0 
+
+Moved to Scala v2.10.3 and Scalding v0.9.0rc4. Refined many of the exercises with an emphasis on using the Scalding's newer "type-safe" API.
+
+### V0.3.X 
 
 Moved to Scala v2.10.2 and Scalding v0.8.6. Completely reworked the build process and the script running process. Refined many of the exercises.
 
@@ -104,7 +112,7 @@ First release for the StrangeLoop 2012 workshop.
 
 See the [Scalding GitHub page](https://github.com/twitter/scalding) for more information about Scalding. The [wiki](https://github.com/twitter/scalding/wiki) is indispensable.
 
-I'm [Dean Wampler](mailto:dean@deanwampler.com) from [Concurrent Thought](http://concurrentthought.com). I prepared this workshop. Send me email with [questions about the workshop](mailto:dean@deanwampler.com?subject=Question%20about%20your%20Scalding%20Workshop) or for [information about consulting and training](mailto:dean@deanwampler.com?subject=Hiring%20Dean%20Wampler) on Scala, Scalding, or other Hadoop and *Big Data* topics.
+I'm [Dean Wampler](mailto:dean@concurrentthought.com) from [Typesafe](http://typesafe.com). I prepared this workshop. Send me email with [questions about the workshop](mailto:dean@concurrentthought.com?subject=Question%20about%20your%20Scalding%20Workshop) or for [information about consulting and training](mailto:dean.wampler@typesafe.com?subject=Hiring%20Dean%20Wampler) on Scala, Scalding, the [Typesafe Reactive Platform](http://typesafe.com/platform), and other Hadoop and *Big Data* technologies.
 
 Some of the data used in these exercises was obtained from [InfoChimps](http://infochimps.com).
 
@@ -135,7 +143,7 @@ Ruby is used as a platform-independent language for driver scripts by Scalding (
 
 Build Scalding according to its [Getting Started](https://github.com/twitter/scalding/wiki/Getting-Started) page. By default, Twitter builds with Scala v2.9.3, but Scalding builds with 2.10.2 and the `project/Build.scala` file can be edited for this version. 
 
-Edit `project/Build.scala`. Near the top, you'll see a line `scalaVersion := 2.9.2` and next to it, a commented line for version 2.10.0. Comment out the line with 2.9.2 and uncomment the 2.10.0 line, then change the last zero to "2". Save your changes.
+Edit `project/Build.scala`. Near the top, you'll see a line `scalaVersion := 2.9.2` and next to it, a commented line for version 2.10.0. Comment out the line with 2.9.2 and uncomment the 2.10.0 line, then change the last zero to "2" or "3". Save your changes.
 
 Now, here is a synopsis of the build steps. Using `bash`: 
 

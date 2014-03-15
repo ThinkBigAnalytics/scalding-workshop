@@ -1,6 +1,6 @@
 #!/usr/bin/env scala
 // ------------------------------------------
-// run - Simple scala driver for the Scalding workshop.
+// run - a simple scala driver for the Scalding workshop.
 // usage (*nix): run scaldingscript.scala [options]
 // usage (Windows): scala run scaldingscript.scala [options]
 //
@@ -15,60 +15,111 @@
 //  1. Does not handle invocation from another directory.
 //  2. Test that our file separator logic works correctly on Windows!
 
+val separator = java.io.File.separator match {
+  case "\\" => "\\\\"
+  case sep => sep
+}
+
+val help = """
+  |run - a simple scala driver for the Scalding workshop.
+  |usage: 
+  |  (*nix):     run [scalding_options] script.scala [script_options]
+  |  (Windows):  scala run [scalding_options] script.scala [script_options]
+  |where the "scalding_options" are any options supported by scalding itself 
+  |and the "script_options" will be discussed for each exercise.
+  |""".stripMargin
+
 // Increase (or decrease) this heap size size value if necessary.
 val heapSize = "-Xmx1g"
+val version  = "0.4.0"
+val assembly = s"target${separator}scala-2.10${separator}scalding-workshop-$version.jar"
+val libs     = s"target${separator}/classes"
 
-val version = "0.3.0"
-val assembly = s"target${separator}ScaldingWorkshop-$version.jar"
 
-val separator = java.io.File.separator match {
-    case "\\" => "\\\\"
-    case sep => sep
-}
-val libs = s"target${separator}*"
-
-args.length match {
-    case 0 => println("Must specify a Scalding script!"); sys.exit(1)
-    case _ =>
-}
-val fullPathScriptREstr = s"""(.*${separator})([^${separator}]+).scala$$"""
-val fullPathScriptRE = fullPathScriptREstr.r 
-val scriptREstr = s"""([^${separator}]+)(.scala)?$$"""
-val scriptRE = scriptREstr.r 
-val (path, name, script) = args(0) match {
-    case fullPathScriptRE(path, name) => (path, name, s"${path}${name}.scala")
-    case scriptRE(name, _) => (s"scripts${separator}", name, s"scripts${separator}${name}.scala")
+def extractPathNameScript(str: String): (String,String,String) = {
+  val fullPathScriptREstr = s"""(.*${separator})([^${separator}]+).scala$$"""
+  val fullPathScriptRE = fullPathScriptREstr.r 
+  val scriptREstr = s"""([^${separator}]+)(.scala)?$$"""
+  val scriptRE = scriptREstr.r 
+  val (path, name, script) = str match {
+    case fullPathScriptRE(path, name) => 
+      (path, name, s"${path}${name}.scala")
+    case scriptRE(name, _) => 
+      (s"scripts${separator}", name, s"scripts${separator}${name}.scala")
     case _  => 
-        println(s"Could not parse input script name: ${args(0)}")
-        sys.exit(1)
+      println(s"Could not parse input script name: $str")
+      sys.exit(1)
+  }
+  (path, name, script)
 }
-println(s"Running script: $script")
-val scriptArgs = args.toList.tail.mkString(" ")
+
+case class Options (
+  path: String = "", 
+  name: String = "", 
+  script: String = "", 
+  scaldingOptions: Vector[String] = Vector.empty, 
+  scriptOptions: Vector[String] = Vector.empty)
+
+def processScriptArgs(
+    argz: List[String], 
+    opts: Options): Options = (argz foldLeft opts) {
+  (opts, arg) => opts copy (scriptOptions = opts.scriptOptions :+ arg)
+}
+
+val scriptNameRE = """.*\.sc(?:ala)?$""".r
+
+def processScaldingArgs(
+    argz: List[String], 
+    opts: Options): Options = argz match {
+  case Nil => opts
+  case head :: tail => head match {
+    case "-h" | "--help" | "--h" =>
+      println(help)
+      sys.exit(0)
+    case script @ scriptNameRE() => 
+      val (path, name, script) = extractPathNameScript(head)
+      processScriptArgs(tail, opts copy (path = path, name = name, script = script))
+    case _ => processScaldingArgs(tail, opts copy (scaldingOptions = opts.scaldingOptions :+ head))
+  }
+}
+
+val options = processScaldingArgs(args.toList, Options())
+
+if (options.script == "") {
+  println("Must specify a Scalding script!")
+  println(help)
+  sys.exit(1)
+}
+
+val script = options.script
+val scaldingOpts = options.scaldingOptions.mkString(" ")
+val scriptOpts = options.scriptOptions.mkString(" ")
 
 import scala.language.postfixOps
 import scala.sys.process._
 
 def mkdir(path: String): Unit = {
-    val dir = new java.io.File(path)
-    if (dir.exists == false) {
-        if (dir.mkdir == false) {
-            println(s"Could not create a required directory: $dir")
-            sys.exit(1)
-        }
+  val dir = new java.io.File(path)
+  if (dir.exists == false) {
+    if (dir.mkdir == false) {
+      println(s"Could not create a required directory: $dir")
+      sys.exit(1)
     }
+  }
 }
 mkdir("classes")
 
-def command(message: String)(cmd: => Int):Int = {
-    val status = cmd
-    if (status != 0) {
-        println(s"Failed $message")
-        sys.exit(1)
-    }
-    status
+def command(step: String, cmdString: String)(cmd: => Int):Int = {
+  println(s"-- $step: $script")
+  val status = cmd
+  if (status != 0) {
+      println(s"$step Failed for script $script ($cmdString)")
+      sys.exit(1)
+  }
+  status
 }
-command(s"compiling the script: $script")(
-    s"scalac -deprecation -cp $assembly:$libs -d classes $script" !)
-println(    s"java $heapSize -cp classes:$assembly:$libs com.twitter.scalding.Tool $name --local $scriptArgs" )
-command("running the script!")(
-    s"java $heapSize -cp classes:$assembly:$libs com.twitter.scalding.Tool $name --local $scriptArgs" !)
+
+val compilecmd = s"scalac -deprecation -cp $assembly:$libs -d classes $script"
+val runcmd = s"java $heapSize -cp classes:$assembly:$libs com.twitter.scalding.Tool $scaldingOpts ${options.name} --local $scriptOpts"
+command("Compile", compilecmd)(compilecmd !)
+command("Run",     runcmd    )(runcmd !)

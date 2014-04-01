@@ -30,10 +30,10 @@ where:
 EOF
 }
 
-assembly=$(ls target/ScaldingWorkshop*.jar 2> /dev/null)
+assembly=$(ls target/scala-2.10/scalding-workshop*.jar 2> /dev/null)
 if [ $? -ne 0 ]
 then
-    echo "$0: The target/ScaldingWorkshop-X.Y.Z.jar hasn't been built yet."
+    echo "$0: The target/scala-2.10/scalding-workshop-X.Y.Z.jar hasn't been built yet."
     echo "  Run 'sbt assembly' then try again."
     exit 1
 fi

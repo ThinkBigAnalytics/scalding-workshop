@@ -33,7 +33,7 @@ val help = """
 val heapSize = "-Xmx1g"
 val version  = "0.4.0"
 val assembly = s"target${separator}scala-2.10${separator}scalding-workshop-$version.jar"
-val libs     = s"target${separator}/classes"
+val libs     = s"target${separator}classes"
 
 
 def extractPathNameScript(str: String): (String,String,String) = {

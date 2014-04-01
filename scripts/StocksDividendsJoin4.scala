@@ -43,6 +43,7 @@ class StocksDividendsJoin4(args : Args) extends Job(args) {
    */
   val stockSchema = 
     List ('symd, 'price_open, 'price_high, 'price_low, 'price_close, 'volume, 'price_adj_close)
+  
   object dividendsSchema extends Enumeration {
     val dymd, dividend = Value
   }

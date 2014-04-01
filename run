@@ -17,7 +17,11 @@
 
 val separator = java.io.File.separator match {
   case "\\" => "\\\\"
-  case sep => sep
+  case sep  => sep
+}
+val pathSeparator = System.getProperty("path.separator") match {
+  case null => println("""WARNING: System.getProperty("path.separator") returned null. Using :""")
+  case sep  => sep
 }
 
 val help = """
@@ -119,7 +123,7 @@ def command(step: String, cmdString: String)(cmd: => Int):Int = {
   status
 }
 
-val compilecmd = s"scalac -deprecation -cp $assembly:$libs -d classes $script"
-val runcmd = s"java $heapSize -cp classes:$assembly:$libs com.twitter.scalding.Tool $scaldingOpts ${options.name} --local $scriptOpts"
+val compilecmd = s"scalac -deprecation -cp $assembly${pathSeparator}$libs -d classes $script"
+val runcmd = s"java $heapSize -cp classes${pathSeparator}$assembly${pathSeparator}$libs com.twitter.scalding.Tool $scaldingOpts ${options.name} --local $scriptOpts"
 command("Compile", compilecmd)(compilecmd !)
 command("Run",     runcmd    )(runcmd !)

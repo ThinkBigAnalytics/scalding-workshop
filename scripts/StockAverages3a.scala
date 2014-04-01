@@ -46,12 +46,12 @@ class StockAverages3a(args : Args) extends Job(args) {
    * A hack to let us pattern matching on the tuple, e.g., "(ymd, close)". 
    */
     .mapTo(('ymd, 'price_adj_close) -> ('year, 'closing_price)) { 
-      tup: (String,String) => tup match {
-        case (ymd, close) => 
+      tup: (String,String) =>
+        val (ymd, close) = tup  // Extract the 1st, 2nd elements from the tuple.
         // TODO: Add exception handling logic in case the 
         // double conversion fails! (See StocksAverages3b ...)
+        // A two-element tuple is returned. (Note the outer parentheses.)
         (toYear(ymd), close.toDouble)
-      }
     }
 
   /*

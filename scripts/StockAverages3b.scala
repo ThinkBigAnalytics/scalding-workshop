@@ -56,20 +56,21 @@ class StockAverages3b(args : Args) extends Job(args) {
    */
    val mapped = csv
     .mapTo(('ymd, 'price_adj_close) -> ('year, 'closing_price, 'bad)) { 
-      tup: (String,String) => tup match {
-        case (ymd, closeStr) => 
-          val (year, bad1) = try {
-            (toYear(ymd), 0)
-          } catch {
-            case nfe: java.lang.NumberFormatException => (0, 1)
-          }
-          val (close, bad2) = try {
-            (closeStr.toDouble, 0)
-          } catch {
-            case nfe: java.lang.NumberFormatException => (-1.0, 1)
-          }
-          (year, close, bad1+bad2)
-      }
+      tup: (String,String) =>
+        val (ymd, closeStr) = tup  // Extract the 1st, 2nd elements from the tuple.
+        // First, try extracting the year and converting to an integer:
+        val (year, bad1) = try {  // Return the year and a "bad" flag
+          (toYear(ymd), 0)        // Bad flag is 0...
+        } catch {               // ... unless an exception is thrown
+          case nfe: java.lang.NumberFormatException => (0, 1)
+        }
+        // Now try convertin the closeStr to a double.
+        val (close, bad2) = try {
+          (closeStr.toDouble, 0)
+        } catch {
+          case nfe: java.lang.NumberFormatException => (-1.0, 1)
+        }
+        (year, close, bad1+bad2)  // bad > 0 if one or both failed.
     }
 
   /*
@@ -79,10 +80,10 @@ class StockAverages3b(args : Args) extends Job(args) {
    */
   val good = mapped
     .filter('bad)( (bad:Int) => bad == 0)
-    .discard('bad)
+    .discard('bad)             // no longer needed
   val bad = mapped
     .filter('bad)( (bad:Int) => bad != 0)
-    .discard('bad)
+    .discard('bad)             // no longer needed
 
   /*
    * Finally, group the good records by the year and average the closing price

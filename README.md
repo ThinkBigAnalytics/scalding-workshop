@@ -110,7 +110,7 @@ First release for the StrangeLoop 2012 workshop.
 
 ## For Further Information
 
-See the [Scalding GitHub page](https://github.com/twitter/scalding) for more information about Scalding. The [wiki](https://github.com/twitter/scalding/wiki) is indispensable.
+See the [Scalding GitHub page](https://github.com/twitter/scalding) for more information about Scalding. The [wiki](https://github.com/twitter/scalding/wiki) is indispensable. The Scaladocs for Scalding are [here](http://twitter.github.io/scalding/).
 
 I'm [Dean Wampler](mailto:dean@concurrentthought.com) from [Typesafe](http://typesafe.com). I prepared this workshop. Send me email with [questions about the workshop](mailto:dean@concurrentthought.com?subject=Question%20about%20your%20Scalding%20Workshop) or for [information about consulting and training](mailto:dean.wampler@typesafe.com?subject=Hiring%20Dean%20Wampler) on Scala, Scalding, the [Typesafe Reactive Platform](http://typesafe.com/platform), and other Hadoop and *Big Data* technologies.
 

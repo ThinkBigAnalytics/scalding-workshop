@@ -53,7 +53,8 @@ class StockAverages3(args : Args) extends Job(args) {
       ymd_close: (String, String) =>   // (String, String) === Tuple2[String, String]
       // TODO: Add exception handling logic in case the 
       // double conversion fails! (See StocksAverages3b ...)
-      (toYear(ymd_close._1), (ymd_close._2).toDouble)  // two-element tuple returned!
+      // A two-element tuple is returned. (Note the outer parentheses.)
+      (toYear(ymd_close._1), (ymd_close._2).toDouble)  
     }
 
   /*

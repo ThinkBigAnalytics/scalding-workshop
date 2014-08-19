@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
-#-------------------------------------------
+#------------------------------------------------------------------------------
+# Copyright (C) 2010-2014 Think Big Analytics, Inc. All Rights Reserved.
+#------------------------------------------------------------------------------
 # run.rb - Simple driver for the Scalding workshop.
 # usage: run.rb scaldingscript.scala [options]
 #

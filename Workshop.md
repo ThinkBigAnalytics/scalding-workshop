@@ -1,5 +1,7 @@
 # Scalding Workshop
 
+*Copyright (C) 2010-2014 Think Big Analytics, Inc. All Rights Reserved.*
+
 [StrangeLoop 2012](http://thestrangeloop.com)<br/>
 **Dean Wampler, Think Big Analytics**<br/>
 [dean@deanwampler.com](mailto:dean@deanwampler.com)<br/>

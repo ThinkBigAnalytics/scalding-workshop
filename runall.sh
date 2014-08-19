@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+#------------------------------------------------------------------------------
+# Copyright (C) 2010-2014 Think Big Analytics, Inc. All Rights Reserved.
+#------------------------------------------------------------------------------
 # Run all the scripts! Mostly used as a sanity check.
 
 if [ -d output ]
